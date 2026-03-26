@@ -340,6 +340,9 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
             </div>
           </div>
 
+          {/* Probabilité de défaillance — Signaux Faibles */}
+          <PredictiveCard dealId={dealId} />
+
           {/* Données brutes */}
           <div className="bg-white rounded-[20px] shadow p-6">
             <h3 className="font-semibold text-[#2d2d2d] mb-4">
@@ -391,6 +394,157 @@ function KV({ label, value }: { label: string; value: string }) {
     <div className="flex justify-between">
       <span className="text-[#a1a1a6]">{label}</span>
       <span className="font-mono text-[#1d1d1f]">{value}</span>
+    </div>
+  );
+}
+
+// ---- Predictive Card (Signaux Faibles) ----
+
+import { CheckCircle, XCircle, TrendingUp } from 'lucide-react';
+
+type PredictiveResult = {
+  probability_6m: number;
+  probability_12m: number;
+  probability_18m: number;
+  probability_24m: number;
+  risk_level: string;
+  contributing_factors: { feature: string; contribution: number; direction: string }[];
+  confidence: number;
+  model_version: string;
+};
+
+const RISK_STYLES: Record<string, { label: string; color: string; bg: string }> = {
+  faible: { label: 'Faible', color: '#2d9d3f', bg: '#2d9d3f' },
+  'modéré': { label: 'Modéré', color: '#bf5a00', bg: '#bf5a00' },
+  'élevé': { label: 'Élevé', color: '#c4342d', bg: '#c4342d' },
+  critique: { label: 'Critique', color: '#a50e0e', bg: '#a50e0e' },
+};
+
+const FEATURE_LABELS: Record<string, string> = {
+  dette_sur_caf: 'Ratio dette/CAF',
+  autonomie_financiere: 'Autonomie financière',
+  liquidite_generale: 'Liquidité générale',
+  marge_nette: 'Marge nette',
+  endettement: 'Endettement',
+  couverture_ff: 'Couverture frais financiers',
+  dso: 'Délai de paiement clients',
+  altman_zone_danger: 'Score Altman en zone danger',
+  conan_zone_difficultes: 'Score Conan en zone difficultés',
+  privilege_urssaf: 'Inscription URSSAF',
+  privilege_tresor: 'Inscription Trésor',
+  changement_dirigeant_recent: 'Changement dirigeant récent',
+  taux_defaillance_sectoriel: 'Taux défaillance sectoriel',
+};
+
+function PredictiveCard({ dealId }: { dealId: string }) {
+  const [pred, setPred] = useState<PredictiveResult | null>(null);
+  const supabase = createClient();
+
+  useEffect(() => {
+    // Get latest score which includes predictive data
+    supabase.from('deal_scores').select('deal_optimizer_suggestions')
+      .eq('deal_id', dealId).order('computed_at', { ascending: false }).limit(1).maybeSingle()
+      .then(() => {
+        // The predictive data comes from the scoring API response
+        // For now, try to fetch from a dedicated endpoint or compute inline
+        const scoringUrl = process.env.NEXT_PUBLIC_SCORING_API_URL;
+        if (scoringUrl) {
+          fetch(`${scoringUrl}/api/v1/scoring/compute`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ deal_id: dealId, organization_id: '', force_recalculate: false }),
+          })
+            .then(r => r.ok ? r.json() : null)
+            .then(data => { if (data?.predictive) setPred(data.predictive); })
+            .catch(() => {});
+        }
+      });
+  }, [dealId, supabase]);
+
+  if (!pred) return null;
+
+  const risk = RISK_STYLES[pred.risk_level] || RISK_STYLES['modéré'];
+  const pct18 = (pred.probability_18m * 100).toFixed(1);
+
+  return (
+    <div className="bg-white rounded-[20px] shadow p-6">
+      <div className="flex items-center gap-2 mb-4">
+        <TrendingUp className="w-4 h-4 text-[#1e40af]" strokeWidth={1.8} />
+        <h3 className="text-[15px] font-semibold text-[#2d2d2d]">Probabilité de défaillance</h3>
+        <span className="text-[10px] text-[#a1a1a6] bg-[#f5f5f7] px-2 py-0.5 rounded-full">
+          Signaux Faibles
+        </span>
+      </div>
+
+      {/* Main indicator */}
+      <div className="flex items-center justify-between mb-5">
+        <div>
+          <p className="text-[12px] text-[#6e6e73] mb-0.5">Probabilité à 18 mois</p>
+          <div className="flex items-baseline gap-2">
+            <span className="text-[36px] font-semibold font-mono tracking-tighter" style={{ color: risk.color }}>
+              {pct18}%
+            </span>
+            <span className="text-[13px] font-medium px-2.5 py-0.5 rounded-full" style={{
+              color: risk.color,
+              backgroundColor: `${risk.bg}0A`,
+            }}>
+              {risk.label}
+            </span>
+          </div>
+        </div>
+        <div className="text-right text-[11px] text-[#a1a1a6]">
+          <p>Confiance : {(pred.confidence * 100).toFixed(0)}%</p>
+          <p>Modèle : {pred.model_version}</p>
+        </div>
+      </div>
+
+      {/* Horizons */}
+      <div className="grid grid-cols-4 gap-3 mb-5">
+        {[
+          { label: '6 mois', value: pred.probability_6m },
+          { label: '12 mois', value: pred.probability_12m },
+          { label: '18 mois', value: pred.probability_18m },
+          { label: '24 mois', value: pred.probability_24m },
+        ].map((h) => {
+          const pct = h.value * 100;
+          const col = pct < 5 ? '#2d9d3f' : pct < 15 ? '#bf5a00' : '#c4342d';
+          return (
+            <div key={h.label} className="bg-[#f5f5f7] rounded-[12px] p-3 text-center">
+              <p className="text-[10px] text-[#86868b] mb-1">{h.label}</p>
+              <p className="text-[17px] font-semibold font-mono tracking-tight" style={{ color: col }}>
+                {pct.toFixed(1)}%
+              </p>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Progress bar */}
+      <div className="h-[6px] bg-[#f5f5f7] rounded-full overflow-hidden mb-5">
+        <div className="h-full rounded-full transition-all duration-700" style={{
+          width: `${Math.min(100, pred.probability_18m * 100 * 2)}%`,
+          background: `linear-gradient(90deg, #2d9d3f, #bf5a00 50%, #c4342d)`,
+        }} />
+      </div>
+
+      {/* Contributing factors */}
+      {pred.contributing_factors.length > 0 && (
+        <div className="space-y-2">
+          <p className="text-[12px] text-[#6e6e73] font-medium mb-2">Facteurs contributifs</p>
+          {pred.contributing_factors.map((f, i) => (
+            <div key={i} className={`flex items-start gap-2.5 px-3 py-2 rounded-[10px] text-[12px] ${
+              f.direction === 'risque'
+                ? 'bg-[#c4342d]/[0.05] text-[#a52a24]'
+                : 'bg-[#2d9d3f]/[0.05] text-[#1a7c2f]'
+            }`}>
+              {f.direction === 'risque'
+                ? <XCircle className="w-3.5 h-3.5 mt-0.5 shrink-0" strokeWidth={1.8} />
+                : <CheckCircle className="w-3.5 h-3.5 mt-0.5 shrink-0" strokeWidth={1.8} />}
+              <span>{FEATURE_LABELS[f.feature] || f.feature}</span>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

@@ -11,6 +11,7 @@ from app.scoring.asset import AssetScorer
 from app.scoring.director import DirectorScorer
 from app.scoring.macro_sector import MacroSectorScorer
 from app.scoring.verdicts import VerdictEngine
+from app.scoring.predictive import PredictiveScorer
 
 logger = logging.getLogger(__name__)
 
@@ -41,6 +42,7 @@ class ScoringEngine:
         self.director = DirectorScorer()
         self.macro_sector = MacroSectorScorer()
         self.verdict_engine = VerdictEngine()
+        self.predictive = PredictiveScorer()
 
     async def compute_full_score(
         self, deal_id: str, organization_id: str, force: bool = False
@@ -80,6 +82,9 @@ class ScoringEngine:
         if score_financier.get("ratios"):
             await self._save_financial_ratios(deal_id, deal_data, score_financier)
 
+        # Predictive model (Signaux Faibles inspired)
+        predictive = await self.predictive.compute(deal_data)
+
         result = {
             "deal_id": deal_id,
             "scores": {
@@ -91,6 +96,7 @@ class ScoringEngine:
             "score_total": round(score_total, 2),
             "verdict": verdict,
             "ponderation_used": weights,
+            "predictive": predictive,
         }
 
         if verdict["verdict"] in ("go_conditionnel", "no_go"):

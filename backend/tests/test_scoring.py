@@ -352,3 +352,90 @@ class TestRiskCurve:
         result = RiskCurveCalculator.compute_curve(deal)
         last = result["curve_data"][-1]
         assert last["couvert"]  # Should be covered at end
+
+
+class TestPredictiveScorer:
+    def setup_method(self):
+        from app.scoring.predictive import PredictiveScorer
+        self.scorer = PredictiveScorer()
+
+    def test_healthy_company(self):
+        result = self.scorer.compute_default_probability(
+            ratios={
+                "dette_sur_caf": 1.5,
+                "autonomie_financiere": 0.45,
+                "liquidite_generale": 2.0,
+                "marge_nette": 0.08,
+                "endettement": 0.5,
+                "couverture_ff": 8.0,
+                "dso": 35,
+            },
+            altman_zone="sain",
+            conan_zone="sain",
+            director_data={},
+            sector_data={"taux_defaillance_sectoriel": 0.01},
+            deal_data={},
+        )
+        assert result["risk_level"] in ("faible", "modéré")
+        assert result["probability_18m"] < 0.20
+        assert "contributing_factors" in result
+
+    def test_distressed_company(self):
+        result = self.scorer.compute_default_probability(
+            ratios={
+                "dette_sur_caf": 8.0,
+                "autonomie_financiere": 0.08,
+                "liquidite_generale": 0.6,
+                "marge_nette": -0.05,
+                "endettement": 3.5,
+                "couverture_ff": 1.2,
+                "dso": 95,
+            },
+            altman_zone="danger",
+            conan_zone="difficultes",
+            director_data={"privilege_urssaf_montant": 15000, "privilege_tresor_montant": 8000},
+            sector_data={"taux_defaillance_sectoriel": 0.08},
+            deal_data={"changement_dirigeant_recent": True},
+        )
+        assert result["risk_level"] in ("élevé", "critique")
+        assert result["probability_18m"] > 0.20
+
+    def test_probability_horizons_ordered(self):
+        result = self.scorer.compute_default_probability(
+            ratios={"dette_sur_caf": 4.0, "marge_nette": 0.02},
+            altman_zone="gris",
+            conan_zone="attention",
+            director_data={},
+            sector_data={},
+            deal_data={},
+        )
+        assert result["probability_6m"] <= result["probability_12m"]
+        assert result["probability_12m"] <= result["probability_18m"]
+        assert result["probability_18m"] <= result["probability_24m"]
+
+    def test_empty_data(self):
+        result = self.scorer.compute_default_probability(
+            ratios={}, altman_zone=None, conan_zone=None,
+            director_data={}, sector_data={}, deal_data={},
+        )
+        assert 0 <= result["probability_18m"] <= 1
+        assert result["confidence"] == 0.0  # No features available
+
+    def test_confidence_increases_with_data(self):
+        sparse = self.scorer.compute_default_probability(
+            ratios={"marge_nette": 0.05},
+            altman_zone=None, conan_zone=None,
+            director_data={}, sector_data={}, deal_data={},
+        )
+        full = self.scorer.compute_default_probability(
+            ratios={
+                "dette_sur_caf": 2.0, "autonomie_financiere": 0.35,
+                "liquidite_generale": 1.5, "marge_nette": 0.05,
+                "endettement": 1.0, "couverture_ff": 5.0, "dso": 45,
+            },
+            altman_zone="gris", conan_zone="attention",
+            director_data={"privilege_urssaf_montant": 1000},
+            sector_data={"taux_defaillance_sectoriel": 0.03},
+            deal_data={"changement_dirigeant_recent": True},
+        )
+        assert full["confidence"] > sparse["confidence"]
