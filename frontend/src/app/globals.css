@@ -15,6 +15,18 @@
   --radius: 20px;
   --radius-sm: 14px;
   --radius-xs: 10px;
+
+  /* Design system tokens */
+  --color-background-primary: #ffffff;
+  --color-background-secondary: #f5f5f7;
+  --color-background-tertiary: #ececee;
+  --color-text-primary: #1d1d1f;
+  --color-text-secondary: #6e6e73;
+  --color-text-tertiary: #a1a1a6;
+  --color-border-primary: rgba(0, 0, 0, 0.12);
+  --color-border-secondary: rgba(0, 0, 0, 0.08);
+  --color-border-tertiary: rgba(0, 0, 0, 0.06);
+  --color-accent: #1e40af;
   --shadow-card: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04);
   --shadow-card-hover: 0 2px 8px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.08);
   --shadow-elevated: 0 4px 16px rgba(0,0,0,0.08), 0 12px 40px rgba(0,0,0,0.06);

@@ -50,12 +50,12 @@ export default function DealDetailPage() {
 
   if (!deal) {
     return (
-      <div className="min-h-screen bg-[#f5f5f7]">
+      <div className="min-h-screen" style={{ background: 'var(--color-background-tertiary)' }}>
         <Sidebar />
         <main className="sm:ml-[64px] p-8">
           <div className="animate-pulse space-y-4 max-w-2xl">
-            <div className="h-7 bg-white/60 rounded-[10px] w-1/3" />
-            <div className="h-60 bg-white/60 rounded-[20px]" />
+            <div className="h-7 rounded-[8px] w-1/3" style={{ background: 'var(--color-background-secondary)' }} />
+            <div className="h-60 rounded-[8px]" style={{ background: 'var(--color-background-secondary)' }} />
           </div>
         </main>
       </div>
@@ -63,85 +63,101 @@ export default function DealDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f5f5f7]">
-      {/* Sidebar — full height, independent of header */}
+    <div className="min-h-screen" style={{ background: 'var(--color-background-tertiary)' }}>
+      {/* Sidebar — full height, independent */}
       <Sidebar />
 
-      {/* Everything right of sidebar */}
+      {/* Delete modal */}
+      {showDelete && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+          <div className="rounded-[8px] p-6 max-w-sm w-full shadow-xl animate-scale-in" style={{ background: 'var(--color-background-primary)' }}>
+            <h3 className="text-[15px] font-medium" style={{ color: 'var(--color-text-primary)' }}>Supprimer ce dossier ?</h3>
+            <p className="text-[12px] mt-1 mb-5" style={{ color: 'var(--color-text-secondary)' }}><strong>{deal.raison_sociale}</strong> — irréversible.</p>
+            <div className="flex gap-3">
+              <button onClick={() => setShowDelete(false)} disabled={deleting}
+                className="flex-1 py-2 rounded-[8px] text-[12px] font-medium transition-all"
+                style={{ background: 'var(--color-background-secondary)', color: 'var(--color-text-secondary)' }}>Annuler</button>
+              <button disabled={deleting} onClick={async () => {
+                setDeleting(true);
+                const { error } = await supabase.from('deals').delete().eq('id', dealId);
+                if (!error) router.push('/deals'); else { setDeleting(false); setShowDelete(false); }
+              }} className="flex-1 py-2 bg-[#c4342d] text-white rounded-[8px] text-[12px] font-medium hover:bg-[#a52a24] transition-all disabled:opacity-50">
+                {deleting ? '...' : 'Supprimer'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Right of sidebar */}
       <div className="sm:ml-[64px] min-h-screen flex flex-col">
 
-        {/* HEADER — above both columns */}
-        <div className="px-5 sm:px-8 pt-5 sm:pt-7 pb-4 flex items-start justify-between border-b border-black/[0.04] bg-white/60 glass">
+        {/* HEADER — white, spans hypotheses + results */}
+        <div className="px-5 sm:px-8 pt-5 sm:pt-6 pb-4 flex items-start justify-between"
+          style={{ background: 'var(--color-background-primary)', borderBottom: '0.5px solid var(--color-border-tertiary)' }}>
           <div>
-            <h1 className="text-[20px] sm:text-[24px] font-semibold text-[#1d1d1f] tracking-tight leading-tight">
+            <h1 className="text-[18px] sm:text-[22px] font-semibold tracking-tight" style={{ color: 'var(--color-text-primary)' }}>
               {deal.raison_sociale}
             </h1>
-            <div className="flex items-center gap-2 mt-1 text-[12px] text-[#6e6e73]">
+            <div className="flex items-center gap-2 mt-1 text-[11px]" style={{ color: 'var(--color-text-secondary)' }}>
               <span className="font-mono">{deal.siren}</span>
-              <span className="text-[#d4d4d8]">|</span>
+              <span style={{ color: 'var(--color-border-primary)' }}>|</span>
               <span>{deal.code_naf} — {deal.secteur_label}</span>
-              <span className={`ml-1 px-2 py-0.5 rounded-full text-[10px] font-medium ${
-                deal.status === 'completed' ? 'bg-[#2d9d3f]/10 text-[#2d9d3f]' :
-                deal.status === 'analyzing' ? 'bg-[#1e40af]/10 text-[#1e40af]' :
-                'bg-[#f5f5f7] text-[#6e6e73]'
-              }`}>
+              <span className="ml-1 px-2 py-0.5 rounded-full text-[10px] font-medium" style={{
+                background: deal.status === 'completed' ? '#2d9d3f10' : deal.status === 'analyzing' ? '#1e40af10' : 'var(--color-background-secondary)',
+                color: deal.status === 'completed' ? '#2d9d3f' : deal.status === 'analyzing' ? '#1e40af' : 'var(--color-text-secondary)',
+              }}>
                 {deal.status === 'completed' ? 'Analysé' : deal.status === 'analyzing' ? 'En cours' : 'Brouillon'}
               </span>
             </div>
           </div>
           <button onClick={() => setShowDelete(true)}
-            className="p-2 text-[#a1a1a6] hover:text-[#c4342d] hover:bg-[#c4342d]/[0.06] rounded-[10px] transition-all">
+            className="p-2 rounded-[6px] transition-all" style={{ color: 'var(--color-text-tertiary)' }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = '#c4342d'; e.currentTarget.style.background = '#c4342d0A'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--color-text-tertiary)'; e.currentTarget.style.background = 'transparent'; }}>
             <Trash2 className="w-4 h-4" strokeWidth={1.6} />
           </button>
         </div>
 
-        {/* Delete modal */}
-        {showDelete && (
-          <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-[20px] p-6 max-w-sm w-full shadow-xl animate-scale-in">
-              <h3 className="text-[17px] font-semibold text-[#1d1d1f] mb-1">Supprimer ce dossier ?</h3>
-              <p className="text-[13px] text-[#6e6e73] mb-5"><strong>{deal.raison_sociale}</strong> — irréversible.</p>
-              <div className="flex gap-3">
-                <button onClick={() => setShowDelete(false)} disabled={deleting}
-                  className="flex-1 py-2 bg-[#f5f5f7] text-[#424245] rounded-[12px] text-[13px] font-medium hover:bg-[#ededf0] transition-all">Annuler</button>
-                <button disabled={deleting} onClick={async () => {
-                  setDeleting(true);
-                  const { error } = await supabase.from('deals').delete().eq('id', dealId);
-                  if (!error) router.push('/deals'); else { setDeleting(false); setShowDelete(false); }
-                }} className="flex-1 py-2 bg-[#c4342d] text-white rounded-[12px] text-[13px] font-medium hover:bg-[#a52a24] transition-all disabled:opacity-50">
-                  {deleting ? '...' : 'Supprimer'}
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* TWO-COLUMN LAYOUT */}
+        {/* TWO COLUMNS */}
         <div className="flex flex-1 overflow-hidden">
 
-          {/* LEFT — Hypothèses (280px, scrollable) */}
-          <HypothesesColumn deal={deal} asset={asset} dealId={dealId} supabase={supabase} />
+          {/* LEFT — Hypothèses (248px) */}
+          <div className="hidden lg:flex flex-col w-[248px] shrink-0 overflow-y-auto"
+            style={{ background: 'var(--color-background-tertiary)', borderRight: '1px solid var(--color-border-secondary)' }}>
+            <div className="p-4">
+              <p className="text-[12px] font-normal mb-2" style={{ color: 'var(--color-text-secondary)' }}>Hypothèses</p>
+              <HypothesesColumn deal={deal} asset={asset} dealId={dealId} supabase={supabase} />
+            </div>
+          </div>
 
           {/* RIGHT — Résultats (flex) */}
-          <div className="flex-1 min-w-0 overflow-y-auto">
+          <div className="flex-1 min-w-0 flex flex-col overflow-hidden"
+            style={{ background: 'var(--color-background-tertiary)' }}>
 
-            {/* Score block (fixed, not scrollable with content) */}
-            <div className="px-5 sm:px-8 pt-5">
+            {/* Title floating on gray bg */}
+            <div className="px-5 sm:px-6 pt-4 pb-2">
+              <p className="text-[12px] font-normal" style={{ color: 'var(--color-text-secondary)' }}>Résultats</p>
+            </div>
+
+            {/* Score block — sticky */}
+            <div className="px-5 sm:px-6 pb-3 sticky top-0 z-10" style={{ background: 'var(--color-background-tertiary)' }}>
               <ScoreBlock score={score} />
             </div>
 
-            {/* Tab bar */}
-            <div className="px-5 sm:px-8 pt-5 pb-4 sticky top-0 z-10 bg-[#f5f5f7]">
-              <div className="flex gap-1 bg-white rounded-[12px] shadow-sm p-1 overflow-x-auto">
+            {/* Tab bar — card */}
+            <div className="px-5 sm:px-6 pb-3">
+              <div className="flex gap-0 rounded-[8px] overflow-hidden" style={{ background: 'var(--color-background-primary)', border: '0.5px solid var(--color-border-tertiary)' }}>
                 {TABS.map((tab) => {
                   const Icon = tab.icon;
+                  const isActive = activeTab === tab.id;
                   return (
                     <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-                      className={`flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-[8px] text-[12px] sm:text-[13px] font-medium transition-all whitespace-nowrap ${
-                        activeTab === tab.id
-                          ? 'bg-[#1e40af] text-white shadow-sm'
-                          : 'text-[#6e6e73] hover:text-[#2d2d2d] hover:bg-black/[0.03]'
-                      }`}>
+                      className="flex items-center gap-1.5 px-3 sm:px-4 py-2.5 text-[11px] sm:text-[12px] font-medium transition-all whitespace-nowrap flex-1 justify-center"
+                      style={{
+                        color: isActive ? 'var(--color-accent)' : 'var(--color-text-secondary)',
+                        borderBottom: isActive ? '2px solid var(--color-accent)' : '2px solid transparent',
+                      }}>
                       <Icon className="w-3.5 h-3.5" strokeWidth={1.8} />
                       <span className="hidden sm:inline">{tab.label}</span>
                     </button>
@@ -150,13 +166,15 @@ export default function DealDetailPage() {
               </div>
             </div>
 
-            {/* Tab content */}
-            <div className="px-5 sm:px-8 pb-8">
-              {activeTab === 'macro' && <MacroSectorTab dealId={dealId} score={score} />}
-              {activeTab === 'financial' && <FinancialTab dealId={dealId} organizationId={deal.organization_id} />}
-              {activeTab === 'asset' && <AssetTab deal={deal} asset={asset} />}
-              {activeTab === 'director' && <DirectorTab deal={deal} dealId={dealId} />}
-              {activeTab === 'simulator' && <SimulatorPanel deal={deal} asset={asset} />}
+            {/* Tab content — card, scrollable */}
+            <div className="px-5 sm:px-6 pb-6 flex-1 overflow-y-auto">
+              <div className="rounded-[8px] p-5 sm:p-6" style={{ background: 'var(--color-background-primary)', border: '0.5px solid var(--color-border-tertiary)' }}>
+                {activeTab === 'macro' && <MacroSectorTab dealId={dealId} score={score} />}
+                {activeTab === 'financial' && <FinancialTab dealId={dealId} organizationId={deal.organization_id} />}
+                {activeTab === 'asset' && <AssetTab deal={deal} asset={asset} />}
+                {activeTab === 'director' && <DirectorTab deal={deal} dealId={dealId} />}
+                {activeTab === 'simulator' && <SimulatorPanel deal={deal} asset={asset} />}
+              </div>
             </div>
           </div>
         </div>
