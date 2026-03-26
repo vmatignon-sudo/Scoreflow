@@ -3,18 +3,25 @@ from __future__ import annotations
 import httpx
 from typing import Any
 
+from app.core.cache import cache_get, cache_set, cache_key
+
 
 class MacroService:
     """Service pour récupérer les indicateurs macroéconomiques."""
 
-    # URLs des APIs publiques
     INSEE_MELODI_URL = "https://api.insee.fr/melodi/data"
     BDF_WEBSTAT_URL = "https://webstat.banque-france.fr/api"
     EUROSTAT_URL = "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data"
 
+    CACHE_TTL = 86400  # 24h
+
     async def get_current_indicators(self) -> dict[str, Any]:
-        """Récupère les indicateurs macro actuels (avec cache 24h)."""
-        # TODO: Implement Redis cache
+        """Récupère les indicateurs macro actuels (cache 24h)."""
+        key = cache_key("macro", "indicators")
+        cached = cache_get(key)
+        if cached is not None:
+            return cached
+
         indicators = {}
 
         async with httpx.AsyncClient(timeout=10.0) as client:
@@ -31,6 +38,7 @@ class MacroService:
             # Phase du cycle
             indicators["phase_cycle"] = self._determine_phase(indicators)
 
+        cache_set(key, indicators, self.CACHE_TTL)
         return indicators
 
     async def _fetch_pib(self, client: httpx.AsyncClient) -> float:

@@ -3,6 +3,8 @@ from __future__ import annotations
 import httpx
 from typing import Any
 
+from app.core.cache import cache_get, cache_set, cache_key
+
 
 class SectorService:
     """Service pour récupérer les données sectorielles via NAF."""
@@ -17,16 +19,25 @@ class SectorService:
     )
     BODACC_URL = "https://bodacc-datadila.opendatasoft.com/api/explore/v2.1/catalog/datasets/annonces-commerciales/records"
 
+    CACHE_TTL = 86400  # 24h
+
     async def get_sector_data(self, code_naf: str) -> dict[str, Any]:
+        key = cache_key("sector", code_naf)
+        cached = cache_get(key)
+        if cached is not None:
+            return cached
+
         async with httpx.AsyncClient(timeout=10.0) as client:
             ratios = await self._fetch_sector_ratios(client, code_naf)
             defaillances = await self._fetch_defaillances(client, code_naf)
 
-        return {
+        result = {
             "code_naf": code_naf,
             "ratios_sectoriels": ratios,
             "defaillances": defaillances,
         }
+        cache_set(key, result, self.CACHE_TTL)
+        return result
 
     async def get_siren_ratios(self, siren: str) -> dict[str, Any]:
         """Récupère les ratios financiers par SIREN depuis l'API open data."""
