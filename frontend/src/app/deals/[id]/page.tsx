@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import Sidebar from '@/components/layout/Sidebar';
 import VerdictBanner from '@/components/scores/VerdictBanner';
@@ -19,7 +19,10 @@ export default function DealDetailPage() {
   const [asset, setAsset] = useState<DealAsset | null>(null);
   const [score, setScore] = useState<DealScore | null>(null);
   const [activeTab, setActiveTab] = useState<'overview' | 'financial' | 'simulator' | 'risk' | 'director'>('overview');
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const supabase = createClient();
+  const router = useRouter();
 
   useEffect(() => {
     async function fetchDeal() {
@@ -78,12 +81,69 @@ export default function DealDetailPage() {
       <main className="ml-[240px] mr-[320px] min-h-screen">
         <div className="p-8">
           {/* Header */}
-          <div className="mb-6">
-            <h1 className="text-2xl font-bold text-[#0F1923]">{deal.raison_sociale}</h1>
-            <p className="text-[#4A5568] mt-1">
-              {deal.siren} - {deal.secteur_label} - {deal.type_financement?.replace('_', ' ')}
-            </p>
+          <div className="flex items-start justify-between mb-6">
+            <div>
+              <h1 className="text-2xl font-bold text-[#0F1923]">{deal.raison_sociale}</h1>
+              <p className="text-[#4A5568] mt-1">
+                {deal.siren} - {deal.secteur_label} - {deal.type_financement?.replace('_', ' ')}
+              </p>
+            </div>
+            <button
+              onClick={() => setShowDeleteConfirm(true)}
+              className="px-3 py-2 text-sm text-[#8A95A3] hover:text-[#DC2626] hover:bg-red-50 rounded-lg transition-colors"
+            >
+              <svg className="w-4 h-4 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+              Supprimer
+            </button>
           </div>
+
+          {/* Delete confirmation modal */}
+          {showDeleteConfirm && (
+            <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+              <div className="bg-white rounded-xl p-6 max-w-md w-full mx-4 shadow-xl">
+                <h3 className="text-lg font-semibold text-[#0F1923] mb-2">
+                  Supprimer ce dossier ?
+                </h3>
+                <p className="text-sm text-[#4A5568] mb-1">
+                  <strong>{deal.raison_sociale}</strong> ({deal.siren})
+                </p>
+                <p className="text-sm text-[#8A95A3] mb-6">
+                  Cette action est irréversible. Toutes les données associées (scores, documents, simulations) seront supprimées.
+                </p>
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => setShowDeleteConfirm(false)}
+                    disabled={deleting}
+                    className="flex-1 py-2.5 border border-[#E2E8F0] text-[#4A5568] rounded-lg font-medium hover:bg-[#F7F8FA] transition-colors"
+                  >
+                    Annuler
+                  </button>
+                  <button
+                    onClick={async () => {
+                      setDeleting(true);
+                      const { error } = await supabase
+                        .from('deals')
+                        .delete()
+                        .eq('id', dealId);
+                      if (!error) {
+                        router.push('/deals');
+                      } else {
+                        console.error('Delete error:', error);
+                        setDeleting(false);
+                        setShowDeleteConfirm(false);
+                      }
+                    }}
+                    disabled={deleting}
+                    className="flex-1 py-2.5 bg-[#DC2626] text-white rounded-lg font-medium hover:bg-[#B91C1C] transition-colors disabled:opacity-50"
+                  >
+                    {deleting ? 'Suppression...' : 'Supprimer définitivement'}
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Verdict banner */}
           <VerdictBanner score={score} />
