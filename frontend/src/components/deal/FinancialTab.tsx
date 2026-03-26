@@ -341,7 +341,7 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
           </div>
 
           {/* Probabilité de défaillance — Signaux Faibles */}
-          <PredictiveCard dealId={dealId} />
+          <PredictiveCard dealId={dealId} organizationId={organizationId} />
 
           {/* Données brutes */}
           <div className="bg-white rounded-[20px] shadow p-6">
@@ -436,30 +436,22 @@ const FEATURE_LABELS: Record<string, string> = {
   taux_defaillance_sectoriel: 'Taux défaillance sectoriel',
 };
 
-function PredictiveCard({ dealId }: { dealId: string }) {
+function PredictiveCard({ dealId, organizationId }: { dealId: string; organizationId: string }) {
   const [pred, setPred] = useState<PredictiveResult | null>(null);
-  const supabase = createClient();
 
   useEffect(() => {
-    // Get latest score which includes predictive data
-    supabase.from('deal_scores').select('deal_optimizer_suggestions')
-      .eq('deal_id', dealId).order('computed_at', { ascending: false }).limit(1).maybeSingle()
-      .then(() => {
-        // The predictive data comes from the scoring API response
-        // For now, try to fetch from a dedicated endpoint or compute inline
-        const scoringUrl = process.env.NEXT_PUBLIC_SCORING_API_URL;
-        if (scoringUrl) {
-          fetch(`${scoringUrl}/api/v1/scoring/compute`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ deal_id: dealId, organization_id: '', force_recalculate: false }),
-          })
-            .then(r => r.ok ? r.json() : null)
-            .then(data => { if (data?.predictive) setPred(data.predictive); })
-            .catch(() => {});
-        }
-      });
-  }, [dealId, supabase]);
+    const scoringUrl = process.env.NEXT_PUBLIC_SCORING_API_URL;
+    if (!scoringUrl || !organizationId) return;
+
+    fetch(`${scoringUrl}/api/v1/scoring/compute`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ deal_id: dealId, organization_id: organizationId, force_recalculate: false }),
+    })
+      .then(r => r.ok ? r.json() : null)
+      .then(data => { if (data?.predictive) setPred(data.predictive); })
+      .catch(() => {});
+  }, [dealId, organizationId]);
 
   if (!pred) return null;
 

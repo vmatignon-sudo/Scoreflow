@@ -181,6 +181,16 @@ class ScoringEngine:
                 if rows:
                     result["director_analysis"] = rows[0]
 
+            # Macro sector data (needed by predictive model)
+            resp = await client.get(
+                f"{base}/rest/v1/deal_macro_sector_data?deal_id=eq.{deal_id}&select=*&limit=1",
+                headers=headers,
+            )
+            if resp.status_code == 200:
+                rows = resp.json()
+                if rows:
+                    result["sector_data"] = rows[0]
+
         logger.info(
             "Fetched deal data for %s: keys=%s, has_asset=%s, has_financial=%s",
             deal_id,
