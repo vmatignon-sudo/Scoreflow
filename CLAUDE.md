@@ -3,52 +3,53 @@
 ## DESIGN SYSTEM — STYLE APPLE MODERNE
 
 ### Philosophie
-- Minimaliste, épuré, beaucoup d'espace blanc
-- Ombres subtiles au lieu de bordures lourdes
-- Coins arrondis généreux (16px cards, 12px buttons, 8px inputs)
+- Fond gris (#ececee), tuiles/cartes blanches (#ffffff) flottant dessus
+- Titres de section ("Hypothèses", "Résultats") en texte flottant sur le gris
+- Bordures 0.5px solid subtiles, border-radius 8px
 - Micro-interactions : active:scale-[0.98], transitions 0.2s ease
-- Glassmorphism sur sidebar et nav (backdrop-filter blur)
 - Typographie serrée (tracking-tight), tailles précises en pixels
 
-### Palette
-- Background pages : #f5f5f7 (gris clair, app) / blanc (landing sections)
-- Cards de contenu : #ffffff avec shadow (flottent au-dessus du fond)
-- Inner elements : #f5f5f7 (inputs, sous-containers, badges)
-- Texte h1/h2 : #1d1d1f
-- Texte h3 (titres cards) : #2d2d2d
-- Texte courant : #424245 (body default)
-- Texte secondaire : #6e6e73
-- Texte muted : #86868b / #a1a1a6
-- Boutons action/CTA : #1e40af (bleu soutenu), hover #1e3a8a
-- Liens : #06c (bleu Apple)
-- Icônes actives/accent : #1e40af sur fond #1e40af/8%
+### CSS Variables (globals.css)
+- --color-background-primary: #ffffff (cartes, tuiles)
+- --color-background-secondary: #f5f5f7 (inputs, badges)
+- --color-background-tertiary: #ececee (fond de page)
+- --color-text-primary: #1d1d1f (titres)
+- --color-text-secondary: #6e6e73 (labels, corps)
+- --color-text-tertiary: #a1a1a6 (muted, placeholders)
+- --color-border-primary: rgba(0,0,0,0.12)
+- --color-border-secondary: rgba(0,0,0,0.08)
+- --color-border-tertiary: rgba(0,0,0,0.06)
+- --color-accent: #1e40af (boutons, onglets actifs, icônes)
 - Success : #2d9d3f, Warning : #bf5a00, Danger : #c4342d
-- Borders : rgba(0,0,0,0.04)
+
+### Layout page deal (wireframe validé)
+┌──────┬──────────────┬──────────────────────────┐
+│SIDE  │ Hypothèses   │ Résultats                │
+│BAR   │ (248px)      │ (flex)                   │
+│64px  │ 4 tuiles     │ ScoreBlock (sticky)      │
+│      │ éditables    │ + 5 onglets scrollables  │
+└──────┴──────────────┴──────────────────────────┘
+- Header blanc au-dessus des 2 colonnes (pas la sidebar)
+- Sidebar full height, indépendante du header
+- Séparateur 1px entre les colonnes
 
 ### Composants
-- Boutons primaires : bg-[#1e40af] text-white rounded-[12px] ou rounded-full
-- Boutons secondaires : bg-[#f5f5f7] text-[#424245] rounded-[12px]
-- Inputs : bg-[#f5f5f7] rounded-[12px], pas de border, focus:ring-black/10
-- Tuiles features : bg-[#f5f5f7] rounded-[20px], hover:bg-[#ededf0]
-- Cards : bg-white rounded-[20px] shadow-sm
-- Sidebar : bg-[#fbfbfd]/80 glass, w-[240px]
-- Score gauge : arcs SVG fins (strokeWidth 6), animations ease-out
+- Tuiles hypothèses : bg-primary, border 0.5px, radius 8px, padding 12px 14px
+- ScoreBlock : toggle Rosace/Barres, score + verdict + recommandation
+- Onglets : carte blanche, onglet actif souligné accent
+- Boutons primaires : bg accent rounded-[6px] ou rounded-full
+- Sidebar : 64px (icônes), expand à 220px au hover, transition 200ms
 
 ### Responsive
-- Mobile first : tout doit être lisible sur iPhone
-- Sidebar : hidden sur mobile (sm:flex), visible à partir de 640px
-- Score panel droit : hidden sur mobile (lg:block)
-- Grids : grid-cols-1 sur mobile, sm:grid-cols-2, lg:grid-cols-3+
-- Padding : p-5 mobile, sm:p-8 desktop
-- Textes hero : text-[32px] mobile, sm:text-[52px] desktop
-- Boutons : flex-col sur mobile, sm:flex-row
+- Mobile : sidebar hidden, hypothèses hidden (lg:flex)
+- Tablette : sidebar 64px, layout simple
+- Desktop lg : layout complet 3 colonnes
 
 ### Interdit
+- Duplication d'information (score, verdict = 1 seul endroit)
 - Bordures épaisses ou colorées
-- Couleurs saturées en background (#EBF0FF, #F0FDF4, etc.)
 - Ombres lourdes
-- Emojis dans les labels (OK dans les catégories d'actifs)
-- Largeurs fixes sans breakpoints responsive
+- Largeurs fixes sans breakpoints
 
 ## RÈGLES GIT
 - Après chaque phase terminée, faire un git add . + git commit + git push
