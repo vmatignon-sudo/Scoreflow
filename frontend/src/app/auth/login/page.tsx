@@ -39,7 +39,7 @@ export default function LoginPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#fbfbfd]">
         <div className="bg-white p-8 rounded-[20px] shadow-lg max-w-[360px] w-full text-center">
-          <p className="text-[15px] font-medium text-[#1d1d1f] mb-1">Vérifiez votre email</p>
+          <p className="text-[15px] font-medium text-[#424245] mb-1">Vérifiez votre email</p>
           <p className="text-[13px] text-[#6e6e73]">Lien envoyé à <strong className="text-[#1d1d1f]">{email}</strong></p>
         </div>
       </div>

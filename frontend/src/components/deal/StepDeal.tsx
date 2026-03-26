@@ -84,7 +84,7 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
 
       {/* Financing type */}
       <div className="bg-white rounded-[20px] shadow p-6">
-        <h3 className="font-semibold text-[#1d1d1f] mb-4">Type de financement</h3>
+        <h3 className="font-semibold text-[#2d2d2d] mb-4">Type de financement</h3>
         <div className="flex gap-2">
           {FINANCING_TYPES.map((t) => (
             <button
@@ -105,10 +105,10 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
 
       {/* Deal fields */}
       <div className="bg-white rounded-[20px] shadow p-6">
-        <h3 className="font-semibold text-[#1d1d1f] mb-4">Conditions du deal</h3>
+        <h3 className="font-semibold text-[#2d2d2d] mb-4">Conditions du deal</h3>
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-[#1d1d1f] mb-1">
+            <label className="block text-sm font-medium text-[#424245] mb-1">
               Montant financé (EUR)
             </label>
             <input
@@ -120,7 +120,7 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-[#1d1d1f] mb-1">
+            <label className="block text-sm font-medium text-[#424245] mb-1">
               Apport initial (EUR)
             </label>
             <input
@@ -152,7 +152,7 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-[#1d1d1f] mb-1">
+            <label className="block text-sm font-medium text-[#424245] mb-1">
               Dépôt de garantie (EUR)
             </label>
             <input
@@ -163,7 +163,7 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-[#1d1d1f] mb-1">
+            <label className="block text-sm font-medium text-[#424245] mb-1">
               Valeur du bien (EUR)
             </label>
             <input
@@ -193,7 +193,7 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
 
       {/* Asset class */}
       <div className="bg-white rounded-[20px] shadow p-6">
-        <h3 className="font-semibold text-[#1d1d1f] mb-4">Catégorie du bien</h3>
+        <h3 className="font-semibold text-[#2d2d2d] mb-4">Catégorie du bien</h3>
         <div className="grid grid-cols-4 gap-2 mb-4">
           {ASSET_CLASSES.map((a) => (
             <button
@@ -214,38 +214,38 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
         {/* Asset details */}
         <div className="grid grid-cols-3 gap-3 mt-4">
           <div>
-            <label className="block text-xs font-medium text-[#1d1d1f] mb-1">Marque</label>
+            <label className="block text-xs font-medium text-[#424245] mb-1">Marque</label>
             <input
               type="text"
               value={draft.marque}
               onChange={(e) => updateDraft({ marque: e.target.value })}
-              className="w-full px-3 py-2 rounded-[16px] bg-[#f5f5f7] text-sm text-[#1d1d1f]"
+              className="w-full px-3 py-2 rounded-[16px] bg-[#f5f5f7] text-sm text-[#424245]"
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-[#1d1d1f] mb-1">Modèle</label>
+            <label className="block text-xs font-medium text-[#424245] mb-1">Modèle</label>
             <input
               type="text"
               value={draft.modele}
               onChange={(e) => updateDraft({ modele: e.target.value })}
-              className="w-full px-3 py-2 rounded-[16px] bg-[#f5f5f7] text-sm text-[#1d1d1f]"
+              className="w-full px-3 py-2 rounded-[16px] bg-[#f5f5f7] text-sm text-[#424245]"
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-[#1d1d1f] mb-1">Année</label>
+            <label className="block text-xs font-medium text-[#424245] mb-1">Année</label>
             <input
               type="number"
               value={draft.annee_fabrication}
               onChange={(e) => updateDraft({ annee_fabrication: parseInt(e.target.value) || 0 })}
-              className="w-full px-3 py-2 rounded-[16px] bg-[#f5f5f7] text-sm text-[#1d1d1f]"
+              className="w-full px-3 py-2 rounded-[16px] bg-[#f5f5f7] text-sm text-[#424245]"
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-[#1d1d1f] mb-1">État</label>
+            <label className="block text-xs font-medium text-[#424245] mb-1">État</label>
             <select
               value={draft.etat}
               onChange={(e) => updateDraft({ etat: e.target.value })}
-              className="w-full px-3 py-2 rounded-[16px] bg-[#f5f5f7] text-sm text-[#1d1d1f]"
+              className="w-full px-3 py-2 rounded-[16px] bg-[#f5f5f7] text-sm text-[#424245]"
             >
               <option value="neuf">Neuf</option>
               <option value="occasion_tres_bon">Occasion très bon état</option>
@@ -255,21 +255,21 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
             </select>
           </div>
           <div>
-            <label className="block text-xs font-medium text-[#1d1d1f] mb-1">Km</label>
+            <label className="block text-xs font-medium text-[#424245] mb-1">Km</label>
             <input
               type="number"
               value={draft.kilometrage || ''}
               onChange={(e) => updateDraft({ kilometrage: parseInt(e.target.value) || 0 })}
-              className="w-full px-3 py-2 rounded-[16px] bg-[#f5f5f7] text-sm text-[#1d1d1f]"
+              className="w-full px-3 py-2 rounded-[16px] bg-[#f5f5f7] text-sm text-[#424245]"
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-[#1d1d1f] mb-1">Heures moteur</label>
+            <label className="block text-xs font-medium text-[#424245] mb-1">Heures moteur</label>
             <input
               type="number"
               value={draft.heures_moteur || ''}
               onChange={(e) => updateDraft({ heures_moteur: parseInt(e.target.value) || 0 })}
-              className="w-full px-3 py-2 rounded-[16px] bg-[#f5f5f7] text-sm text-[#1d1d1f]"
+              className="w-full px-3 py-2 rounded-[16px] bg-[#f5f5f7] text-sm text-[#424245]"
             />
           </div>
         </div>
@@ -285,7 +285,7 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
                 onChange={(e) => updateDraft({ traceur_gps: e.target.checked })}
                 className="w-4 h-4 accent-[#1B4FD8]"
               />
-              <span className="text-sm text-[#1d1d1f]">Traceur GPS (+0.15)</span>
+              <span className="text-sm text-[#424245]">Traceur GPS (+0.15)</span>
             </label>
             <label className="flex items-center gap-2 cursor-pointer">
               <input
@@ -294,7 +294,7 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
                 onChange={(e) => updateDraft({ contrat_recuperation: e.target.checked })}
                 className="w-4 h-4 accent-[#1B4FD8]"
               />
-              <span className="text-sm text-[#1d1d1f]">Contrat récupérateur (+0.05)</span>
+              <span className="text-sm text-[#424245]">Contrat récupérateur (+0.05)</span>
             </label>
           </div>
         </div>
@@ -306,7 +306,7 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
           onClick={() => setShowRefinancement(!showRefinancement)}
           className="w-full flex items-center justify-between p-6"
         >
-          <h3 className="font-semibold text-[#1d1d1f]">Refinancement</h3>
+          <h3 className="font-semibold text-[#2d2d2d]">Refinancement</h3>
           <svg
             className={`w-5 h-5 text-[#a1a1a6] transition-transform ${showRefinancement ? 'rotate-180' : ''}`}
             fill="none"
@@ -319,7 +319,7 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
         {showRefinancement && (
           <div className="px-6 pb-6 grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-[#1d1d1f] mb-1">Taux refinancement (%)</label>
+              <label className="block text-sm font-medium text-[#424245] mb-1">Taux refinancement (%)</label>
               <input
                 type="number"
                 step="0.1"
@@ -329,7 +329,7 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-[#1d1d1f] mb-1">Loyer banque (EUR/mois)</label>
+              <label className="block text-sm font-medium text-[#424245] mb-1">Loyer banque (EUR/mois)</label>
               <input
                 type="number"
                 value={draft.loyer_mensuel_banque || ''}
@@ -338,7 +338,7 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-[#1d1d1f] mb-1">Frais dossier (EUR)</label>
+              <label className="block text-sm font-medium text-[#424245] mb-1">Frais dossier (EUR)</label>
               <input
                 type="number"
                 value={draft.frais_dossier_banque || ''}
@@ -347,7 +347,7 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-[#1d1d1f] mb-1">Pénalités RA (EUR)</label>
+              <label className="block text-sm font-medium text-[#424245] mb-1">Pénalités RA (EUR)</label>
               <input
                 type="number"
                 value={draft.penalites_remboursement_anticipe || ''}
@@ -365,7 +365,7 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
           onClick={() => setShowBDF(!showBDF)}
           className="w-full flex items-center justify-between p-6"
         >
-          <h3 className="font-semibold text-[#1d1d1f]">Cotation Banque de France</h3>
+          <h3 className="font-semibold text-[#2d2d2d]">Cotation Banque de France</h3>
           <svg
             className={`w-5 h-5 text-[#a1a1a6] transition-transform ${showBDF ? 'rotate-180' : ''}`}
             fill="none"
@@ -378,7 +378,7 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
         {showBDF && (
           <div className="px-6 pb-6 grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-[#1d1d1f] mb-1">Cote activité (A-X)</label>
+              <label className="block text-sm font-medium text-[#424245] mb-1">Cote activité (A-X)</label>
               <input
                 type="text"
                 value={draft.cotation_bdf_activite}
@@ -388,7 +388,7 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-[#1d1d1f] mb-1">Cote crédit (1+ - P)</label>
+              <label className="block text-sm font-medium text-[#424245] mb-1">Cote crédit (1+ - P)</label>
               <input
                 type="text"
                 value={draft.cotation_bdf_credit}
@@ -398,7 +398,7 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-[#1d1d1f] mb-1">Source</label>
+              <label className="block text-sm font-medium text-[#424245] mb-1">Source</label>
               <select
                 value={draft.cotation_bdf_source}
                 onChange={(e) => updateDraft({ cotation_bdf_source: e.target.value })}
@@ -411,7 +411,7 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-[#1d1d1f] mb-1">Indicateur dirigeant</label>
+              <label className="block text-sm font-medium text-[#424245] mb-1">Indicateur dirigeant</label>
               <select
                 value={draft.indicateur_dirigeant_bdf}
                 onChange={(e) => updateDraft({ indicateur_dirigeant_bdf: e.target.value })}

@@ -63,7 +63,7 @@ export default function StepDocuments({ draft, updateDraft, onNext, onBack }: Pr
         <div className="bg-white rounded-[20px] shadow p-6">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="font-semibold text-[#1d1d1f]">Liasses fiscales INPI</h3>
+              <h3 className="font-semibold text-[#2d2d2d]">Liasses fiscales INPI</h3>
               <p className="text-sm text-[#6e6e73] mt-1">
                 Vérification des liasses disponibles pour {draft.siren}
               </p>
@@ -123,7 +123,7 @@ export default function StepDocuments({ draft, updateDraft, onNext, onBack }: Pr
       {/* Uploaded documents list */}
       {uploadedDocs.length > 0 && (
         <div className="bg-white rounded-[20px] shadow p-6">
-          <h3 className="font-semibold text-[#1d1d1f] mb-4">
+          <h3 className="font-semibold text-[#2d2d2d] mb-4">
             Documents ({uploadedDocs.length})
           </h3>
           <div className="space-y-3">
@@ -139,7 +139,7 @@ export default function StepDocuments({ draft, updateDraft, onNext, onBack }: Pr
                     </span>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-[#1d1d1f]">{doc.file.name}</p>
+                    <p className="text-sm font-medium text-[#424245]">{doc.file.name}</p>
                     <p className="text-xs text-[#a1a1a6]">
                       {DOC_TYPE_LABELS[doc.type]} - {formatFileSize(doc.file.size)}
                     </p>

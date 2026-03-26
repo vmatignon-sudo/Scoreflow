@@ -111,7 +111,7 @@ export default function PortfolioPage() {
 
         {/* Scatter plot */}
         <div className="bg-white rounded-[20px] shadow p-6 mb-8">
-          <h2 className="font-semibold text-[#1d1d1f] mb-4">Cartographie des deals</h2>
+          <h2 className="font-semibold text-[#2d2d2d] mb-4">Cartographie des deals</h2>
           <ResponsiveContainer width="100%" height={300}>
             <ScatterChart>
               <CartesianGrid strokeDasharray="3 3" stroke="#EEF0F5" />
@@ -143,7 +143,7 @@ export default function PortfolioPage() {
             <tbody>
               {deals.map((deal) => (
                 <tr key={deal.id} className="border-b border-black/[0.04] hover:bg-[#f5f5f7]">
-                  <td className="px-5 py-3 text-sm font-medium text-[#1d1d1f]">{deal.raison_sociale}</td>
+                  <td className="px-5 py-3 text-sm font-medium text-[#424245]">{deal.raison_sociale}</td>
                   <td className="px-5 py-3 text-sm font-mono text-right text-[#1d1d1f]">
                     {deal.montant_finance?.toLocaleString('fr-FR')} EUR
                   </td>

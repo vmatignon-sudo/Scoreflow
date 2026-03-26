@@ -26,7 +26,7 @@ export default function SettingsPage() {
         <div className="grid grid-cols-2 gap-6">
           {/* Pondération */}
           <div className="bg-white rounded-[20px] shadow p-6">
-            <h2 className="text-lg font-semibold text-[#1d1d1f] mb-4">
+            <h2 className="text-lg font-semibold text-[#2d2d2d] mb-4">
               Pondération du scoring
             </h2>
             <p className="text-sm text-[#6e6e73] mb-6">
@@ -71,10 +71,10 @@ export default function SettingsPage() {
 
           {/* Seuils */}
           <div className="bg-white rounded-[20px] shadow p-6">
-            <h2 className="text-lg font-semibold text-[#1d1d1f] mb-4">Seuils de verdict</h2>
+            <h2 className="text-lg font-semibold text-[#2d2d2d] mb-4">Seuils de verdict</h2>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-[#1d1d1f] mb-1">
+                <label className="block text-sm font-medium text-[#424245] mb-1">
                   Seuil GO (score minimum)
                 </label>
                 <input
@@ -86,7 +86,7 @@ export default function SettingsPage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-[#1d1d1f] mb-1">
+                <label className="block text-sm font-medium text-[#424245] mb-1">
                   Seuil GO Conditionnel
                 </label>
                 <input
@@ -98,7 +98,7 @@ export default function SettingsPage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-[#1d1d1f] mb-1">
+                <label className="block text-sm font-medium text-[#424245] mb-1">
                   Seuil changement dirigeant (jours)
                 </label>
                 <input
@@ -108,7 +108,7 @@ export default function SettingsPage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-[#1d1d1f] mb-1">
+                <label className="block text-sm font-medium text-[#424245] mb-1">
                   Nb liquidations pour VETO
                 </label>
                 <input

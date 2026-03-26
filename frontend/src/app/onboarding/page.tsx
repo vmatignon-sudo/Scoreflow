@@ -104,7 +104,7 @@ export default function OnboardingPage() {
         {/* Step 1: Organization name */}
         {step === 1 && (
           <div>
-            <h2 className="text-xl font-semibold text-[#1d1d1f] mb-1">
+            <h2 className="text-xl font-semibold text-[#424245] mb-1">
               Bienvenue sur ScoreFlow
             </h2>
             <p className="text-[#6e6e73] mb-6">
@@ -130,7 +130,7 @@ export default function OnboardingPage() {
         {/* Step 2: Activity type */}
         {step === 2 && (
           <div>
-            <h2 className="text-xl font-semibold text-[#1d1d1f] mb-1">
+            <h2 className="text-xl font-semibold text-[#424245] mb-1">
               Type d&apos;activité
             </h2>
             <p className="text-[#6e6e73] mb-6">
@@ -172,7 +172,7 @@ export default function OnboardingPage() {
         {/* Step 3: Default parameters */}
         {step === 3 && (
           <div>
-            <h2 className="text-xl font-semibold text-[#1d1d1f] mb-1">
+            <h2 className="text-xl font-semibold text-[#424245] mb-1">
               Paramètres par défaut
             </h2>
             <p className="text-[#6e6e73] mb-6">

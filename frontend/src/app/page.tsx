@@ -117,7 +117,7 @@ export default function HomePage() {
                   <s.icon className="w-5 h-5 text-[#1d1d1f]" strokeWidth={1.5} />
                 </div>
                 <p className="text-[12px] text-[#86868b] font-medium mb-1">Étape {s.step}</p>
-                <h3 className="text-[17px] font-semibold text-[#1d1d1f] mb-1 tracking-tight">{s.title}</h3>
+                <h3 className="text-[17px] font-semibold text-[#2d2d2d] mb-1 tracking-tight">{s.title}</h3>
                 <p className="text-[14px] text-[#6e6e73] leading-[1.5]">{s.desc}</p>
               </div>
             ))}

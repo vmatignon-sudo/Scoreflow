@@ -74,7 +74,7 @@ export default function StepProspect({ draft, updateDraft, onNext }: Props) {
 
   return (
     <div className="bg-white rounded-[20px] shadow p-6">
-      <h2 className="text-lg font-semibold text-[#1d1d1f] mb-1">Prospect</h2>
+      <h2 className="text-lg font-semibold text-[#424245] mb-1">Prospect</h2>
       <p className="text-sm text-[#6e6e73] mb-6">
         Entrez un SIREN ou une raison sociale
       </p>
@@ -108,7 +108,7 @@ export default function StepProspect({ draft, updateDraft, onNext }: Props) {
               >
                 <div className="flex justify-between items-start">
                   <div>
-                    <p className="font-medium text-[#1d1d1f]">{r.raison_sociale}</p>
+                    <p className="font-medium text-[#424245]">{r.raison_sociale}</p>
                     <p className="text-sm text-[#6e6e73]">
                       {r.siren} - {r.secteur_label}
                     </p>
@@ -133,7 +133,7 @@ export default function StepProspect({ draft, updateDraft, onNext }: Props) {
       {selected && (
         <div className="rounded-[16px] bg-[#f5f5f7] p-5 mb-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="font-semibold text-[#1d1d1f]">
+            <h3 className="font-semibold text-[#2d2d2d]">
               Voilà ce que nous avons trouvé
             </h3>
             <button
@@ -150,7 +150,7 @@ export default function StepProspect({ draft, updateDraft, onNext }: Props) {
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div>
               <span className="text-[#a1a1a6]">Raison sociale</span>
-              <p className="font-medium text-[#1d1d1f]">{selected.raison_sociale}</p>
+              <p className="font-medium text-[#424245]">{selected.raison_sociale}</p>
             </div>
             <div>
               <span className="text-[#a1a1a6]">SIREN</span>

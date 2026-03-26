@@ -76,7 +76,7 @@ export default function DealsPage() {
               >
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="font-semibold text-[#1d1d1f]">{deal.raison_sociale || 'Sans nom'}</h3>
+                    <h3 className="font-semibold text-[#2d2d2d]">{deal.raison_sociale || 'Sans nom'}</h3>
                     <p className="text-sm text-[#6e6e73] mt-1">
                       {deal.siren} - {deal.secteur_label} - {deal.montant_finance?.toLocaleString('fr-FR')} EUR
                     </p>

@@ -38,7 +38,7 @@ export default function NegotiationSliders({ deal, score }: Props) {
   return (
     <div className="bg-white rounded-[20px] shadow p-6">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="font-semibold text-[#1d1d1f]">Curseurs de négociation</h3>
+        <h3 className="font-semibold text-[#2d2d2d]">Curseurs de négociation</h3>
         <div className="flex items-center gap-2">
           <span className="text-sm text-[#6e6e73]">Score Deal :</span>
           <span className="text-lg font-bold font-mono text-[#1d1d1f]">
@@ -134,7 +134,7 @@ export default function NegotiationSliders({ deal, score }: Props) {
             onChange={(e) => setCautionPerso(e.target.checked)}
             className="w-5 h-5 accent-[#1B4FD8]"
           />
-          <span className="text-sm font-medium text-[#1d1d1f]">Caution personnelle</span>
+          <span className="text-sm font-medium text-[#424245]">Caution personnelle</span>
           {cautionPerso && (
             <span className="text-xs text-[#059669] font-medium">+1.5 pts</span>
           )}

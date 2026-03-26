@@ -94,7 +94,7 @@ export default function RiskCurveChart({ deal, asset }: Props) {
 
       {/* Main chart */}
       <div className="bg-white rounded-[20px] shadow p-6">
-        <h3 className="font-semibold text-[#1d1d1f] mb-4">Courbe de Risque Résiduel Net (RRN)</h3>
+        <h3 className="font-semibold text-[#2d2d2d] mb-4">Courbe de Risque Résiduel Net (RRN)</h3>
 
         {moisCouvertureTotale !== null && (
           <div className="mb-4 p-3 bg-[#F0FDF4] border border-[#059669] rounded-lg text-sm text-[#059669]">

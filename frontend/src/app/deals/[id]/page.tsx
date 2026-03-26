@@ -103,7 +103,7 @@ export default function DealDetailPage() {
           {showDeleteConfirm && (
             <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
               <div className="bg-white rounded-xl p-6 max-w-md w-full mx-4 shadow-xl">
-                <h3 className="text-lg font-semibold text-[#1d1d1f] mb-2">
+                <h3 className="text-lg font-semibold text-[#2d2d2d] mb-2">
                   Supprimer ce dossier ?
                 </h3>
                 <p className="text-sm text-[#6e6e73] mb-1">
@@ -174,14 +174,14 @@ export default function DealDetailPage() {
             <div className="space-y-6">
               {/* Score radar */}
               <div className="bg-white rounded-[20px] shadow p-6">
-                <h3 className="font-semibold text-[#1d1d1f] mb-4">Score par dimension</h3>
+                <h3 className="font-semibold text-[#2d2d2d] mb-4">Score par dimension</h3>
                 <RadarChart score={score} />
               </div>
 
               {/* Deal summary */}
               <div className="grid grid-cols-2 gap-6">
                 <div className="bg-white rounded-[20px] shadow p-6">
-                  <h3 className="font-semibold text-[#1d1d1f] mb-4">Conditions du deal</h3>
+                  <h3 className="font-semibold text-[#2d2d2d] mb-4">Conditions du deal</h3>
                   <div className="space-y-3 text-sm">
                     <Row label="Montant financé" value={`${deal.montant_finance?.toLocaleString('fr-FR')} EUR`} />
                     <Row label="Apport initial" value={`${deal.apport_initial.toLocaleString('fr-FR')} EUR`} />
@@ -191,7 +191,7 @@ export default function DealDetailPage() {
                   </div>
                 </div>
                 <div className="bg-white rounded-[20px] shadow p-6">
-                  <h3 className="font-semibold text-[#1d1d1f] mb-4">Bien financé</h3>
+                  <h3 className="font-semibold text-[#2d2d2d] mb-4">Bien financé</h3>
                   <div className="space-y-3 text-sm">
                     <Row label="Catégorie" value={asset?.asset_class?.replace(/_/g, ' ') || '—'} />
                     <Row label="Marque / Modèle" value={`${asset?.marque || ''} ${asset?.modele || ''}`.trim() || '—'} />
@@ -222,7 +222,7 @@ export default function DealDetailPage() {
 
           {activeTab === 'director' && (
             <div className="bg-white rounded-[20px] shadow p-6">
-              <h3 className="font-semibold text-[#1d1d1f] mb-4">Analyse dirigeant</h3>
+              <h3 className="font-semibold text-[#2d2d2d] mb-4">Analyse dirigeant</h3>
               <div className="space-y-3 text-sm">
                 <Row label="Dirigeant" value={`${deal.dirigeant_prenom} ${deal.dirigeant_nom}`} />
                 <Row label="Nommé depuis" value={deal.jours_depuis_nomination ? `${deal.jours_depuis_nomination} jours` : '—'} />
@@ -246,7 +246,7 @@ function Row({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex justify-between">
       <span className="text-[#a1a1a6]">{label}</span>
-      <span className="font-medium text-[#1d1d1f]">{value}</span>
+      <span className="font-medium text-[#424245]">{value}</span>
     </div>
   );
 }

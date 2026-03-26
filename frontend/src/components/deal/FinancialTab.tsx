@@ -210,7 +210,7 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
       {/* Upload zone + documents list */}
       <div className="bg-white rounded-[20px] shadow p-6">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="font-semibold text-[#1d1d1f]">Documents financiers</h3>
+          <h3 className="font-semibold text-[#2d2d2d]">Documents financiers</h3>
           <button
             onClick={handleReanalyze}
             disabled={reanalyzing}
@@ -257,7 +257,7 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
               <svg className="w-8 h-8 text-[#a1a1a6] mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
               </svg>
-              <p className="text-sm text-[#1d1d1f] font-medium">Liasses fiscales, relevés bancaires</p>
+              <p className="text-sm text-[#424245] font-medium">Liasses fiscales, relevés bancaires</p>
               <p className="text-xs text-[#a1a1a6] mt-1">PDF ou XML — Glissez-déposez ou cliquez</p>
             </>
           )}
@@ -275,7 +275,7 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
                     </span>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-[#1d1d1f]">{doc.filename}</p>
+                    <p className="text-sm font-medium text-[#424245]">{doc.filename}</p>
                     <p className="text-xs text-[#a1a1a6]">
                       {doc.type === 'liasse_fiscale' ? 'Liasse fiscale' : 'Relevé bancaire'}
                       {' — '}
@@ -342,7 +342,7 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
 
           {/* Données brutes */}
           <div className="bg-white rounded-[20px] shadow p-6">
-            <h3 className="font-semibold text-[#1d1d1f] mb-4">
+            <h3 className="font-semibold text-[#2d2d2d] mb-4">
               Données comptables {data.annee ? `(${data.annee})` : ''}
             </h3>
             <div className="grid grid-cols-3 gap-x-8 gap-y-3 text-sm">
@@ -364,7 +364,7 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
             if (!hasAny) return null;
             return (
               <div key={group.title} className="bg-white rounded-[20px] shadow p-6">
-                <h3 className="font-semibold text-[#1d1d1f] mb-4">{group.title}</h3>
+                <h3 className="font-semibold text-[#2d2d2d] mb-4">{group.title}</h3>
                 <div className="grid grid-cols-2 gap-x-8 gap-y-3 text-sm">
                   {group.keys.map((key) => {
                     const val = ratios[key];
@@ -372,7 +372,7 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
                     return (
                       <div key={key} className="flex justify-between">
                         <span className="text-[#6e6e73]">{RATIO_LABELS[key] || key}</span>
-                        <span className="font-mono font-medium text-[#1d1d1f]">{fmt(val)}</span>
+                        <span className="font-mono font-medium text-[#424245]">{fmt(val)}</span>
                       </div>
                     );
                   })}
