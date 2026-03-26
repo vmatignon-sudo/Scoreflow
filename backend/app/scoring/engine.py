@@ -1,11 +1,35 @@
 from __future__ import annotations
 
+import logging
 from typing import Any
+
+import httpx
+
+from app.core.config import settings
 from app.scoring.financial import FinancialScorer
 from app.scoring.asset import AssetScorer
 from app.scoring.director import DirectorScorer
 from app.scoring.macro_sector import MacroSectorScorer
 from app.scoring.verdicts import VerdictEngine
+
+logger = logging.getLogger(__name__)
+
+SUPABASE_HEADERS = {
+    "apikey": "",
+    "Authorization": "",
+    "Content-Type": "application/json",
+    "Prefer": "return=representation",
+}
+
+
+def _headers() -> dict[str, str]:
+    key = settings.supabase_service_role_key
+    return {
+        "apikey": key,
+        "Authorization": f"Bearer {key}",
+        "Content-Type": "application/json",
+        "Prefer": "return=representation",
+    }
 
 
 class ScoringEngine:
@@ -21,7 +45,6 @@ class ScoringEngine:
     async def compute_full_score(
         self, deal_id: str, organization_id: str, force: bool = False
     ) -> dict[str, Any]:
-        # Retrieve deal data from Supabase
         deal_data = await self._fetch_deal_data(deal_id)
         org_settings = await self._fetch_org_settings(organization_id)
 
@@ -46,13 +69,16 @@ class ScoringEngine:
             + score_dirigeant["score"] * weights["dirigeant"]
         )
 
-        # Determine verdict
         verdict = self.verdict_engine.determine(
             score_total=score_total,
             score_dirigeant=score_dirigeant["score"],
             deal_data=deal_data,
             org_settings=org_settings,
         )
+
+        # Persist financial ratios to Supabase
+        if score_financier.get("ratios"):
+            await self._save_financial_ratios(deal_id, deal_data, score_financier)
 
         result = {
             "deal_id": deal_id,
@@ -67,7 +93,6 @@ class ScoringEngine:
             "ponderation_used": weights,
         }
 
-        # Generate optimizer suggestions if needed
         if verdict["verdict"] in ("go_conditionnel", "no_go"):
             result["optimizer"] = await self._generate_optimizer_suggestions(
                 deal_data, org_settings, score_total, weights
@@ -77,11 +102,9 @@ class ScoringEngine:
 
     async def simulate_negotiation(self, deal_id: str, params: dict) -> dict:
         deal_data = await self._fetch_deal_data(deal_id)
-        # Apply negotiation params
         for key, value in params.items():
             if value is not None:
                 deal_data[key] = value
-        # Recompute affected scores
         score_materiel = await self.asset.compute(deal_data)
         score_financier = await self.financial.compute(deal_data)
         return {
@@ -94,18 +117,95 @@ class ScoringEngine:
         }
 
     async def optimize_deal(self, deal_id: str, organization_id: str) -> list[dict]:
-        # Compute current score first
         current = await self.compute_full_score(deal_id, organization_id)
         if current["verdict"]["verdict"] == "go":
             return []
         return current.get("optimizer", [])
 
+    # ---- Supabase data fetchers ----
+
     async def _fetch_deal_data(self, deal_id: str) -> dict:
-        # TODO: Fetch from Supabase
-        return {"id": deal_id}
+        """Fetch deal + asset + director + financial data from Supabase."""
+        base = settings.supabase_url
+        if not base or not settings.supabase_service_role_key:
+            logger.warning("Supabase not configured, returning empty deal data")
+            return {"id": deal_id}
+
+        headers = _headers()
+        result: dict[str, Any] = {"id": deal_id}
+
+        async with httpx.AsyncClient(timeout=15.0) as client:
+            # Deal
+            resp = await client.get(
+                f"{base}/rest/v1/deals?id=eq.{deal_id}&select=*",
+                headers=headers,
+            )
+            if resp.status_code == 200:
+                rows = resp.json()
+                if rows:
+                    result.update(rows[0])
+
+            # Asset
+            resp = await client.get(
+                f"{base}/rest/v1/deal_assets?deal_id=eq.{deal_id}&select=*&limit=1",
+                headers=headers,
+            )
+            if resp.status_code == 200:
+                rows = resp.json()
+                if rows:
+                    result["asset"] = rows[0]
+
+            # Financial ratios (latest year)
+            resp = await client.get(
+                f"{base}/rest/v1/deal_financial_ratios?deal_id=eq.{deal_id}&select=*&order=annee.desc&limit=1",
+                headers=headers,
+            )
+            if resp.status_code == 200:
+                rows = resp.json()
+                if rows:
+                    result["financial_ratios"] = rows[0]
+
+            # Director analysis
+            resp = await client.get(
+                f"{base}/rest/v1/deal_director_analysis?deal_id=eq.{deal_id}&select=*&limit=1",
+                headers=headers,
+            )
+            if resp.status_code == 200:
+                rows = resp.json()
+                if rows:
+                    result["director_analysis"] = rows[0]
+
+        logger.info(
+            "Fetched deal data for %s: keys=%s, has_asset=%s, has_financial=%s",
+            deal_id,
+            list(result.keys()),
+            "asset" in result,
+            "financial_ratios" in result,
+        )
+
+        return result
 
     async def _fetch_org_settings(self, organization_id: str) -> dict:
-        # TODO: Fetch from Supabase
+        base = settings.supabase_url
+        if not base or not settings.supabase_service_role_key:
+            return self._default_settings()
+
+        headers = _headers()
+
+        async with httpx.AsyncClient(timeout=10.0) as client:
+            resp = await client.get(
+                f"{base}/rest/v1/organizations?id=eq.{organization_id}&select=settings",
+                headers=headers,
+            )
+            if resp.status_code == 200:
+                rows = resp.json()
+                if rows and rows[0].get("settings"):
+                    return rows[0]["settings"]
+
+        return self._default_settings()
+
+    @staticmethod
+    def _default_settings() -> dict:
         return {
             "ponderation_macro_sectoriel": 20,
             "ponderation_financier": 30,
@@ -115,6 +215,65 @@ class ScoringEngine:
             "seuil_go_conditionnel": 10,
         }
 
+    async def _save_financial_ratios(
+        self, deal_id: str, deal_data: dict, score_financier: dict
+    ) -> None:
+        """Persist computed ratios to deal_financial_ratios table."""
+        base = settings.supabase_url
+        if not base or not settings.supabase_service_role_key:
+            return
+
+        headers = _headers()
+        ratios = score_financier.get("ratios", {})
+        fin = deal_data.get("financial_ratios", {})
+
+        payload = {
+            "deal_id": deal_id,
+            "annee": fin.get("annee_exercice") or fin.get("annee"),
+            "ca": fin.get("ca"),
+            "ebitda": fin.get("ebitda"),
+            "ebit": fin.get("ebit"),
+            "resultat_net": fin.get("resultat_net"),
+            "caf": fin.get("caf"),
+            "actif_total": fin.get("actif_total"),
+            "actif_circulant": fin.get("actif_circulant"),
+            "stocks": fin.get("stocks"),
+            "creances_clients": fin.get("creances_clients"),
+            "passif_total": fin.get("passif_total"),
+            "passif_circulant": fin.get("passif_circulant"),
+            "dettes_financieres": fin.get("dettes_financieres"),
+            "fonds_propres": fin.get("fonds_propres"),
+            "capitaux_permanents": fin.get("capitaux_permanents"),
+            "tresorerie": fin.get("tresorerie"),
+            "charges_personnel": fin.get("charges_personnel"),
+            "valeur_ajoutee": fin.get("valeur_ajoutee"),
+            "frais_financiers": fin.get("frais_financiers"),
+            "ratios": ratios,
+            "score_altman_z": score_financier.get("altman", {}).get("z"),
+            "altman_zone": score_financier.get("altman", {}).get("zone"),
+            "score_conan_holder": score_financier.get("conan_holder", {}).get("z"),
+            "conan_zone": score_financier.get("conan_holder", {}).get("zone"),
+        }
+
+        # Remove None values to avoid PostgREST errors
+        payload = {k: v for k, v in payload.items() if v is not None}
+
+        async with httpx.AsyncClient(timeout=10.0) as client:
+            # Upsert: delete existing then insert
+            await client.delete(
+                f"{base}/rest/v1/deal_financial_ratios?deal_id=eq.{deal_id}",
+                headers=headers,
+            )
+            resp = await client.post(
+                f"{base}/rest/v1/deal_financial_ratios",
+                headers=headers,
+                json=payload,
+            )
+            if resp.status_code >= 300:
+                logger.error("Failed to save ratios: %s %s", resp.status_code, resp.text)
+            else:
+                logger.info("Saved financial ratios for deal %s", deal_id)
+
     async def _generate_optimizer_suggestions(
         self, deal_data: dict, org_settings: dict, current_score: float, weights: dict
     ) -> list[dict]:
@@ -122,7 +281,6 @@ class ScoringEngine:
         gap = target - current_score
         suggestions = []
 
-        # Priority: depot_garantie > apport > duree > valeur_residuelle
         if gap > 0:
             suggestions.append({
                 "type": "depot_garantie",

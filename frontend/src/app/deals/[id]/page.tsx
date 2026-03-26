@@ -10,6 +10,7 @@ import RadarChart from '@/components/charts/RadarChart';
 import SimulatorPanel from '@/components/simulator/SimulatorPanel';
 import RiskCurveChart from '@/components/charts/RiskCurveChart';
 import NegotiationSliders from '@/components/deal/NegotiationSliders';
+import FinancialTab from '@/components/deal/FinancialTab';
 import type { Deal, DealAsset, DealScore } from '@/types/database';
 
 export default function DealDetailPage() {
@@ -213,12 +214,7 @@ export default function DealDetailPage() {
           )}
 
           {activeTab === 'financial' && (
-            <div className="bg-white rounded-xl border border-[#E2E8F0] p-6">
-              <h3 className="font-semibold text-[#0F1923] mb-4">Analyse financière</h3>
-              <p className="text-[#4A5568] text-sm">
-                Les ratios financiers seront disponibles après le parsing des liasses fiscales.
-              </p>
-            </div>
+            <FinancialTab dealId={dealId} />
           )}
 
           {activeTab === 'director' && (
