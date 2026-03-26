@@ -60,11 +60,11 @@ export default function StepDocuments({ draft, updateDraft, onNext, onBack }: Pr
     <div className="space-y-6">
       {/* INPI check */}
       {draft.siren && (
-        <div className="bg-white rounded-xl border border-[#E2E8F0] p-6">
+        <div className="bg-[#f5f5f7] rounded-[20px] p-6">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="font-semibold text-[#0F1923]">Liasses fiscales INPI</h3>
-              <p className="text-sm text-[#4A5568] mt-1">
+              <h3 className="font-semibold text-[#1d1d1f]">Liasses fiscales INPI</h3>
+              <p className="text-sm text-[#6e6e73] mt-1">
                 Vérification des liasses disponibles pour {draft.siren}
               </p>
             </div>
@@ -74,7 +74,7 @@ export default function StepDocuments({ draft, updateDraft, onNext, onBack }: Pr
                   // TODO: Check INPI API
                   setInpiAvailable(false); // Simulated
                 }}
-                className="px-4 py-2 bg-[#EBF0FF] text-[#1B4FD8] rounded-lg text-sm font-medium hover:bg-[#D6E0FF] transition-colors"
+                className="px-4 py-2 bg-[#f5f5f7] text-[#1d1d1f] rounded-lg text-sm font-medium hover:bg-[#ededf0] transition-colors"
               >
                 Vérifier INPI
               </button>
@@ -83,7 +83,7 @@ export default function StepDocuments({ draft, updateDraft, onNext, onBack }: Pr
                 Liasses disponibles
               </span>
             ) : (
-              <span className="text-sm text-[#8A95A3] bg-[#F7F8FA] px-3 py-1 rounded-full">
+              <span className="text-sm text-[#a1a1a6] bg-[#f5f5f7] px-3 py-1 rounded-full">
                 Non disponible — upload manuel
               </span>
             )}
@@ -93,7 +93,7 @@ export default function StepDocuments({ draft, updateDraft, onNext, onBack }: Pr
 
       {/* Drop zone */}
       <div
-        className="bg-white rounded-xl border-2 border-dashed border-[#E2E8F0] p-12 text-center hover:border-[#1B4FD8] transition-colors cursor-pointer"
+        className="bg-white rounded-xl border-2 border-dashed border-black/[0.04] p-12 text-center hover:border-[#1d1d1f] transition-colors cursor-pointer"
         onDragOver={(e) => e.preventDefault()}
         onDrop={handleDrop}
         onClick={() => document.getElementById('file-input')?.click()}
@@ -106,41 +106,41 @@ export default function StepDocuments({ draft, updateDraft, onNext, onBack }: Pr
           onChange={handleFileInput}
           className="hidden"
         />
-        <svg className="w-12 h-12 text-[#8A95A3] mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg className="w-12 h-12 text-[#a1a1a6] mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
         </svg>
-        <p className="text-[#0F1923] font-medium text-lg">
+        <p className="text-[#1d1d1f] font-medium text-lg">
           Déposez vos documents ici
         </p>
-        <p className="text-sm text-[#8A95A3] mt-2">
+        <p className="text-sm text-[#a1a1a6] mt-2">
           Liasses fiscales (PDF/XML) - Relevés bancaires (PDF)
         </p>
-        <p className="text-xs text-[#8A95A3] mt-1">
+        <p className="text-xs text-[#a1a1a6] mt-1">
           Détection automatique du type de document
         </p>
       </div>
 
       {/* Uploaded documents list */}
       {uploadedDocs.length > 0 && (
-        <div className="bg-white rounded-xl border border-[#E2E8F0] p-6">
-          <h3 className="font-semibold text-[#0F1923] mb-4">
+        <div className="bg-[#f5f5f7] rounded-[20px] p-6">
+          <h3 className="font-semibold text-[#1d1d1f] mb-4">
             Documents ({uploadedDocs.length})
           </h3>
           <div className="space-y-3">
             {uploadedDocs.map((doc, i) => (
               <div
                 key={i}
-                className="flex items-center justify-between p-3 bg-[#F7F8FA] rounded-lg"
+                className="flex items-center justify-between p-3 bg-[#f5f5f7] rounded-lg"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-white rounded-lg border border-[#E2E8F0] flex items-center justify-center">
-                    <span className="text-xs font-mono text-[#4A5568]">
+                  <div className="w-10 h-10 bg-white rounded-lg border border-black/[0.04] flex items-center justify-center">
+                    <span className="text-xs font-mono text-[#6e6e73]">
                       {doc.file.name.split('.').pop()?.toUpperCase()}
                     </span>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-[#0F1923]">{doc.file.name}</p>
-                    <p className="text-xs text-[#8A95A3]">
+                    <p className="text-sm font-medium text-[#1d1d1f]">{doc.file.name}</p>
+                    <p className="text-xs text-[#a1a1a6]">
                       {DOC_TYPE_LABELS[doc.type]} - {formatFileSize(doc.file.size)}
                     </p>
                   </div>
@@ -149,7 +149,7 @@ export default function StepDocuments({ draft, updateDraft, onNext, onBack }: Pr
                   <StatusBadge status={doc.status} />
                   <button
                     onClick={() => removeDoc(i)}
-                    className="text-[#8A95A3] hover:text-red-500 transition-colors"
+                    className="text-[#a1a1a6] hover:text-red-500 transition-colors"
                   >
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -166,13 +166,13 @@ export default function StepDocuments({ draft, updateDraft, onNext, onBack }: Pr
       <div className="flex gap-3">
         <button
           onClick={onBack}
-          className="flex-1 bg-white border border-[#E2E8F0] text-[#4A5568] py-3 rounded-lg font-medium hover:bg-[#F7F8FA] transition-colors"
+          className="flex-1 bg-white border border-black/[0.04] text-[#6e6e73] py-3 rounded-lg font-medium hover:bg-[#f5f5f7] transition-colors"
         >
           Retour
         </button>
         <button
           onClick={onNext}
-          className="flex-1 bg-[#1B4FD8] text-white py-3 rounded-lg font-medium hover:bg-[#1640B0] transition-colors"
+          className="flex-1 bg-[#1d1d1f] text-white py-3 rounded-lg font-medium hover:bg-[#000] transition-colors"
         >
           {uploadedDocs.length > 0 ? 'Continuer' : 'Passer cette étape'}
         </button>
@@ -210,7 +210,7 @@ function formatFileSize(bytes: number): string {
 
 function StatusBadge({ status }: { status: string }) {
   const styles = {
-    pending: 'bg-[#EEF0F5] text-[#8A95A3]',
+    pending: 'bg-[#f5f5f7] text-[#a1a1a6]',
     processing: 'bg-blue-50 text-blue-600',
     done: 'bg-green-50 text-green-600',
     error: 'bg-red-50 text-red-600',

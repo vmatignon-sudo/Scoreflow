@@ -96,10 +96,10 @@ export default function PortfolioPage() {
   }));
 
   return (
-    <div className="min-h-screen bg-[#F7F8FA]">
+    <div className="min-h-screen bg-[#f5f5f7]">
       <Sidebar />
       <main className="ml-[240px] p-8">
-        <h1 className="text-2xl font-bold text-[#0F1923] mb-8">Portefeuille</h1>
+        <h1 className="text-2xl font-bold text-[#1d1d1f] mb-8">Portefeuille</h1>
 
         {/* Aggregates */}
         <div className="grid grid-cols-4 gap-4 mb-8">
@@ -110,8 +110,8 @@ export default function PortfolioPage() {
         </div>
 
         {/* Scatter plot */}
-        <div className="bg-white rounded-xl border border-[#E2E8F0] p-6 mb-8">
-          <h2 className="font-semibold text-[#0F1923] mb-4">Cartographie des deals</h2>
+        <div className="bg-[#f5f5f7] rounded-[20px] p-6 mb-8">
+          <h2 className="font-semibold text-[#1d1d1f] mb-4">Cartographie des deals</h2>
           <ResponsiveContainer width="100%" height={300}>
             <ScatterChart>
               <CartesianGrid strokeDasharray="3 3" stroke="#EEF0F5" />
@@ -128,26 +128,26 @@ export default function PortfolioPage() {
         </div>
 
         {/* Deal table */}
-        <div className="bg-white rounded-xl border border-[#E2E8F0] overflow-hidden">
+        <div className="bg-[#f5f5f7] rounded-[20px] overflow-hidden">
           <table className="w-full">
-            <thead className="bg-[#F7F8FA] border-b border-[#E2E8F0]">
+            <thead className="bg-[#f5f5f7] border-b border-black/[0.04]">
               <tr>
-                <th className="text-left text-xs font-medium text-[#4A5568] px-5 py-3">Client</th>
-                <th className="text-right text-xs font-medium text-[#4A5568] px-5 py-3">Montant</th>
-                <th className="text-right text-xs font-medium text-[#4A5568] px-5 py-3">Mois restants</th>
-                <th className="text-right text-xs font-medium text-[#4A5568] px-5 py-3">RRN</th>
-                <th className="text-right text-xs font-medium text-[#4A5568] px-5 py-3">Score</th>
-                <th className="text-right text-xs font-medium text-[#4A5568] px-5 py-3">Verdict</th>
+                <th className="text-left text-xs font-medium text-[#6e6e73] px-5 py-3">Client</th>
+                <th className="text-right text-xs font-medium text-[#6e6e73] px-5 py-3">Montant</th>
+                <th className="text-right text-xs font-medium text-[#6e6e73] px-5 py-3">Mois restants</th>
+                <th className="text-right text-xs font-medium text-[#6e6e73] px-5 py-3">RRN</th>
+                <th className="text-right text-xs font-medium text-[#6e6e73] px-5 py-3">Score</th>
+                <th className="text-right text-xs font-medium text-[#6e6e73] px-5 py-3">Verdict</th>
               </tr>
             </thead>
             <tbody>
               {deals.map((deal) => (
-                <tr key={deal.id} className="border-b border-[#E2E8F0] hover:bg-[#F7F8FA]">
-                  <td className="px-5 py-3 text-sm font-medium text-[#0F1923]">{deal.raison_sociale}</td>
-                  <td className="px-5 py-3 text-sm font-mono text-right text-[#0F1923]">
+                <tr key={deal.id} className="border-b border-black/[0.04] hover:bg-[#f5f5f7]">
+                  <td className="px-5 py-3 text-sm font-medium text-[#1d1d1f]">{deal.raison_sociale}</td>
+                  <td className="px-5 py-3 text-sm font-mono text-right text-[#1d1d1f]">
                     {deal.montant_finance?.toLocaleString('fr-FR')} EUR
                   </td>
-                  <td className="px-5 py-3 text-sm font-mono text-right text-[#4A5568]">
+                  <td className="px-5 py-3 text-sm font-mono text-right text-[#6e6e73]">
                     {deal.mois_restants}
                   </td>
                   <td className={`px-5 py-3 text-sm font-mono text-right font-medium ${
@@ -155,7 +155,7 @@ export default function PortfolioPage() {
                   }`}>
                     {deal.rrn.toLocaleString('fr-FR')} EUR
                   </td>
-                  <td className="px-5 py-3 text-sm font-mono text-right text-[#0F1923]">
+                  <td className="px-5 py-3 text-sm font-mono text-right text-[#1d1d1f]">
                     {deal.score_deal_total?.toFixed(1) || '—'}/20
                   </td>
                   <td className="px-5 py-3 text-right">
@@ -167,7 +167,7 @@ export default function PortfolioPage() {
               ))}
               {deals.length === 0 && !loading && (
                 <tr>
-                  <td colSpan={6} className="px-5 py-8 text-center text-[#8A95A3] text-sm">
+                  <td colSpan={6} className="px-5 py-8 text-center text-[#a1a1a6] text-sm">
                     Aucun deal actif dans le portefeuille
                   </td>
                 </tr>
@@ -182,8 +182,8 @@ export default function PortfolioPage() {
 
 function AggCard({ label, value, color }: { label: string; value: string; color: string }) {
   return (
-    <div className="bg-white rounded-xl border border-[#E2E8F0] p-5">
-      <p className="text-sm text-[#4A5568] mb-1">{label}</p>
+    <div className="bg-[#f5f5f7] rounded-[20px] p-5">
+      <p className="text-sm text-[#6e6e73] mb-1">{label}</p>
       <p className="text-2xl font-bold font-mono" style={{ color }}>{value}</p>
     </div>
   );

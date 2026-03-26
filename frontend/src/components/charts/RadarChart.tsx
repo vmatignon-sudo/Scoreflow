@@ -45,7 +45,7 @@ export default function RadarChart({ score }: Props) {
 
   if (!score) {
     return (
-      <div className="h-[300px] flex items-center justify-center text-[#8A95A3] text-sm">
+      <div className="h-[300px] flex items-center justify-center text-[#a1a1a6] text-sm">
         En attente des scores...
       </div>
     );

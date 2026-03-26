@@ -80,16 +80,16 @@ export default function SimulatorPanel({ deal, asset }: Props) {
   return (
     <div className="space-y-6">
       {/* Controls */}
-      <div className="bg-white rounded-xl border border-[#E2E8F0] p-6">
-        <h3 className="font-semibold text-[#0F1923] mb-4">Simulateur d&apos;incident</h3>
+      <div className="bg-[#f5f5f7] rounded-[20px] p-6">
+        <h3 className="font-semibold text-[#1d1d1f] mb-4">Simulateur d&apos;incident</h3>
 
         {/* Slider 1: mois de défaut */}
         <div className="mb-6">
           <div className="flex justify-between text-sm mb-2">
-            <span className="font-medium text-[#0F1923]">
+            <span className="font-medium text-[#1d1d1f]">
               Impayé au mois {moisDefaut}
             </span>
-            <span className="text-[#4A5568]">
+            <span className="text-[#6e6e73]">
               {moisDefaut} loyers encaissés
             </span>
           </div>
@@ -101,7 +101,7 @@ export default function SimulatorPanel({ deal, asset }: Props) {
             onChange={(e) => setMoisDefaut(parseInt(e.target.value))}
             className="w-full accent-[#1B4FD8]"
           />
-          <div className="flex justify-between text-xs text-[#8A95A3] mt-1">
+          <div className="flex justify-between text-xs text-[#a1a1a6] mt-1">
             <span>Mois 1</span>
             <span>Mois {duree}</span>
           </div>
@@ -110,7 +110,7 @@ export default function SimulatorPanel({ deal, asset }: Props) {
         {/* Slider 2: délai récupération */}
         <div className="mb-4">
           <div className="flex justify-between text-sm mb-2">
-            <span className="font-medium text-[#0F1923]">
+            <span className="font-medium text-[#1d1d1f]">
               Délai de récupération : {delaiRecuperation} mois
             </span>
           </div>
@@ -121,8 +121,8 @@ export default function SimulatorPanel({ deal, asset }: Props) {
                 onClick={() => setDelaiRecuperation(m)}
                 className={`flex-1 py-2 rounded-lg border text-sm font-medium transition-colors ${
                   delaiRecuperation === m
-                    ? 'border-[#1B4FD8] bg-[#EBF0FF] text-[#1B4FD8]'
-                    : 'border-[#E2E8F0] text-[#4A5568] hover:border-[#CBD5E1]'
+                    ? 'border-[#1d1d1f] bg-[#f5f5f7] text-[#1d1d1f]'
+                    : 'border-black/[0.04] text-[#6e6e73] hover:bg-[#ededf0]'
                 }`}
               >
                 {m}m
@@ -135,25 +135,25 @@ export default function SimulatorPanel({ deal, asset }: Props) {
         <div className="flex gap-2">
           <button
             onClick={() => { setMoisDefaut(6); setDelaiRecuperation(2); }}
-            className="px-3 py-1.5 bg-[#F7F8FA] text-[#4A5568] rounded-lg text-xs font-medium hover:bg-[#EEF0F5]"
+            className="px-3 py-1.5 bg-[#f5f5f7] text-[#6e6e73] rounded-lg text-xs font-medium hover:bg-[#f5f5f7]"
           >
             Défaut M6
           </button>
           <button
             onClick={() => { setMoisDefaut(Math.floor(duree / 2)); setDelaiRecuperation(2); }}
-            className="px-3 py-1.5 bg-[#F7F8FA] text-[#4A5568] rounded-lg text-xs font-medium hover:bg-[#EEF0F5]"
+            className="px-3 py-1.5 bg-[#f5f5f7] text-[#6e6e73] rounded-lg text-xs font-medium hover:bg-[#f5f5f7]"
           >
             Mi-parcours
           </button>
           <button
             onClick={() => { setMoisDefaut(Math.floor(duree * 0.8)); setDelaiRecuperation(2); }}
-            className="px-3 py-1.5 bg-[#F7F8FA] text-[#4A5568] rounded-lg text-xs font-medium hover:bg-[#EEF0F5]"
+            className="px-3 py-1.5 bg-[#f5f5f7] text-[#6e6e73] rounded-lg text-xs font-medium hover:bg-[#f5f5f7]"
           >
             Tardif
           </button>
           <button
             onClick={() => { setMoisDefaut(3); setDelaiRecuperation(6); }}
-            className="px-3 py-1.5 bg-[#F7F8FA] text-[#4A5568] rounded-lg text-xs font-medium hover:bg-[#EEF0F5]"
+            className="px-3 py-1.5 bg-[#f5f5f7] text-[#6e6e73] rounded-lg text-xs font-medium hover:bg-[#f5f5f7]"
           >
             Pire cas
           </button>
@@ -161,8 +161,8 @@ export default function SimulatorPanel({ deal, asset }: Props) {
       </div>
 
       {/* Results */}
-      <div className="bg-white rounded-xl border border-[#E2E8F0] p-6">
-        <h3 className="font-semibold text-[#0F1923] mb-4">Résultat du scénario</h3>
+      <div className="bg-[#f5f5f7] rounded-[20px] p-6">
+        <h3 className="font-semibold text-[#1d1d1f] mb-4">Résultat du scénario</h3>
         <div className="grid grid-cols-3 gap-4 mb-6">
           <ResultCard label="Loyers encaissés" value={simulation.loyersEncaisses} positive />
           <ResultCard label="Valeur nette bien" value={simulation.valeurNette} positive />
@@ -174,7 +174,7 @@ export default function SimulatorPanel({ deal, asset }: Props) {
               ? 'bg-[#F0FDF4] border-[#059669]'
               : 'bg-[#FEF2F2] border-[#DC2626]'
           }`}>
-            <p className="text-xs text-[#4A5568] mb-1">Bilan net</p>
+            <p className="text-xs text-[#6e6e73] mb-1">Bilan net</p>
             <p className={`text-xl font-bold font-mono ${
               simulation.bilanNet >= 0 ? 'text-[#059669]' : 'text-[#DC2626]'
             }`}>
@@ -185,8 +185,8 @@ export default function SimulatorPanel({ deal, asset }: Props) {
       </div>
 
       {/* Chart */}
-      <div className="bg-white rounded-xl border border-[#E2E8F0] p-6">
-        <h3 className="font-semibold text-[#0F1923] mb-4">Évolution dans le temps</h3>
+      <div className="bg-[#f5f5f7] rounded-[20px] p-6">
+        <h3 className="font-semibold text-[#1d1d1f] mb-4">Évolution dans le temps</h3>
         <ResponsiveContainer width="100%" height={350}>
           <AreaChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" stroke="#EEF0F5" />
@@ -260,10 +260,10 @@ function ResultCard({
   negative?: boolean;
 }) {
   return (
-    <div className="p-4 bg-[#F7F8FA] rounded-lg">
-      <p className="text-xs text-[#4A5568] mb-1">{label}</p>
+    <div className="p-4 bg-[#f5f5f7] rounded-lg">
+      <p className="text-xs text-[#6e6e73] mb-1">{label}</p>
       <p className={`text-lg font-bold font-mono ${
-        positive ? 'text-[#059669]' : negative ? 'text-[#DC2626]' : 'text-[#0F1923]'
+        positive ? 'text-[#059669]' : negative ? 'text-[#DC2626]' : 'text-[#1d1d1f]'
       }`}>
         {value.toLocaleString('fr-FR')} EUR
       </p>

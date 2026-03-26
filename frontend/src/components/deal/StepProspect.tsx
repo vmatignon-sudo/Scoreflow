@@ -73,9 +73,9 @@ export default function StepProspect({ draft, updateDraft, onNext }: Props) {
     : null;
 
   return (
-    <div className="bg-white rounded-xl border border-[#E2E8F0] p-6">
-      <h2 className="text-lg font-semibold text-[#0F1923] mb-1">Prospect</h2>
-      <p className="text-sm text-[#4A5568] mb-6">
+    <div className="bg-[#f5f5f7] rounded-[20px] p-6">
+      <h2 className="text-lg font-semibold text-[#1d1d1f] mb-1">Prospect</h2>
+      <p className="text-sm text-[#6e6e73] mb-6">
         Entrez un SIREN ou une raison sociale
       </p>
 
@@ -89,27 +89,27 @@ export default function StepProspect({ draft, updateDraft, onNext }: Props) {
             setSelected(null);
           }}
           placeholder="SIREN (9 chiffres) ou raison sociale..."
-          className="w-full px-4 py-3 border border-[#E2E8F0] rounded-lg focus:ring-2 focus:ring-[#1B4FD8] focus:border-transparent outline-none text-[#0F1923] text-lg"
+          className="w-full px-4 py-3 rounded-[16px] bg-[#f5f5f7] focus:ring-2 focus:ring-[#1B4FD8] focus:border-transparent outline-none text-[#1d1d1f] text-lg"
         />
         {loading && (
           <div className="absolute right-3 top-3.5">
-            <div className="w-5 h-5 border-2 border-[#1B4FD8] border-t-transparent rounded-full animate-spin" />
+            <div className="w-5 h-5 border-2 border-[#1d1d1f] border-t-transparent rounded-full animate-spin" />
           </div>
         )}
 
         {/* Results dropdown */}
         {results.length > 0 && !selected && (
-          <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-[#E2E8F0] rounded-lg shadow-lg z-10 max-h-80 overflow-y-auto">
+          <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-[16px] bg-[#f5f5f7] shadow-lg z-10 max-h-80 overflow-y-auto">
             {results.map((r) => (
               <button
                 key={r.siren}
                 onClick={() => handleSelect(r)}
-                className="w-full text-left px-4 py-3 hover:bg-[#F7F8FA] border-b border-[#E2E8F0] last:border-0"
+                className="w-full text-left px-4 py-3 hover:bg-[#f5f5f7] border-b border-black/[0.04] last:border-0"
               >
                 <div className="flex justify-between items-start">
                   <div>
-                    <p className="font-medium text-[#0F1923]">{r.raison_sociale}</p>
-                    <p className="text-sm text-[#4A5568]">
+                    <p className="font-medium text-[#1d1d1f]">{r.raison_sociale}</p>
+                    <p className="text-sm text-[#6e6e73]">
                       {r.siren} - {r.secteur_label}
                     </p>
                   </div>
@@ -131,9 +131,9 @@ export default function StepProspect({ draft, updateDraft, onNext }: Props) {
 
       {/* Selected enterprise preview */}
       {selected && (
-        <div className="border border-[#E2E8F0] rounded-lg p-5 mb-6">
+        <div className="rounded-[16px] bg-[#f5f5f7] p-5 mb-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="font-semibold text-[#0F1923]">
+            <h3 className="font-semibold text-[#1d1d1f]">
               Voilà ce que nous avons trouvé
             </h3>
             <button
@@ -141,7 +141,7 @@ export default function StepProspect({ draft, updateDraft, onNext }: Props) {
                 setSelected(null);
                 setQuery('');
               }}
-              className="text-sm text-[#4A5568] hover:text-[#0F1923]"
+              className="text-sm text-[#6e6e73] hover:text-[#1d1d1f]"
             >
               Modifier
             </button>
@@ -149,30 +149,30 @@ export default function StepProspect({ draft, updateDraft, onNext }: Props) {
 
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div>
-              <span className="text-[#8A95A3]">Raison sociale</span>
-              <p className="font-medium text-[#0F1923]">{selected.raison_sociale}</p>
+              <span className="text-[#a1a1a6]">Raison sociale</span>
+              <p className="font-medium text-[#1d1d1f]">{selected.raison_sociale}</p>
             </div>
             <div>
-              <span className="text-[#8A95A3]">SIREN</span>
-              <p className="font-mono text-[#0F1923]">{selected.siren}</p>
+              <span className="text-[#a1a1a6]">SIREN</span>
+              <p className="font-mono text-[#1d1d1f]">{selected.siren}</p>
             </div>
             <div>
-              <span className="text-[#8A95A3]">Forme juridique</span>
-              <p className="text-[#0F1923]">{selected.forme_juridique || '—'}</p>
+              <span className="text-[#a1a1a6]">Forme juridique</span>
+              <p className="text-[#1d1d1f]">{selected.forme_juridique || '—'}</p>
             </div>
             <div>
-              <span className="text-[#8A95A3]">Secteur (NAF)</span>
-              <p className="text-[#0F1923]">
+              <span className="text-[#a1a1a6]">Secteur (NAF)</span>
+              <p className="text-[#1d1d1f]">
                 {selected.code_naf} — {selected.secteur_label}
               </p>
             </div>
             <div>
-              <span className="text-[#8A95A3]">Adresse</span>
-              <p className="text-[#0F1923]">{selected.adresse || '—'}</p>
+              <span className="text-[#a1a1a6]">Adresse</span>
+              <p className="text-[#1d1d1f]">{selected.adresse || '—'}</p>
             </div>
             <div>
-              <span className="text-[#8A95A3]">Dirigeant</span>
-              <p className="text-[#0F1923]">
+              <span className="text-[#a1a1a6]">Dirigeant</span>
+              <p className="text-[#1d1d1f]">
                 {selected.dirigeant_prenom} {selected.dirigeant_nom}
               </p>
             </div>
@@ -193,7 +193,7 @@ export default function StepProspect({ draft, updateDraft, onNext }: Props) {
       <button
         onClick={onNext}
         disabled={!selected}
-        className="w-full bg-[#1B4FD8] text-white py-3 rounded-lg font-medium hover:bg-[#1640B0] transition-colors disabled:opacity-50"
+        className="w-full bg-[#1d1d1f] text-white py-3 rounded-lg font-medium hover:bg-[#000] transition-colors disabled:opacity-50"
       >
         Continuer vers le deal
       </button>

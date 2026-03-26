@@ -71,20 +71,20 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
     <div className="space-y-6">
       {/* Devis upload zone */}
       <div
-        className="bg-white rounded-xl border-2 border-dashed border-[#E2E8F0] p-8 text-center hover:border-[#1B4FD8] transition-colors cursor-pointer"
+        className="bg-white rounded-xl border-2 border-dashed border-black/[0.04] p-8 text-center hover:border-[#1d1d1f] transition-colors cursor-pointer"
         onDragOver={(e) => e.preventDefault()}
         onDrop={handleFileDrop}
       >
-        <svg className="w-10 h-10 text-[#8A95A3] mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg className="w-10 h-10 text-[#a1a1a6] mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
         </svg>
-        <p className="text-[#0F1923] font-medium">Déposez le devis fournisseur</p>
-        <p className="text-sm text-[#8A95A3] mt-1">pour remplissage automatique</p>
+        <p className="text-[#1d1d1f] font-medium">Déposez le devis fournisseur</p>
+        <p className="text-sm text-[#a1a1a6] mt-1">pour remplissage automatique</p>
       </div>
 
       {/* Financing type */}
-      <div className="bg-white rounded-xl border border-[#E2E8F0] p-6">
-        <h3 className="font-semibold text-[#0F1923] mb-4">Type de financement</h3>
+      <div className="bg-[#f5f5f7] rounded-[20px] p-6">
+        <h3 className="font-semibold text-[#1d1d1f] mb-4">Type de financement</h3>
         <div className="flex gap-2">
           {FINANCING_TYPES.map((t) => (
             <button
@@ -92,8 +92,8 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
               onClick={() => updateDraft({ type_financement: t.id })}
               className={`flex-1 flex flex-col items-center gap-1 py-3 rounded-lg border text-sm transition-colors ${
                 draft.type_financement === t.id
-                  ? 'border-[#1B4FD8] bg-[#EBF0FF] text-[#1B4FD8]'
-                  : 'border-[#E2E8F0] text-[#4A5568] hover:border-[#CBD5E1]'
+                  ? 'border-[#1d1d1f] bg-[#f5f5f7] text-[#1d1d1f]'
+                  : 'border-black/[0.04] text-[#6e6e73] hover:bg-[#ededf0]'
               }`}
             >
               <span className="text-xl">{t.icon}</span>
@@ -104,35 +104,35 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
       </div>
 
       {/* Deal fields */}
-      <div className="bg-white rounded-xl border border-[#E2E8F0] p-6">
-        <h3 className="font-semibold text-[#0F1923] mb-4">Conditions du deal</h3>
+      <div className="bg-[#f5f5f7] rounded-[20px] p-6">
+        <h3 className="font-semibold text-[#1d1d1f] mb-4">Conditions du deal</h3>
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-[#0F1923] mb-1">
+            <label className="block text-sm font-medium text-[#1d1d1f] mb-1">
               Montant financé (EUR)
             </label>
             <input
               type="number"
               value={draft.montant_finance || ''}
               onChange={(e) => updateDraft({ montant_finance: parseFloat(e.target.value) || 0 })}
-              className="w-full px-3 py-2 border border-[#E2E8F0] rounded-lg text-[#0F1923]"
+              className="w-full px-3 py-2 rounded-[16px] bg-[#f5f5f7] text-[#1d1d1f]"
               placeholder="85 000"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-[#0F1923] mb-1">
+            <label className="block text-sm font-medium text-[#1d1d1f] mb-1">
               Apport initial (EUR)
             </label>
             <input
               type="number"
               value={draft.apport_initial || ''}
               onChange={(e) => updateDraft({ apport_initial: parseFloat(e.target.value) || 0 })}
-              className="w-full px-3 py-2 border border-[#E2E8F0] rounded-lg text-[#0F1923]"
+              className="w-full px-3 py-2 rounded-[16px] bg-[#f5f5f7] text-[#1d1d1f]"
               placeholder="8 500"
             />
           </div>
           <div className="col-span-2">
-            <label className="block text-sm font-medium text-[#0F1923] mb-2">
+            <label className="block text-sm font-medium text-[#1d1d1f] mb-2">
               Durée : {draft.duree_mois} mois
             </label>
             <div className="flex gap-2">
@@ -142,8 +142,8 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
                   onClick={() => updateDraft({ duree_mois: d })}
                   className={`flex-1 py-2 rounded-lg border text-sm font-medium transition-colors ${
                     draft.duree_mois === d
-                      ? 'border-[#1B4FD8] bg-[#EBF0FF] text-[#1B4FD8]'
-                      : 'border-[#E2E8F0] text-[#4A5568] hover:border-[#CBD5E1]'
+                      ? 'border-[#1d1d1f] bg-[#f5f5f7] text-[#1d1d1f]'
+                      : 'border-black/[0.04] text-[#6e6e73] hover:bg-[#ededf0]'
                   }`}
                 >
                   {d}
@@ -152,34 +152,34 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-[#0F1923] mb-1">
+            <label className="block text-sm font-medium text-[#1d1d1f] mb-1">
               Dépôt de garantie (EUR)
             </label>
             <input
               type="number"
               value={draft.depot_garantie || ''}
               onChange={(e) => updateDraft({ depot_garantie: parseFloat(e.target.value) || 0 })}
-              className="w-full px-3 py-2 border border-[#E2E8F0] rounded-lg text-[#0F1923]"
+              className="w-full px-3 py-2 rounded-[16px] bg-[#f5f5f7] text-[#1d1d1f]"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-[#0F1923] mb-1">
+            <label className="block text-sm font-medium text-[#1d1d1f] mb-1">
               Valeur du bien (EUR)
             </label>
             <input
               type="number"
               value={draft.prix_achat_ht || ''}
               onChange={(e) => updateDraft({ prix_achat_ht: parseFloat(e.target.value) || 0 })}
-              className="w-full px-3 py-2 border border-[#E2E8F0] rounded-lg text-[#0F1923]"
+              className="w-full px-3 py-2 rounded-[16px] bg-[#f5f5f7] text-[#1d1d1f]"
             />
           </div>
         </div>
 
         {/* Real-time estimate */}
         {estimatedPayment > 0 && (
-          <div className="mt-4 p-3 bg-[#F7F8FA] rounded-lg flex items-center justify-between text-sm">
-            <span className="text-[#4A5568]">Loyer estimé :</span>
-            <span className="font-mono font-bold text-[#0F1923]">
+          <div className="mt-4 p-3 bg-[#f5f5f7] rounded-lg flex items-center justify-between text-sm">
+            <span className="text-[#6e6e73]">Loyer estimé :</span>
+            <span className="font-mono font-bold text-[#1d1d1f]">
               {estimatedPayment.toLocaleString('fr-FR', { maximumFractionDigits: 0 })} EUR/mois
             </span>
             {marginBrut > 0 && (
@@ -192,8 +192,8 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
       </div>
 
       {/* Asset class */}
-      <div className="bg-white rounded-xl border border-[#E2E8F0] p-6">
-        <h3 className="font-semibold text-[#0F1923] mb-4">Catégorie du bien</h3>
+      <div className="bg-[#f5f5f7] rounded-[20px] p-6">
+        <h3 className="font-semibold text-[#1d1d1f] mb-4">Catégorie du bien</h3>
         <div className="grid grid-cols-4 gap-2 mb-4">
           {ASSET_CLASSES.map((a) => (
             <button
@@ -201,8 +201,8 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
               onClick={() => updateDraft({ asset_class: a.id })}
               className={`flex flex-col items-center gap-1 py-3 rounded-lg border text-xs transition-colors ${
                 draft.asset_class === a.id
-                  ? 'border-[#1B4FD8] bg-[#EBF0FF] text-[#1B4FD8]'
-                  : 'border-[#E2E8F0] text-[#4A5568] hover:border-[#CBD5E1]'
+                  ? 'border-[#1d1d1f] bg-[#f5f5f7] text-[#1d1d1f]'
+                  : 'border-black/[0.04] text-[#6e6e73] hover:bg-[#ededf0]'
               }`}
             >
               <span className="text-2xl">{a.icon}</span>
@@ -214,38 +214,38 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
         {/* Asset details */}
         <div className="grid grid-cols-3 gap-3 mt-4">
           <div>
-            <label className="block text-xs font-medium text-[#0F1923] mb-1">Marque</label>
+            <label className="block text-xs font-medium text-[#1d1d1f] mb-1">Marque</label>
             <input
               type="text"
               value={draft.marque}
               onChange={(e) => updateDraft({ marque: e.target.value })}
-              className="w-full px-3 py-2 border border-[#E2E8F0] rounded-lg text-sm text-[#0F1923]"
+              className="w-full px-3 py-2 rounded-[16px] bg-[#f5f5f7] text-sm text-[#1d1d1f]"
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-[#0F1923] mb-1">Modèle</label>
+            <label className="block text-xs font-medium text-[#1d1d1f] mb-1">Modèle</label>
             <input
               type="text"
               value={draft.modele}
               onChange={(e) => updateDraft({ modele: e.target.value })}
-              className="w-full px-3 py-2 border border-[#E2E8F0] rounded-lg text-sm text-[#0F1923]"
+              className="w-full px-3 py-2 rounded-[16px] bg-[#f5f5f7] text-sm text-[#1d1d1f]"
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-[#0F1923] mb-1">Année</label>
+            <label className="block text-xs font-medium text-[#1d1d1f] mb-1">Année</label>
             <input
               type="number"
               value={draft.annee_fabrication}
               onChange={(e) => updateDraft({ annee_fabrication: parseInt(e.target.value) || 0 })}
-              className="w-full px-3 py-2 border border-[#E2E8F0] rounded-lg text-sm text-[#0F1923]"
+              className="w-full px-3 py-2 rounded-[16px] bg-[#f5f5f7] text-sm text-[#1d1d1f]"
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-[#0F1923] mb-1">État</label>
+            <label className="block text-xs font-medium text-[#1d1d1f] mb-1">État</label>
             <select
               value={draft.etat}
               onChange={(e) => updateDraft({ etat: e.target.value })}
-              className="w-full px-3 py-2 border border-[#E2E8F0] rounded-lg text-sm text-[#0F1923]"
+              className="w-full px-3 py-2 rounded-[16px] bg-[#f5f5f7] text-sm text-[#1d1d1f]"
             >
               <option value="neuf">Neuf</option>
               <option value="occasion_tres_bon">Occasion très bon état</option>
@@ -255,28 +255,28 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
             </select>
           </div>
           <div>
-            <label className="block text-xs font-medium text-[#0F1923] mb-1">Km</label>
+            <label className="block text-xs font-medium text-[#1d1d1f] mb-1">Km</label>
             <input
               type="number"
               value={draft.kilometrage || ''}
               onChange={(e) => updateDraft({ kilometrage: parseInt(e.target.value) || 0 })}
-              className="w-full px-3 py-2 border border-[#E2E8F0] rounded-lg text-sm text-[#0F1923]"
+              className="w-full px-3 py-2 rounded-[16px] bg-[#f5f5f7] text-sm text-[#1d1d1f]"
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-[#0F1923] mb-1">Heures moteur</label>
+            <label className="block text-xs font-medium text-[#1d1d1f] mb-1">Heures moteur</label>
             <input
               type="number"
               value={draft.heures_moteur || ''}
               onChange={(e) => updateDraft({ heures_moteur: parseInt(e.target.value) || 0 })}
-              className="w-full px-3 py-2 border border-[#E2E8F0] rounded-lg text-sm text-[#0F1923]"
+              className="w-full px-3 py-2 rounded-[16px] bg-[#f5f5f7] text-sm text-[#1d1d1f]"
             />
           </div>
         </div>
 
         {/* Recuperability section */}
-        <div className="mt-4 p-4 bg-[#F7F8FA] rounded-lg">
-          <h4 className="text-sm font-medium text-[#0F1923] mb-3">Récupérabilité</h4>
+        <div className="mt-4 p-4 bg-[#f5f5f7] rounded-lg">
+          <h4 className="text-sm font-medium text-[#1d1d1f] mb-3">Récupérabilité</h4>
           <div className="flex gap-6">
             <label className="flex items-center gap-2 cursor-pointer">
               <input
@@ -285,7 +285,7 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
                 onChange={(e) => updateDraft({ traceur_gps: e.target.checked })}
                 className="w-4 h-4 accent-[#1B4FD8]"
               />
-              <span className="text-sm text-[#0F1923]">Traceur GPS (+0.15)</span>
+              <span className="text-sm text-[#1d1d1f]">Traceur GPS (+0.15)</span>
             </label>
             <label className="flex items-center gap-2 cursor-pointer">
               <input
@@ -294,21 +294,21 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
                 onChange={(e) => updateDraft({ contrat_recuperation: e.target.checked })}
                 className="w-4 h-4 accent-[#1B4FD8]"
               />
-              <span className="text-sm text-[#0F1923]">Contrat récupérateur (+0.05)</span>
+              <span className="text-sm text-[#1d1d1f]">Contrat récupérateur (+0.05)</span>
             </label>
           </div>
         </div>
       </div>
 
       {/* Refinancement (collapsible) */}
-      <div className="bg-white rounded-xl border border-[#E2E8F0]">
+      <div className="bg-[#f5f5f7] rounded-[20px]">
         <button
           onClick={() => setShowRefinancement(!showRefinancement)}
           className="w-full flex items-center justify-between p-6"
         >
-          <h3 className="font-semibold text-[#0F1923]">Refinancement</h3>
+          <h3 className="font-semibold text-[#1d1d1f]">Refinancement</h3>
           <svg
-            className={`w-5 h-5 text-[#8A95A3] transition-transform ${showRefinancement ? 'rotate-180' : ''}`}
+            className={`w-5 h-5 text-[#a1a1a6] transition-transform ${showRefinancement ? 'rotate-180' : ''}`}
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -319,40 +319,40 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
         {showRefinancement && (
           <div className="px-6 pb-6 grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-[#0F1923] mb-1">Taux refinancement (%)</label>
+              <label className="block text-sm font-medium text-[#1d1d1f] mb-1">Taux refinancement (%)</label>
               <input
                 type="number"
                 step="0.1"
                 value={draft.taux_refinancement_banque}
                 onChange={(e) => updateDraft({ taux_refinancement_banque: parseFloat(e.target.value) || 0 })}
-                className="w-full px-3 py-2 border border-[#E2E8F0] rounded-lg text-[#0F1923]"
+                className="w-full px-3 py-2 rounded-[16px] bg-[#f5f5f7] text-[#1d1d1f]"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-[#0F1923] mb-1">Loyer banque (EUR/mois)</label>
+              <label className="block text-sm font-medium text-[#1d1d1f] mb-1">Loyer banque (EUR/mois)</label>
               <input
                 type="number"
                 value={draft.loyer_mensuel_banque || ''}
                 onChange={(e) => updateDraft({ loyer_mensuel_banque: parseFloat(e.target.value) || 0 })}
-                className="w-full px-3 py-2 border border-[#E2E8F0] rounded-lg text-[#0F1923]"
+                className="w-full px-3 py-2 rounded-[16px] bg-[#f5f5f7] text-[#1d1d1f]"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-[#0F1923] mb-1">Frais dossier (EUR)</label>
+              <label className="block text-sm font-medium text-[#1d1d1f] mb-1">Frais dossier (EUR)</label>
               <input
                 type="number"
                 value={draft.frais_dossier_banque || ''}
                 onChange={(e) => updateDraft({ frais_dossier_banque: parseFloat(e.target.value) || 0 })}
-                className="w-full px-3 py-2 border border-[#E2E8F0] rounded-lg text-[#0F1923]"
+                className="w-full px-3 py-2 rounded-[16px] bg-[#f5f5f7] text-[#1d1d1f]"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-[#0F1923] mb-1">Pénalités RA (EUR)</label>
+              <label className="block text-sm font-medium text-[#1d1d1f] mb-1">Pénalités RA (EUR)</label>
               <input
                 type="number"
                 value={draft.penalites_remboursement_anticipe || ''}
                 onChange={(e) => updateDraft({ penalites_remboursement_anticipe: parseFloat(e.target.value) || 0 })}
-                className="w-full px-3 py-2 border border-[#E2E8F0] rounded-lg text-[#0F1923]"
+                className="w-full px-3 py-2 rounded-[16px] bg-[#f5f5f7] text-[#1d1d1f]"
               />
             </div>
           </div>
@@ -360,14 +360,14 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
       </div>
 
       {/* Cotation BDF (collapsible) */}
-      <div className="bg-white rounded-xl border border-[#E2E8F0]">
+      <div className="bg-[#f5f5f7] rounded-[20px]">
         <button
           onClick={() => setShowBDF(!showBDF)}
           className="w-full flex items-center justify-between p-6"
         >
-          <h3 className="font-semibold text-[#0F1923]">Cotation Banque de France</h3>
+          <h3 className="font-semibold text-[#1d1d1f]">Cotation Banque de France</h3>
           <svg
-            className={`w-5 h-5 text-[#8A95A3] transition-transform ${showBDF ? 'rotate-180' : ''}`}
+            className={`w-5 h-5 text-[#a1a1a6] transition-transform ${showBDF ? 'rotate-180' : ''}`}
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -378,31 +378,31 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
         {showBDF && (
           <div className="px-6 pb-6 grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-[#0F1923] mb-1">Cote activité (A-X)</label>
+              <label className="block text-sm font-medium text-[#1d1d1f] mb-1">Cote activité (A-X)</label>
               <input
                 type="text"
                 value={draft.cotation_bdf_activite}
                 onChange={(e) => updateDraft({ cotation_bdf_activite: e.target.value })}
-                className="w-full px-3 py-2 border border-[#E2E8F0] rounded-lg text-[#0F1923]"
+                className="w-full px-3 py-2 rounded-[16px] bg-[#f5f5f7] text-[#1d1d1f]"
                 placeholder="D"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-[#0F1923] mb-1">Cote crédit (1+ - P)</label>
+              <label className="block text-sm font-medium text-[#1d1d1f] mb-1">Cote crédit (1+ - P)</label>
               <input
                 type="text"
                 value={draft.cotation_bdf_credit}
                 onChange={(e) => updateDraft({ cotation_bdf_credit: e.target.value })}
-                className="w-full px-3 py-2 border border-[#E2E8F0] rounded-lg text-[#0F1923]"
+                className="w-full px-3 py-2 rounded-[16px] bg-[#f5f5f7] text-[#1d1d1f]"
                 placeholder="4"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-[#0F1923] mb-1">Source</label>
+              <label className="block text-sm font-medium text-[#1d1d1f] mb-1">Source</label>
               <select
                 value={draft.cotation_bdf_source}
                 onChange={(e) => updateDraft({ cotation_bdf_source: e.target.value })}
-                className="w-full px-3 py-2 border border-[#E2E8F0] rounded-lg text-[#0F1923]"
+                className="w-full px-3 py-2 rounded-[16px] bg-[#f5f5f7] text-[#1d1d1f]"
               >
                 <option value="non_disponible">Non disponible</option>
                 <option value="fiben_direct">FIBEN (saisie)</option>
@@ -411,11 +411,11 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-[#0F1923] mb-1">Indicateur dirigeant</label>
+              <label className="block text-sm font-medium text-[#1d1d1f] mb-1">Indicateur dirigeant</label>
               <select
                 value={draft.indicateur_dirigeant_bdf}
                 onChange={(e) => updateDraft({ indicateur_dirigeant_bdf: e.target.value })}
-                className="w-full px-3 py-2 border border-[#E2E8F0] rounded-lg text-[#0F1923]"
+                className="w-full px-3 py-2 rounded-[16px] bg-[#f5f5f7] text-[#1d1d1f]"
               >
                 <option value="">Non renseigné</option>
                 <option value="000">000 - Aucun incident</option>
@@ -431,14 +431,14 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
       <div className="flex gap-3">
         <button
           onClick={onBack}
-          className="flex-1 bg-white border border-[#E2E8F0] text-[#4A5568] py-3 rounded-lg font-medium hover:bg-[#F7F8FA] transition-colors"
+          className="flex-1 bg-white border border-black/[0.04] text-[#6e6e73] py-3 rounded-lg font-medium hover:bg-[#f5f5f7] transition-colors"
         >
           Retour
         </button>
         <button
           onClick={onNext}
           disabled={!draft.type_financement || !draft.montant_finance}
-          className="flex-1 bg-[#1B4FD8] text-white py-3 rounded-lg font-medium hover:bg-[#1640B0] transition-colors disabled:opacity-50"
+          className="flex-1 bg-[#1d1d1f] text-white py-3 rounded-lg font-medium hover:bg-[#000] transition-colors disabled:opacity-50"
         >
           Continuer
         </button>

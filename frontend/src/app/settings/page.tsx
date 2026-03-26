@@ -18,18 +18,18 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F7F8FA]">
+    <div className="min-h-screen bg-[#f5f5f7]">
       <Sidebar />
       <main className="ml-[240px] p-8">
-        <h1 className="text-2xl font-bold text-[#0F1923] mb-8">Paramètres</h1>
+        <h1 className="text-2xl font-bold text-[#1d1d1f] mb-8">Paramètres</h1>
 
         <div className="grid grid-cols-2 gap-6">
           {/* Pondération */}
-          <div className="bg-white rounded-xl border border-[#E2E8F0] p-6">
-            <h2 className="text-lg font-semibold text-[#0F1923] mb-4">
+          <div className="bg-[#f5f5f7] rounded-[20px] p-6">
+            <h2 className="text-lg font-semibold text-[#1d1d1f] mb-4">
               Pondération du scoring
             </h2>
-            <p className="text-sm text-[#4A5568] mb-6">
+            <p className="text-sm text-[#6e6e73] mb-6">
               Ajustez l&apos;importance relative de chaque dimension.
               Le total doit faire 100%.
             </p>
@@ -43,8 +43,8 @@ export default function SettingsPage() {
               ].map(({ key, label }) => (
                 <div key={key}>
                   <div className="flex justify-between text-sm mb-1">
-                    <span className="text-[#0F1923] font-medium">{label}</span>
-                    <span className="font-mono text-[#4A5568]">{weights[key]}%</span>
+                    <span className="text-[#1d1d1f] font-medium">{label}</span>
+                    <span className="font-mono text-[#6e6e73]">{weights[key]}%</span>
                   </div>
                   <input
                     type="range"
@@ -70,11 +70,11 @@ export default function SettingsPage() {
           </div>
 
           {/* Seuils */}
-          <div className="bg-white rounded-xl border border-[#E2E8F0] p-6">
-            <h2 className="text-lg font-semibold text-[#0F1923] mb-4">Seuils de verdict</h2>
+          <div className="bg-[#f5f5f7] rounded-[20px] p-6">
+            <h2 className="text-lg font-semibold text-[#1d1d1f] mb-4">Seuils de verdict</h2>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-[#0F1923] mb-1">
+                <label className="block text-sm font-medium text-[#1d1d1f] mb-1">
                   Seuil GO (score minimum)
                 </label>
                 <input
@@ -82,11 +82,11 @@ export default function SettingsPage() {
                   defaultValue={14}
                   min={0}
                   max={20}
-                  className="w-full px-3 py-2 border border-[#E2E8F0] rounded-lg text-[#0F1923]"
+                  className="w-full px-3 py-2 rounded-[16px] bg-[#f5f5f7] text-[#1d1d1f]"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-[#0F1923] mb-1">
+                <label className="block text-sm font-medium text-[#1d1d1f] mb-1">
                   Seuil GO Conditionnel
                 </label>
                 <input
@@ -94,28 +94,28 @@ export default function SettingsPage() {
                   defaultValue={10}
                   min={0}
                   max={20}
-                  className="w-full px-3 py-2 border border-[#E2E8F0] rounded-lg text-[#0F1923]"
+                  className="w-full px-3 py-2 rounded-[16px] bg-[#f5f5f7] text-[#1d1d1f]"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-[#0F1923] mb-1">
+                <label className="block text-sm font-medium text-[#1d1d1f] mb-1">
                   Seuil changement dirigeant (jours)
                 </label>
                 <input
                   type="number"
                   defaultValue={180}
-                  className="w-full px-3 py-2 border border-[#E2E8F0] rounded-lg text-[#0F1923]"
+                  className="w-full px-3 py-2 rounded-[16px] bg-[#f5f5f7] text-[#1d1d1f]"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-[#0F1923] mb-1">
+                <label className="block text-sm font-medium text-[#1d1d1f] mb-1">
                   Nb liquidations pour VETO
                 </label>
                 <input
                   type="number"
                   defaultValue={2}
                   min={1}
-                  className="w-full px-3 py-2 border border-[#E2E8F0] rounded-lg text-[#0F1923]"
+                  className="w-full px-3 py-2 rounded-[16px] bg-[#f5f5f7] text-[#1d1d1f]"
                 />
               </div>
             </div>

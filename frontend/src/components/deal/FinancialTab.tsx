@@ -195,10 +195,10 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
 
   if (loading) {
     return (
-      <div className="bg-white rounded-xl border border-[#E2E8F0] p-6 animate-pulse">
-        <div className="h-6 bg-[#EEF0F5] rounded w-1/3 mb-4" />
-        <div className="h-4 bg-[#EEF0F5] rounded w-full mb-2" />
-        <div className="h-4 bg-[#EEF0F5] rounded w-2/3" />
+      <div className="bg-[#f5f5f7] rounded-[20px] p-6 animate-pulse">
+        <div className="h-6 bg-[#f5f5f7] rounded w-1/3 mb-4" />
+        <div className="h-4 bg-[#f5f5f7] rounded w-full mb-2" />
+        <div className="h-4 bg-[#f5f5f7] rounded w-2/3" />
       </div>
     );
   }
@@ -208,13 +208,13 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
   return (
     <div className="space-y-6">
       {/* Upload zone + documents list */}
-      <div className="bg-white rounded-xl border border-[#E2E8F0] p-6">
+      <div className="bg-[#f5f5f7] rounded-[20px] p-6">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="font-semibold text-[#0F1923]">Documents financiers</h3>
+          <h3 className="font-semibold text-[#1d1d1f]">Documents financiers</h3>
           <button
             onClick={handleReanalyze}
             disabled={reanalyzing}
-            className="flex items-center gap-2 px-4 py-2 bg-[#1B4FD8] text-white rounded-lg text-sm font-medium hover:bg-[#1640B0] transition-colors disabled:opacity-50"
+            className="flex items-center gap-2 px-4 py-2 bg-[#1d1d1f] text-white rounded-lg text-sm font-medium hover:bg-[#000] transition-colors disabled:opacity-50"
           >
             {reanalyzing ? (
               <>
@@ -234,7 +234,7 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
 
         {/* Drop zone */}
         <div
-          className="border-2 border-dashed border-[#E2E8F0] rounded-lg p-6 text-center hover:border-[#1B4FD8] transition-colors cursor-pointer mb-4"
+          className="border-2 border-dashed border-black/[0.04] rounded-lg p-6 text-center hover:border-[#1d1d1f] transition-colors cursor-pointer mb-4"
           onDragOver={(e) => e.preventDefault()}
           onDrop={handleDrop}
           onClick={() => document.getElementById('financial-file-input')?.click()}
@@ -248,17 +248,17 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
             className="hidden"
           />
           {uploading ? (
-            <div className="flex items-center justify-center gap-2 text-[#1B4FD8]">
-              <div className="w-5 h-5 border-2 border-[#1B4FD8] border-t-transparent rounded-full animate-spin" />
+            <div className="flex items-center justify-center gap-2 text-[#1d1d1f]">
+              <div className="w-5 h-5 border-2 border-[#1d1d1f] border-t-transparent rounded-full animate-spin" />
               <span className="text-sm font-medium">Upload en cours...</span>
             </div>
           ) : (
             <>
-              <svg className="w-8 h-8 text-[#8A95A3] mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="w-8 h-8 text-[#a1a1a6] mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
               </svg>
-              <p className="text-sm text-[#0F1923] font-medium">Liasses fiscales, relevés bancaires</p>
-              <p className="text-xs text-[#8A95A3] mt-1">PDF ou XML — Glissez-déposez ou cliquez</p>
+              <p className="text-sm text-[#1d1d1f] font-medium">Liasses fiscales, relevés bancaires</p>
+              <p className="text-xs text-[#a1a1a6] mt-1">PDF ou XML — Glissez-déposez ou cliquez</p>
             </>
           )}
         </div>
@@ -267,16 +267,16 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
         {docs.length > 0 && (
           <div className="space-y-2">
             {docs.map((doc) => (
-              <div key={doc.id} className="flex items-center justify-between p-3 bg-[#F7F8FA] rounded-lg">
+              <div key={doc.id} className="flex items-center justify-between p-3 bg-[#f5f5f7] rounded-lg">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-white rounded border border-[#E2E8F0] flex items-center justify-center">
-                    <span className="text-[10px] font-mono text-[#4A5568]">
+                  <div className="w-8 h-8 bg-white rounded border border-black/[0.04] flex items-center justify-center">
+                    <span className="text-[10px] font-mono text-[#6e6e73]">
                       {doc.filename.split('.').pop()?.toUpperCase()}
                     </span>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-[#0F1923]">{doc.filename}</p>
-                    <p className="text-xs text-[#8A95A3]">
+                    <p className="text-sm font-medium text-[#1d1d1f]">{doc.filename}</p>
+                    <p className="text-xs text-[#a1a1a6]">
                       {doc.type === 'liasse_fiscale' ? 'Liasse fiscale' : 'Relevé bancaire'}
                       {' — '}
                       {new Date(doc.uploaded_at).toLocaleDateString('fr-FR')}
@@ -287,7 +287,7 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
                   doc.parse_status === 'done' ? 'bg-green-50 text-green-600' :
                   doc.parse_status === 'processing' ? 'bg-blue-50 text-blue-600' :
                   doc.parse_status === 'error' ? 'bg-red-50 text-red-600' :
-                  'bg-[#EEF0F5] text-[#8A95A3]'
+                  'bg-[#f5f5f7] text-[#a1a1a6]'
                 }`}>
                   {doc.parse_status === 'done' ? 'Analysé' :
                    doc.parse_status === 'processing' ? 'En cours...' :
@@ -310,10 +310,10 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
       {data && (
         <>
           <div className="grid grid-cols-2 gap-4">
-            <div className="bg-white rounded-xl border border-[#E2E8F0] p-5">
-              <h4 className="text-sm font-medium text-[#4A5568] mb-1">Altman Z&apos;</h4>
+            <div className="bg-[#f5f5f7] rounded-[20px] p-5">
+              <h4 className="text-sm font-medium text-[#6e6e73] mb-1">Altman Z&apos;</h4>
               <div className="flex items-center gap-3">
-                <span className="text-2xl font-bold font-mono text-[#0F1923]">
+                <span className="text-2xl font-bold font-mono text-[#1d1d1f]">
                   {data.score_altman_z !== null ? data.score_altman_z.toFixed(2) : '—'}
                 </span>
                 {data.altman_zone && (
@@ -322,12 +322,12 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
                   </span>
                 )}
               </div>
-              <p className="text-xs text-[#8A95A3] mt-1">&gt;2.9 sain | 1.23-2.9 gris | &lt;1.23 danger</p>
+              <p className="text-xs text-[#a1a1a6] mt-1">&gt;2.9 sain | 1.23-2.9 gris | &lt;1.23 danger</p>
             </div>
-            <div className="bg-white rounded-xl border border-[#E2E8F0] p-5">
-              <h4 className="text-sm font-medium text-[#4A5568] mb-1">Conan &amp; Holder</h4>
+            <div className="bg-[#f5f5f7] rounded-[20px] p-5">
+              <h4 className="text-sm font-medium text-[#6e6e73] mb-1">Conan &amp; Holder</h4>
               <div className="flex items-center gap-3">
-                <span className="text-2xl font-bold font-mono text-[#0F1923]">
+                <span className="text-2xl font-bold font-mono text-[#1d1d1f]">
                   {data.score_conan_holder !== null ? data.score_conan_holder.toFixed(3) : '—'}
                 </span>
                 {data.conan_zone && (
@@ -336,13 +336,13 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
                   </span>
                 )}
               </div>
-              <p className="text-xs text-[#8A95A3] mt-1">&gt;0.09 sain | 0.04-0.09 attention | &lt;0.04 difficultés</p>
+              <p className="text-xs text-[#a1a1a6] mt-1">&gt;0.09 sain | 0.04-0.09 attention | &lt;0.04 difficultés</p>
             </div>
           </div>
 
           {/* Données brutes */}
-          <div className="bg-white rounded-xl border border-[#E2E8F0] p-6">
-            <h3 className="font-semibold text-[#0F1923] mb-4">
+          <div className="bg-[#f5f5f7] rounded-[20px] p-6">
+            <h3 className="font-semibold text-[#1d1d1f] mb-4">
               Données comptables {data.annee ? `(${data.annee})` : ''}
             </h3>
             <div className="grid grid-cols-3 gap-x-8 gap-y-3 text-sm">
@@ -363,16 +363,16 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
             const hasAny = group.keys.some((k) => ratios[k] !== null && ratios[k] !== undefined);
             if (!hasAny) return null;
             return (
-              <div key={group.title} className="bg-white rounded-xl border border-[#E2E8F0] p-6">
-                <h3 className="font-semibold text-[#0F1923] mb-4">{group.title}</h3>
+              <div key={group.title} className="bg-[#f5f5f7] rounded-[20px] p-6">
+                <h3 className="font-semibold text-[#1d1d1f] mb-4">{group.title}</h3>
                 <div className="grid grid-cols-2 gap-x-8 gap-y-3 text-sm">
                   {group.keys.map((key) => {
                     const val = ratios[key];
                     if (val === null || val === undefined) return null;
                     return (
                       <div key={key} className="flex justify-between">
-                        <span className="text-[#4A5568]">{RATIO_LABELS[key] || key}</span>
-                        <span className="font-mono font-medium text-[#0F1923]">{fmt(val)}</span>
+                        <span className="text-[#6e6e73]">{RATIO_LABELS[key] || key}</span>
+                        <span className="font-mono font-medium text-[#1d1d1f]">{fmt(val)}</span>
                       </div>
                     );
                   })}
@@ -389,8 +389,8 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
 function KV({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex justify-between">
-      <span className="text-[#8A95A3]">{label}</span>
-      <span className="font-mono text-[#0F1923]">{value}</span>
+      <span className="text-[#a1a1a6]">{label}</span>
+      <span className="font-mono text-[#1d1d1f]">{value}</span>
     </div>
   );
 }

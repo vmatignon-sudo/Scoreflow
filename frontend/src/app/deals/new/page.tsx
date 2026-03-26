@@ -113,13 +113,13 @@ export default function NewDealPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F7F8FA]">
+    <div className="min-h-screen bg-[#f5f5f7]">
       <Sidebar />
       <main className="ml-[240px] p-8">
         <div className="max-w-3xl mx-auto">
           {/* Header */}
-          <h1 className="text-2xl font-bold text-[#0F1923] mb-2">Nouveau dossier</h1>
-          <p className="text-[#4A5568] mb-6">5 minutes pour analyser un deal complet</p>
+          <h1 className="text-2xl font-bold text-[#1d1d1f] mb-2">Nouveau dossier</h1>
+          <p className="text-[#6e6e73] mb-6">5 minutes pour analyser un deal complet</p>
 
           {/* Step indicator */}
           <div className="flex items-center gap-1 mb-8">
@@ -128,17 +128,17 @@ export default function NewDealPage() {
                 <div
                   className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium w-full ${
                     s.num === step
-                      ? 'bg-[#1B4FD8] text-white'
+                      ? 'bg-[#1d1d1f] text-white'
                       : s.num < step
-                      ? 'bg-[#EBF0FF] text-[#1B4FD8]'
-                      : 'bg-[#EEF0F5] text-[#8A95A3]'
+                      ? 'bg-[#f5f5f7] text-[#1d1d1f]'
+                      : 'bg-[#f5f5f7] text-[#a1a1a6]'
                   }`}
                 >
                   <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
                     s.num === step
                       ? 'bg-white/20'
                       : s.num < step
-                      ? 'bg-[#1B4FD8]/10'
+                      ? 'bg-[#1d1d1f]/10'
                       : 'bg-[#E2E8F0]'
                   }`}>
                     {s.num < step ? '✓' : s.num}

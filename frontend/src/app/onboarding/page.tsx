@@ -87,15 +87,15 @@ export default function OnboardingPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#F7F8FA]">
-      <div className="bg-white p-8 rounded-xl shadow-sm border border-[#E2E8F0] max-w-lg w-full">
+    <div className="min-h-screen flex items-center justify-center bg-[#f5f5f7]">
+      <div className="bg-white p-8 rounded-xl shadow-sm border border-black/[0.04] max-w-lg w-full">
         {/* Progress */}
         <div className="flex items-center gap-2 mb-8">
           {[1, 2, 3].map((s) => (
             <div
               key={s}
               className={`h-1.5 flex-1 rounded-full transition-colors ${
-                s <= step ? 'bg-[#1B4FD8]' : 'bg-[#E2E8F0]'
+                s <= step ? 'bg-[#1d1d1f]' : 'bg-[#E2E8F0]'
               }`}
             />
           ))}
@@ -104,10 +104,10 @@ export default function OnboardingPage() {
         {/* Step 1: Organization name */}
         {step === 1 && (
           <div>
-            <h2 className="text-xl font-semibold text-[#0F1923] mb-1">
+            <h2 className="text-xl font-semibold text-[#1d1d1f] mb-1">
               Bienvenue sur ScoreFlow
             </h2>
-            <p className="text-[#4A5568] mb-6">
+            <p className="text-[#6e6e73] mb-6">
               Comment s&apos;appelle votre organisation ?
             </p>
             <input
@@ -115,12 +115,12 @@ export default function OnboardingPage() {
               value={orgName}
               onChange={(e) => setOrgName(e.target.value)}
               placeholder="Ex: Finance Plus, BTP Crédit..."
-              className="w-full px-3 py-2.5 border border-[#E2E8F0] rounded-lg focus:ring-2 focus:ring-[#1B4FD8] focus:border-transparent outline-none text-[#0F1923] mb-6"
+              className="w-full px-3 py-2.5 rounded-[16px] bg-[#f5f5f7] focus:ring-2 focus:ring-[#1B4FD8] focus:border-transparent outline-none text-[#1d1d1f] mb-6"
             />
             <button
               onClick={() => setStep(2)}
               disabled={!orgName.trim()}
-              className="w-full bg-[#1B4FD8] text-white py-2.5 rounded-lg font-medium hover:bg-[#1640B0] transition-colors disabled:opacity-50"
+              className="w-full bg-[#1d1d1f] text-white py-2.5 rounded-lg font-medium hover:bg-[#000] transition-colors disabled:opacity-50"
             >
               Continuer
             </button>
@@ -130,10 +130,10 @@ export default function OnboardingPage() {
         {/* Step 2: Activity type */}
         {step === 2 && (
           <div>
-            <h2 className="text-xl font-semibold text-[#0F1923] mb-1">
+            <h2 className="text-xl font-semibold text-[#1d1d1f] mb-1">
               Type d&apos;activité
             </h2>
-            <p className="text-[#4A5568] mb-6">
+            <p className="text-[#6e6e73] mb-6">
               Quel est votre domaine principal ?
             </p>
             <div className="space-y-2 mb-6">
@@ -143,8 +143,8 @@ export default function OnboardingPage() {
                   onClick={() => setActivityType(type.id)}
                   className={`w-full text-left px-4 py-3 rounded-lg border transition-colors ${
                     activityType === type.id
-                      ? 'border-[#1B4FD8] bg-[#EBF0FF] text-[#1B4FD8]'
-                      : 'border-[#E2E8F0] hover:border-[#CBD5E1] text-[#0F1923]'
+                      ? 'border-[#1d1d1f] bg-[#f5f5f7] text-[#1d1d1f]'
+                      : 'border-black/[0.04] hover:bg-[#ededf0] text-[#1d1d1f]'
                   }`}
                 >
                   {type.label}
@@ -154,14 +154,14 @@ export default function OnboardingPage() {
             <div className="flex gap-3">
               <button
                 onClick={() => setStep(1)}
-                className="flex-1 bg-[#F7F8FA] text-[#4A5568] py-2.5 rounded-lg font-medium hover:bg-[#EEF0F5] transition-colors"
+                className="flex-1 bg-[#f5f5f7] text-[#6e6e73] py-2.5 rounded-lg font-medium hover:bg-[#f5f5f7] transition-colors"
               >
                 Retour
               </button>
               <button
                 onClick={() => setStep(3)}
                 disabled={!activityType}
-                className="flex-1 bg-[#1B4FD8] text-white py-2.5 rounded-lg font-medium hover:bg-[#1640B0] transition-colors disabled:opacity-50"
+                className="flex-1 bg-[#1d1d1f] text-white py-2.5 rounded-lg font-medium hover:bg-[#000] transition-colors disabled:opacity-50"
               >
                 Continuer
               </button>
@@ -172,16 +172,16 @@ export default function OnboardingPage() {
         {/* Step 3: Default parameters */}
         {step === 3 && (
           <div>
-            <h2 className="text-xl font-semibold text-[#0F1923] mb-1">
+            <h2 className="text-xl font-semibold text-[#1d1d1f] mb-1">
               Paramètres par défaut
             </h2>
-            <p className="text-[#4A5568] mb-6">
+            <p className="text-[#6e6e73] mb-6">
               Vous pourrez les modifier à tout moment.
             </p>
 
             <div className="space-y-5 mb-6">
               <div>
-                <label className="block text-sm font-medium text-[#0F1923] mb-2">
+                <label className="block text-sm font-medium text-[#1d1d1f] mb-2">
                   Taux de refinancement par défaut : {tauxRefinancement}%
                 </label>
                 <input
@@ -193,14 +193,14 @@ export default function OnboardingPage() {
                   onChange={(e) => setTauxRefinancement(parseFloat(e.target.value))}
                   className="w-full accent-[#1B4FD8]"
                 />
-                <div className="flex justify-between text-xs text-[#8A95A3] mt-1">
+                <div className="flex justify-between text-xs text-[#a1a1a6] mt-1">
                   <span>1%</span>
                   <span>10%</span>
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-[#0F1923] mb-2">
+                <label className="block text-sm font-medium text-[#1d1d1f] mb-2">
                   Délai de récupération par défaut : {delaiRecuperation} mois
                 </label>
                 <div className="flex gap-2">
@@ -210,8 +210,8 @@ export default function OnboardingPage() {
                       onClick={() => setDelaiRecuperation(m)}
                       className={`flex-1 py-2 rounded-lg border text-sm font-medium transition-colors ${
                         delaiRecuperation === m
-                          ? 'border-[#1B4FD8] bg-[#EBF0FF] text-[#1B4FD8]'
-                          : 'border-[#E2E8F0] text-[#4A5568] hover:border-[#CBD5E1]'
+                          ? 'border-[#1d1d1f] bg-[#f5f5f7] text-[#1d1d1f]'
+                          : 'border-black/[0.04] text-[#6e6e73] hover:bg-[#ededf0]'
                       }`}
                     >
                       {m}m
@@ -224,14 +224,14 @@ export default function OnboardingPage() {
             <div className="flex gap-3">
               <button
                 onClick={() => setStep(2)}
-                className="flex-1 bg-[#F7F8FA] text-[#4A5568] py-2.5 rounded-lg font-medium hover:bg-[#EEF0F5] transition-colors"
+                className="flex-1 bg-[#f5f5f7] text-[#6e6e73] py-2.5 rounded-lg font-medium hover:bg-[#f5f5f7] transition-colors"
               >
                 Retour
               </button>
               <button
                 onClick={handleComplete}
                 disabled={loading}
-                className="flex-1 bg-[#1B4FD8] text-white py-2.5 rounded-lg font-medium hover:bg-[#1640B0] transition-colors disabled:opacity-50"
+                className="flex-1 bg-[#1d1d1f] text-white py-2.5 rounded-lg font-medium hover:bg-[#000] transition-colors disabled:opacity-50"
               >
                 {loading ? 'Configuration...' : 'Lancer ScoreFlow'}
               </button>

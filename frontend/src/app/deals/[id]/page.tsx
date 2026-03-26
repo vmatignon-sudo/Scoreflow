@@ -55,13 +55,13 @@ export default function DealDetailPage() {
 
   if (!deal) {
     return (
-      <div className="min-h-screen bg-[#F7F8FA]">
+      <div className="min-h-screen bg-[#f5f5f7]">
         <Sidebar />
         <main className="ml-[240px] p-8">
           <div className="animate-pulse space-y-4">
-            <div className="h-8 bg-[#EEF0F5] rounded w-1/3" />
-            <div className="h-4 bg-[#EEF0F5] rounded w-1/4" />
-            <div className="h-64 bg-[#EEF0F5] rounded" />
+            <div className="h-8 bg-[#f5f5f7] rounded w-1/3" />
+            <div className="h-4 bg-[#f5f5f7] rounded w-1/4" />
+            <div className="h-64 bg-[#f5f5f7] rounded" />
           </div>
         </main>
       </div>
@@ -84,14 +84,14 @@ export default function DealDetailPage() {
           {/* Header */}
           <div className="flex items-start justify-between mb-6">
             <div>
-              <h1 className="text-2xl font-bold text-[#0F1923]">{deal.raison_sociale}</h1>
-              <p className="text-[#4A5568] mt-1">
+              <h1 className="text-2xl font-bold text-[#1d1d1f]">{deal.raison_sociale}</h1>
+              <p className="text-[#6e6e73] mt-1">
                 {deal.siren} - {deal.secteur_label} - {deal.type_financement?.replace('_', ' ')}
               </p>
             </div>
             <button
               onClick={() => setShowDeleteConfirm(true)}
-              className="px-3 py-2 text-sm text-[#8A95A3] hover:text-[#DC2626] hover:bg-red-50 rounded-lg transition-colors"
+              className="px-3 py-2 text-sm text-[#a1a1a6] hover:text-[#DC2626] hover:bg-red-50 rounded-lg transition-colors"
             >
               <svg className="w-4 h-4 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -104,20 +104,20 @@ export default function DealDetailPage() {
           {showDeleteConfirm && (
             <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
               <div className="bg-white rounded-xl p-6 max-w-md w-full mx-4 shadow-xl">
-                <h3 className="text-lg font-semibold text-[#0F1923] mb-2">
+                <h3 className="text-lg font-semibold text-[#1d1d1f] mb-2">
                   Supprimer ce dossier ?
                 </h3>
-                <p className="text-sm text-[#4A5568] mb-1">
+                <p className="text-sm text-[#6e6e73] mb-1">
                   <strong>{deal.raison_sociale}</strong> ({deal.siren})
                 </p>
-                <p className="text-sm text-[#8A95A3] mb-6">
+                <p className="text-sm text-[#a1a1a6] mb-6">
                   Cette action est irréversible. Toutes les données associées (scores, documents, simulations) seront supprimées.
                 </p>
                 <div className="flex gap-3">
                   <button
                     onClick={() => setShowDeleteConfirm(false)}
                     disabled={deleting}
-                    className="flex-1 py-2.5 border border-[#E2E8F0] text-[#4A5568] rounded-lg font-medium hover:bg-[#F7F8FA] transition-colors"
+                    className="flex-1 py-2.5 border border-black/[0.04] text-[#6e6e73] rounded-lg font-medium hover:bg-[#f5f5f7] transition-colors"
                   >
                     Annuler
                   </button>
@@ -150,15 +150,15 @@ export default function DealDetailPage() {
           <VerdictBanner score={score} />
 
           {/* Tabs */}
-          <div className="flex gap-1 mb-6 border-b border-[#E2E8F0]">
+          <div className="flex gap-1 mb-6 border-b border-black/[0.04]">
             {TABS.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
                   activeTab === tab.id
-                    ? 'border-[#1B4FD8] text-[#1B4FD8]'
-                    : 'border-transparent text-[#4A5568] hover:text-[#0F1923]'
+                    ? 'border-[#1d1d1f] text-[#1d1d1f]'
+                    : 'border-transparent text-[#6e6e73] hover:text-[#1d1d1f]'
                 }`}
               >
                 {tab.label}
@@ -170,15 +170,15 @@ export default function DealDetailPage() {
           {activeTab === 'overview' && (
             <div className="space-y-6">
               {/* Score radar */}
-              <div className="bg-white rounded-xl border border-[#E2E8F0] p-6">
-                <h3 className="font-semibold text-[#0F1923] mb-4">Score par dimension</h3>
+              <div className="bg-[#f5f5f7] rounded-[20px] p-6">
+                <h3 className="font-semibold text-[#1d1d1f] mb-4">Score par dimension</h3>
                 <RadarChart score={score} />
               </div>
 
               {/* Deal summary */}
               <div className="grid grid-cols-2 gap-6">
-                <div className="bg-white rounded-xl border border-[#E2E8F0] p-6">
-                  <h3 className="font-semibold text-[#0F1923] mb-4">Conditions du deal</h3>
+                <div className="bg-[#f5f5f7] rounded-[20px] p-6">
+                  <h3 className="font-semibold text-[#1d1d1f] mb-4">Conditions du deal</h3>
                   <div className="space-y-3 text-sm">
                     <Row label="Montant financé" value={`${deal.montant_finance?.toLocaleString('fr-FR')} EUR`} />
                     <Row label="Apport initial" value={`${deal.apport_initial.toLocaleString('fr-FR')} EUR`} />
@@ -187,8 +187,8 @@ export default function DealDetailPage() {
                     <Row label="Dépôt de garantie" value={`${deal.depot_garantie.toLocaleString('fr-FR')} EUR`} />
                   </div>
                 </div>
-                <div className="bg-white rounded-xl border border-[#E2E8F0] p-6">
-                  <h3 className="font-semibold text-[#0F1923] mb-4">Bien financé</h3>
+                <div className="bg-[#f5f5f7] rounded-[20px] p-6">
+                  <h3 className="font-semibold text-[#1d1d1f] mb-4">Bien financé</h3>
                   <div className="space-y-3 text-sm">
                     <Row label="Catégorie" value={asset?.asset_class?.replace(/_/g, ' ') || '—'} />
                     <Row label="Marque / Modèle" value={`${asset?.marque || ''} ${asset?.modele || ''}`.trim() || '—'} />
@@ -218,8 +218,8 @@ export default function DealDetailPage() {
           )}
 
           {activeTab === 'director' && (
-            <div className="bg-white rounded-xl border border-[#E2E8F0] p-6">
-              <h3 className="font-semibold text-[#0F1923] mb-4">Analyse dirigeant</h3>
+            <div className="bg-[#f5f5f7] rounded-[20px] p-6">
+              <h3 className="font-semibold text-[#1d1d1f] mb-4">Analyse dirigeant</h3>
               <div className="space-y-3 text-sm">
                 <Row label="Dirigeant" value={`${deal.dirigeant_prenom} ${deal.dirigeant_nom}`} />
                 <Row label="Nommé depuis" value={deal.jours_depuis_nomination ? `${deal.jours_depuis_nomination} jours` : '—'} />
@@ -242,8 +242,8 @@ export default function DealDetailPage() {
 function Row({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex justify-between">
-      <span className="text-[#8A95A3]">{label}</span>
-      <span className="font-medium text-[#0F1923]">{value}</span>
+      <span className="text-[#a1a1a6]">{label}</span>
+      <span className="font-medium text-[#1d1d1f]">{value}</span>
     </div>
   );
 }

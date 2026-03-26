@@ -70,22 +70,22 @@ export default function RiskCurveChart({ deal, asset }: Props) {
     <div className="space-y-6">
       {/* Key metrics */}
       <div className="grid grid-cols-3 gap-4">
-        <div className="bg-white rounded-xl border border-[#E2E8F0] p-5">
-          <p className="text-sm text-[#4A5568] mb-1">Couverture matériel</p>
-          <p className="text-2xl font-bold font-mono text-[#1B4FD8]">
+        <div className="bg-[#f5f5f7] rounded-[20px] p-5">
+          <p className="text-sm text-[#6e6e73] mb-1">Couverture matériel</p>
+          <p className="text-2xl font-bold font-mono text-[#1d1d1f]">
             {moisCouvertureMateriel !== null ? `Mois ${moisCouvertureMateriel}` : '—'}
           </p>
-          <p className="text-xs text-[#8A95A3] mt-1">Point A</p>
+          <p className="text-xs text-[#a1a1a6] mt-1">Point A</p>
         </div>
-        <div className="bg-white rounded-xl border border-[#E2E8F0] p-5">
-          <p className="text-sm text-[#4A5568] mb-1">Couverture totale</p>
+        <div className="bg-[#f5f5f7] rounded-[20px] p-5">
+          <p className="text-sm text-[#6e6e73] mb-1">Couverture totale</p>
           <p className="text-2xl font-bold font-mono text-[#059669]">
             {moisCouvertureTotale !== null ? `Mois ${moisCouvertureTotale}` : '—'}
           </p>
-          <p className="text-xs text-[#8A95A3] mt-1">Point B — plus de perte possible</p>
+          <p className="text-xs text-[#a1a1a6] mt-1">Point B — plus de perte possible</p>
         </div>
-        <div className="bg-white rounded-xl border border-[#E2E8F0] p-5">
-          <p className="text-sm text-[#4A5568] mb-1">Exposition maximale</p>
+        <div className="bg-[#f5f5f7] rounded-[20px] p-5">
+          <p className="text-sm text-[#6e6e73] mb-1">Exposition maximale</p>
           <p className="text-2xl font-bold font-mono text-[#DC2626]">
             {expositionMax.toLocaleString('fr-FR')} EUR
           </p>
@@ -93,8 +93,8 @@ export default function RiskCurveChart({ deal, asset }: Props) {
       </div>
 
       {/* Main chart */}
-      <div className="bg-white rounded-xl border border-[#E2E8F0] p-6">
-        <h3 className="font-semibold text-[#0F1923] mb-4">Courbe de Risque Résiduel Net (RRN)</h3>
+      <div className="bg-[#f5f5f7] rounded-[20px] p-6">
+        <h3 className="font-semibold text-[#1d1d1f] mb-4">Courbe de Risque Résiduel Net (RRN)</h3>
 
         {moisCouvertureTotale !== null && (
           <div className="mb-4 p-3 bg-[#F0FDF4] border border-[#059669] rounded-lg text-sm text-[#059669]">
@@ -173,12 +173,12 @@ export default function RiskCurveChart({ deal, asset }: Props) {
           </ComposedChart>
         </ResponsiveContainer>
 
-        <div className="flex gap-4 mt-4 text-xs text-[#4A5568]">
+        <div className="flex gap-4 mt-4 text-xs text-[#6e6e73]">
           <span className="flex items-center gap-1">
             <span className="w-3 h-3 bg-[#DC2626] rounded-sm inline-block" /> CRD banque
           </span>
           <span className="flex items-center gap-1">
-            <span className="w-3 h-3 bg-[#1B4FD8] rounded-sm inline-block" /> Valeur récupérable
+            <span className="w-3 h-3 bg-[#1d1d1f] rounded-sm inline-block" /> Valeur récupérable
           </span>
           <span className="flex items-center gap-1">
             <span className="w-3 h-3 bg-[#059669] rounded-sm inline-block" /> Loyers nets

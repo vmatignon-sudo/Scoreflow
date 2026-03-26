@@ -167,37 +167,37 @@ export default function StepLaunch({ draft, onBack }: Props) {
   return (
     <div className="space-y-6">
       {/* Summary */}
-      <div className="bg-white rounded-xl border border-[#E2E8F0] p-6">
-        <h3 className="font-semibold text-[#0F1923] mb-4">Récapitulatif</h3>
+      <div className="bg-[#f5f5f7] rounded-[20px] p-6">
+        <h3 className="font-semibold text-[#1d1d1f] mb-4">Récapitulatif</h3>
         <div className="grid grid-cols-2 gap-4 text-sm">
           <div>
-            <span className="text-[#8A95A3]">Entreprise</span>
-            <p className="font-medium text-[#0F1923]">{draft.raison_sociale}</p>
-            <p className="text-[#4A5568]">{draft.siren}</p>
+            <span className="text-[#a1a1a6]">Entreprise</span>
+            <p className="font-medium text-[#1d1d1f]">{draft.raison_sociale}</p>
+            <p className="text-[#6e6e73]">{draft.siren}</p>
           </div>
           <div>
-            <span className="text-[#8A95A3]">Secteur</span>
-            <p className="text-[#0F1923]">{draft.secteur_label || draft.code_naf}</p>
+            <span className="text-[#a1a1a6]">Secteur</span>
+            <p className="text-[#1d1d1f]">{draft.secteur_label || draft.code_naf}</p>
           </div>
           <div>
-            <span className="text-[#8A95A3]">Montant financé</span>
-            <p className="font-mono font-bold text-[#0F1923]">
+            <span className="text-[#a1a1a6]">Montant financé</span>
+            <p className="font-mono font-bold text-[#1d1d1f]">
               {draft.montant_finance.toLocaleString('fr-FR')} EUR
             </p>
           </div>
           <div>
-            <span className="text-[#8A95A3]">Durée</span>
-            <p className="font-mono text-[#0F1923]">{draft.duree_mois} mois</p>
+            <span className="text-[#a1a1a6]">Durée</span>
+            <p className="font-mono text-[#1d1d1f]">{draft.duree_mois} mois</p>
           </div>
           <div>
-            <span className="text-[#8A95A3]">Bien</span>
-            <p className="text-[#0F1923]">
+            <span className="text-[#a1a1a6]">Bien</span>
+            <p className="text-[#1d1d1f]">
               {draft.marque} {draft.modele} {draft.annee_fabrication}
             </p>
           </div>
           <div>
-            <span className="text-[#8A95A3]">Type</span>
-            <p className="text-[#0F1923] capitalize">
+            <span className="text-[#a1a1a6]">Type</span>
+            <p className="text-[#1d1d1f] capitalize">
               {draft.type_financement?.replace('_', ' ')}
             </p>
           </div>
@@ -206,13 +206,13 @@ export default function StepLaunch({ draft, onBack }: Props) {
 
       {/* Analysis progress */}
       {analyzing && (
-        <div className="bg-white rounded-xl border border-[#E2E8F0] p-6">
-          <h3 className="font-semibold text-[#0F1923] mb-4">Analyse en cours...</h3>
+        <div className="bg-[#f5f5f7] rounded-[20px] p-6">
+          <h3 className="font-semibold text-[#1d1d1f] mb-4">Analyse en cours...</h3>
           <div className="space-y-3">
             {ANALYSIS_STEPS.map((step) => (
               <div key={step.key} className="flex items-center gap-3">
                 <span className="text-xl">{step.icon}</span>
-                <span className="flex-1 text-sm text-[#0F1923]">{step.label}</span>
+                <span className="flex-1 text-sm text-[#1d1d1f]">{step.label}</span>
                 <AnalysisStatus status={progress[step.key]} />
               </div>
             ))}
@@ -225,13 +225,13 @@ export default function StepLaunch({ draft, onBack }: Props) {
         <div className="flex gap-3">
           <button
             onClick={onBack}
-            className="flex-1 bg-white border border-[#E2E8F0] text-[#4A5568] py-3 rounded-lg font-medium hover:bg-[#F7F8FA] transition-colors"
+            className="flex-1 bg-white border border-black/[0.04] text-[#6e6e73] py-3 rounded-lg font-medium hover:bg-[#f5f5f7] transition-colors"
           >
             Retour
           </button>
           <button
             onClick={handleLaunch}
-            className="flex-1 bg-[#1B4FD8] text-white py-3 rounded-lg font-medium hover:bg-[#1640B0] transition-colors flex items-center justify-center gap-2"
+            className="flex-1 bg-[#1d1d1f] text-white py-3 rounded-lg font-medium hover:bg-[#000] transition-colors flex items-center justify-center gap-2"
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -247,7 +247,7 @@ export default function StepLaunch({ draft, onBack }: Props) {
 function AnalysisStatus({ status }: { status: string }) {
   if (status === 'processing') {
     return (
-      <div className="w-5 h-5 border-2 border-[#1B4FD8] border-t-transparent rounded-full animate-spin" />
+      <div className="w-5 h-5 border-2 border-[#1d1d1f] border-t-transparent rounded-full animate-spin" />
     );
   }
   if (status === 'done') {
@@ -259,5 +259,5 @@ function AnalysisStatus({ status }: { status: string }) {
       </div>
     );
   }
-  return <div className="w-5 h-5 bg-[#EEF0F5] rounded-full" />;
+  return <div className="w-5 h-5 bg-[#f5f5f7] rounded-full" />;
 }
