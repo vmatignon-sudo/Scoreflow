@@ -10,21 +10,26 @@
 - Glassmorphism sur sidebar et nav (backdrop-filter blur)
 - Typographie serrée (tracking-tight), tailles précises en pixels
 
-### Palette
-- Background : #fafafa (pas de gris foncé)
-- Cards : #ffffff avec shadow-sm (pas de border visible)
+### Palette — PAS DE BLEU
+- Background : #fbfbfd
+- Cards/tuiles : #f5f5f7 (gris très clair, style Apple)
+- Cards élevées : #ffffff avec shadow-lg
 - Texte principal : #1d1d1f
-- Texte secondaire : #86868b
-- Accent : #0071e3 (bleu Apple)
-- Success : #34c759, Warning : #ff9f0a, Danger : #ff3b30
+- Texte secondaire : #6e6e73
+- Texte muted : #a1a1a6
+- CTA/boutons : #1d1d1f (noir), hover #000
+- Success : #2d9d3f, Warning : #bf5a00, Danger : #c4342d
 - Borders : rgba(0,0,0,0.04) — quasi invisibles
+- PAS de bleu (#0071e3 interdit), PAS de couleurs saturées
 
 ### Composants
-- Boutons primaires : bg-[#0071e3] rounded-xl ou rounded-full
-- Inputs : bg-black/[0.03] rounded-xl, pas de border, focus:ring accent
-- Cards : bg-white rounded-2xl shadow-sm, pas de border
-- Sidebar : bg-white/80 glass, border-r border-black/[0.04]
-- Score gauge : arcs SVG fins (strokeWidth 8), animations ease-out
+- Boutons primaires : bg-[#1d1d1f] text-white rounded-[12px] ou rounded-full
+- Boutons secondaires : bg-[#f5f5f7] text-[#1d1d1f] rounded-[12px]
+- Inputs : bg-[#f5f5f7] rounded-[12px], pas de border, focus:ring-black/10
+- Tuiles features : bg-[#f5f5f7] rounded-[20px], hover:bg-[#ededf0]
+- Cards : bg-white rounded-[20px] shadow-sm
+- Sidebar : bg-[#fbfbfd]/80 glass, w-[240px]
+- Score gauge : arcs SVG fins (strokeWidth 6), animations ease-out
 
 ### Responsive
 - Mobile first : tout doit être lisible sur iPhone

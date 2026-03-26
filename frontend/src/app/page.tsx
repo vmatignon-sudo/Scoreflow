@@ -2,23 +2,20 @@ import Link from 'next/link';
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-[#fafafa]">
+    <div className="min-h-screen bg-[#fbfbfd]">
       {/* Nav */}
-      <nav className="sticky top-0 z-50 bg-white/70 glass border-b border-black/[0.04]">
-        <div className="max-w-6xl mx-auto flex items-center justify-between px-6 h-12">
+      <nav className="sticky top-0 z-50 bg-[#fbfbfd]/80 glass">
+        <div className="max-w-[980px] mx-auto flex items-center justify-between px-5 h-11">
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-gradient-to-br from-[#0071e3] to-[#40a9ff] rounded-md flex items-center justify-center">
-              <span className="text-white font-semibold text-[9px]">SF</span>
-            </div>
             <span className="font-semibold text-[#1d1d1f] text-[14px] tracking-tight">ScoreFlow</span>
           </Link>
-          <div className="flex items-center gap-3">
-            <Link href="/auth/login" className="text-[13px] text-[#1d1d1f] hover:text-[#0071e3] font-medium transition-colors">
+          <div className="flex items-center gap-5">
+            <Link href="/auth/login" className="text-[12px] text-[#1d1d1f] hover:text-[#6e6e73] font-normal transition-colors">
               Se connecter
             </Link>
             <Link
               href="/auth/register"
-              className="text-[13px] bg-[#0071e3] text-white px-4 py-1.5 rounded-full font-medium hover:bg-[#0077ED] active:scale-[0.97] transition-all"
+              className="text-[12px] bg-[#1d1d1f] text-white px-4 py-1.5 rounded-full font-normal hover:bg-[#000] active:scale-[0.97] transition-all"
             >
               Commencer
             </Link>
@@ -27,61 +24,80 @@ export default function HomePage() {
       </nav>
 
       {/* Hero */}
-      <section className="max-w-3xl mx-auto px-5 sm:px-6 pt-16 sm:pt-28 pb-16 sm:pb-20 text-center">
-        <p className="text-[#0071e3] text-[13px] sm:text-[14px] font-medium mb-3 sm:mb-4 tracking-tight">
-          Scoring de deals de financement
-        </p>
-        <h1 className="text-[32px] sm:text-[52px] font-bold text-[#1d1d1f] leading-[1.1] sm:leading-[1.05] tracking-tight mb-4 sm:mb-5">
-          Analysez un deal<br />
-          en <span className="bg-gradient-to-r from-[#0071e3] to-[#40a9ff] bg-clip-text text-transparent">5 minutes</span>
+      <section className="max-w-[680px] mx-auto px-5 pt-20 sm:pt-32 pb-16 sm:pb-24 text-center">
+        <h1 className="text-[36px] sm:text-[56px] font-semibold text-[#1d1d1f] leading-[1.05] tracking-tight mb-3">
+          Scorez vos deals.
         </h1>
-        <p className="text-[15px] sm:text-[18px] text-[#86868b] max-w-lg mx-auto leading-relaxed mb-8 sm:mb-10 px-2">
-          ScoreFlow note le deal, pas le client. Scoring composite sur 5 dimensions
-          incluant le bien financé et sa valeur résiduelle.
+        <h2 className="text-[36px] sm:text-[56px] font-semibold text-[#6e6e73] leading-[1.05] tracking-tight mb-6">
+          En 5 minutes.
+        </h2>
+        <p className="text-[17px] sm:text-[21px] text-[#6e6e73] max-w-[500px] mx-auto leading-[1.4] mb-8 sm:mb-10 font-normal">
+          Scoring composite sur 5 dimensions. Le bien financé, la valeur résiduelle, le risque. Tout compris.
         </p>
-        <div className="flex flex-col sm:flex-row gap-3 justify-center px-4 sm:px-0">
+        <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
           <Link
             href="/auth/register"
-            className="bg-[#0071e3] text-white px-7 py-3 rounded-full font-medium text-[15px] hover:bg-[#0077ED] active:scale-[0.97] transition-all shadow-sm"
+            className="bg-[#1d1d1f] text-white px-7 py-2.5 rounded-full text-[15px] font-normal hover:bg-[#000] active:scale-[0.97] transition-all"
           >
             Démarrer gratuitement
           </Link>
           <Link
-            href="/auth/login"
-            className="bg-black/[0.04] text-[#1d1d1f] px-7 py-3 rounded-full font-medium text-[15px] hover:bg-black/[0.06] active:scale-[0.97] transition-all"
+            href="#features"
+            className="text-[#1d1d1f] text-[15px] font-normal hover:text-[#6e6e73] transition-colors flex items-center gap-1"
           >
-            Se connecter
+            En savoir plus
+            <svg className="w-3.5 h-3.5 mt-px" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
           </Link>
         </div>
       </section>
 
       {/* Features */}
-      <section className="max-w-5xl mx-auto px-5 sm:px-6 pb-20 sm:pb-28">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-          {[
-            { title: '5 dimensions', desc: 'Macro, financier, matériel, dirigeant, inscriptions.' },
-            { title: 'Simulateur', desc: 'Impact d\'un incident de paiement en temps réel.' },
-            { title: 'APIs publiques', desc: 'SIREN, INPI, ratios sectoriels, macro INSEE.' },
-            { title: 'Deal Optimizer', desc: 'Suggestions pour passer de GO COND. à GO.' },
-            { title: 'Courbe RRN', desc: 'Le mois exact où vous ne perdez plus d\'argent.' },
-            { title: 'Multi-tenant', desc: 'RLS, rôles, profils scoring configurables.' },
-          ].map((f) => (
-            <div
-              key={f.title}
-              className="bg-white rounded-2xl p-6 shadow-sm hover:shadow transition-shadow"
-            >
-              <h3 className="font-semibold text-[#1d1d1f] text-[15px] mb-1.5 tracking-tight">{f.title}</h3>
-              <p className="text-[13px] text-[#86868b] leading-relaxed">{f.desc}</p>
-            </div>
-          ))}
+      <section id="features" className="bg-white py-16 sm:py-24">
+        <div className="max-w-[980px] mx-auto px-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[
+              { title: '5 dimensions', desc: 'Macro-sectoriel, financier, matériel, dirigeant, inscriptions. Score composite /20.' },
+              { title: 'Simulateur', desc: 'Simulez un incident de paiement. Visualisez l\'impact sur votre exposition.' },
+              { title: 'APIs publiques', desc: 'SIREN, INPI, ratios sectoriels, indicateurs macro. Enrichissement automatique.' },
+              { title: 'Deal Optimizer', desc: 'Suggestions pour transformer un GO conditionnel en GO. Effort minimal.' },
+              { title: 'Courbe RRN', desc: 'Le mois exact à partir duquel vous ne pouvez plus perdre d\'argent.' },
+              { title: 'Multi-tenant', desc: 'Row Level Security, rôles, profils de scoring configurables par organisation.' },
+            ].map((f) => (
+              <div
+                key={f.title}
+                className="bg-[#f5f5f7] rounded-[20px] p-7 sm:p-8 hover:bg-[#ededf0] transition-colors"
+              >
+                <h3 className="font-semibold text-[#1d1d1f] text-[17px] mb-2 tracking-tight">{f.title}</h3>
+                <p className="text-[14px] text-[#6e6e73] leading-[1.5]">{f.desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
+      {/* CTA */}
+      <section className="py-16 sm:py-24 text-center px-5">
+        <h2 className="text-[28px] sm:text-[40px] font-semibold text-[#1d1d1f] tracking-tight mb-3">
+          Prêt à scorer ?
+        </h2>
+        <p className="text-[17px] text-[#6e6e73] mb-8">
+          Créez votre premier dossier en quelques clics.
+        </p>
+        <Link
+          href="/auth/register"
+          className="inline-block bg-[#1d1d1f] text-white px-7 py-2.5 rounded-full text-[15px] font-normal hover:bg-[#000] active:scale-[0.97] transition-all"
+        >
+          Commencer gratuitement
+        </Link>
+      </section>
+
       {/* Footer */}
-      <footer className="border-t border-black/[0.04] py-6 px-6">
-        <div className="max-w-5xl mx-auto flex items-center justify-between text-[12px] text-[#86868b]">
+      <footer className="border-t border-black/[0.04] py-5 px-5">
+        <div className="max-w-[980px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-[#6e6e73]">
           <span>ScoreFlow</span>
-          <span>Art. 6.1.f RGPD</span>
+          <span>Art. 6.1.f RGPD — Prévention du risque de crédit</span>
         </div>
       </footer>
     </div>
