@@ -120,7 +120,7 @@ export default function OnboardingPage() {
             <button
               onClick={() => setStep(2)}
               disabled={!orgName.trim()}
-              className="w-full bg-[#1d1d1f] text-white py-2.5 rounded-lg font-medium hover:bg-[#000] transition-colors disabled:opacity-50"
+              className="w-full bg-[#2563eb] text-white py-2.5 rounded-lg font-medium hover:bg-[#1d4ed8] transition-colors disabled:opacity-50"
             >
               Continuer
             </button>
@@ -161,7 +161,7 @@ export default function OnboardingPage() {
               <button
                 onClick={() => setStep(3)}
                 disabled={!activityType}
-                className="flex-1 bg-[#1d1d1f] text-white py-2.5 rounded-lg font-medium hover:bg-[#000] transition-colors disabled:opacity-50"
+                className="flex-1 bg-[#2563eb] text-white py-2.5 rounded-lg font-medium hover:bg-[#1d4ed8] transition-colors disabled:opacity-50"
               >
                 Continuer
               </button>
@@ -231,7 +231,7 @@ export default function OnboardingPage() {
               <button
                 onClick={handleComplete}
                 disabled={loading}
-                className="flex-1 bg-[#1d1d1f] text-white py-2.5 rounded-lg font-medium hover:bg-[#000] transition-colors disabled:opacity-50"
+                className="flex-1 bg-[#2563eb] text-white py-2.5 rounded-lg font-medium hover:bg-[#1d4ed8] transition-colors disabled:opacity-50"
               >
                 {loading ? 'Configuration...' : 'Lancer ScoreFlow'}
               </button>

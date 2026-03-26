@@ -34,7 +34,7 @@ export default function HomePage() {
               Se connecter
             </Link>
             <Link href="/auth/register"
-              className="text-[12px] bg-[#1d1d1f] text-white px-4 py-1.5 rounded-full hover:bg-black active:scale-[0.97] transition-all">
+              className="text-[12px] bg-[#2563eb] text-white px-4 py-1.5 rounded-full hover:bg-[#1d4ed8] active:scale-[0.97] transition-all">
               Commencer
             </Link>
           </div>
@@ -42,7 +42,7 @@ export default function HomePage() {
       </nav>
 
       {/* Hero — dark */}
-      <section className="bg-[#1d1d1f] text-white">
+      <section className="bg-[#2563eb] text-white">
         <div className="max-w-[680px] mx-auto px-5 pt-24 sm:pt-36 pb-20 sm:pb-28 text-center">
           <h1 className="text-[40px] sm:text-[64px] font-semibold leading-[1.03] tracking-tight mb-2">
             ScoreFlow
@@ -90,8 +90,8 @@ export default function HomePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {FEATURES.map((f) => (
               <div key={f.title} className="bg-white rounded-[20px] p-7 shadow hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
-                <div className="w-10 h-10 rounded-[12px] bg-[#f5f5f7] flex items-center justify-center mb-4">
-                  <f.icon className="w-5 h-5 text-[#1d1d1f]" strokeWidth={1.5} />
+                <div className="w-10 h-10 rounded-[12px] bg-[#2563eb]/[0.08] flex items-center justify-center mb-4">
+                  <f.icon className="w-5 h-5 text-[#2563eb]" strokeWidth={1.5} />
                 </div>
                 <h3 className="font-semibold text-[#1d1d1f] text-[17px] mb-2 tracking-tight">{f.title}</h3>
                 <p className="text-[14px] text-[#6e6e73] leading-[1.5]">{f.desc}</p>
@@ -113,8 +113,8 @@ export default function HomePage() {
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-8">
             {STEPS.map((s) => (
               <div key={s.step} className="text-center sm:text-left">
-                <div className="w-12 h-12 rounded-full bg-[#f5f5f7] flex items-center justify-center mx-auto sm:mx-0 mb-4">
-                  <s.icon className="w-5 h-5 text-[#1d1d1f]" strokeWidth={1.5} />
+                <div className="w-12 h-12 rounded-full bg-[#2563eb]/[0.08] flex items-center justify-center mx-auto sm:mx-0 mb-4">
+                  <s.icon className="w-5 h-5 text-[#2563eb]" strokeWidth={1.5} />
                 </div>
                 <p className="text-[12px] text-[#86868b] font-medium mb-1">Étape {s.step}</p>
                 <h3 className="text-[17px] font-semibold text-[#2d2d2d] mb-1 tracking-tight">{s.title}</h3>

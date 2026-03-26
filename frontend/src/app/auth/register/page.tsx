@@ -42,7 +42,7 @@ export default function RegisterPage() {
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={8} placeholder="Mot de passe (8 car. min.)" className={inputClass} />
           {error && <p className="text-[12px] text-[#c4342d] bg-[#c4342d]/[0.05] px-3 py-2 rounded-[10px]">{error}</p>}
           <button type="submit" disabled={loading}
-            className="w-full bg-[#1d1d1f] text-white py-2.5 rounded-[12px] text-[14px] font-medium hover:bg-[#000] active:scale-[0.98] transition-all disabled:opacity-50">
+            className="w-full bg-[#2563eb] text-white py-2.5 rounded-[12px] text-[14px] font-medium hover:bg-[#1d4ed8] active:scale-[0.98] transition-all disabled:opacity-50">
             {loading ? 'Création...' : 'Créer mon compte'}
           </button>
         </form>

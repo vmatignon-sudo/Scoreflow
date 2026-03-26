@@ -193,7 +193,7 @@ export default function StepProspect({ draft, updateDraft, onNext }: Props) {
       <button
         onClick={onNext}
         disabled={!selected}
-        className="w-full bg-[#1d1d1f] text-white py-3 rounded-lg font-medium hover:bg-[#000] transition-colors disabled:opacity-50"
+        className="w-full bg-[#2563eb] text-white py-3 rounded-lg font-medium hover:bg-[#1d4ed8] transition-colors disabled:opacity-50"
       >
         Continuer vers le deal
       </button>

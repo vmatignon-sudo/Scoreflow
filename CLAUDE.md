@@ -10,21 +10,24 @@
 - Glassmorphism sur sidebar et nav (backdrop-filter blur)
 - Typographie serrée (tracking-tight), tailles précises en pixels
 
-### Palette — PAS DE BLEU
-- Background : #fbfbfd
-- Cards/tuiles : #f5f5f7 (gris très clair, style Apple)
-- Cards élevées : #ffffff avec shadow-lg
-- Texte principal : #1d1d1f
+### Palette
+- Background pages : #f5f5f7 (gris clair, app) / blanc (landing sections)
+- Cards de contenu : #ffffff avec shadow (flottent au-dessus du fond)
+- Inner elements : #f5f5f7 (inputs, sous-containers, badges)
+- Texte h1/h2 : #1d1d1f
+- Texte h3 (titres cards) : #2d2d2d
+- Texte courant : #424245 (body default)
 - Texte secondaire : #6e6e73
-- Texte muted : #a1a1a6
-- CTA/boutons : #1d1d1f (noir), hover #000
+- Texte muted : #86868b / #a1a1a6
+- Boutons action/CTA : #2563eb (bleu soutenu), hover #1d4ed8
+- Liens : #06c (bleu Apple)
+- Icônes actives/accent : #2563eb sur fond #2563eb/8%
 - Success : #2d9d3f, Warning : #bf5a00, Danger : #c4342d
-- Borders : rgba(0,0,0,0.04) — quasi invisibles
-- PAS de bleu (#0071e3 interdit), PAS de couleurs saturées
+- Borders : rgba(0,0,0,0.04)
 
 ### Composants
-- Boutons primaires : bg-[#1d1d1f] text-white rounded-[12px] ou rounded-full
-- Boutons secondaires : bg-[#f5f5f7] text-[#1d1d1f] rounded-[12px]
+- Boutons primaires : bg-[#2563eb] text-white rounded-[12px] ou rounded-full
+- Boutons secondaires : bg-[#f5f5f7] text-[#424245] rounded-[12px]
 - Inputs : bg-[#f5f5f7] rounded-[12px], pas de border, focus:ring-black/10
 - Tuiles features : bg-[#f5f5f7] rounded-[20px], hover:bg-[#ededf0]
 - Cards : bg-white rounded-[20px] shadow-sm

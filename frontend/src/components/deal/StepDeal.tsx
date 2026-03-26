@@ -438,7 +438,7 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
         <button
           onClick={onNext}
           disabled={!draft.type_financement || !draft.montant_finance}
-          className="flex-1 bg-[#1d1d1f] text-white py-3 rounded-lg font-medium hover:bg-[#000] transition-colors disabled:opacity-50"
+          className="flex-1 bg-[#2563eb] text-white py-3 rounded-lg font-medium hover:bg-[#1d4ed8] transition-colors disabled:opacity-50"
         >
           Continuer
         </button>
