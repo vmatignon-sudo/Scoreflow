@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import ScoreExplainer from '@/components/ui/ScoreExplainer';
+import Tooltip from '@/components/ui/Tooltip';
 import type { DealScore } from '@/types/database';
 
 type Props = { dealId: string; score: DealScore | null };
@@ -117,10 +118,28 @@ export default function MacroSectorTab({ dealId, score }: Props) {
   );
 }
 
+const MACRO_DEFS: Record<string, { definition: string; source: string }> = {
+  PIB: { definition: 'Produit Intérieur Brut : croissance annuelle de l\'économie française.', source: 'API INSEE Melodi' },
+  Inflation: { definition: 'Évolution annuelle des prix à la consommation.', source: 'API INSEE' },
+  'Taux BCE': { definition: 'Taux directeur de la Banque Centrale Européenne. Influence le coût du crédit.', source: 'API Banque de France' },
+  'PMI manufacturier': { definition: 'Purchasing Managers\' Index : > 50 = expansion, < 50 = contraction de l\'activité.', source: 'API Eurostat' },
+  'Confiance entreprises': { definition: 'Indicateur de climat des affaires mesuré par l\'INSEE. Base 100 = moyenne long terme.', source: 'API INSEE' },
+  'Taux défaillance': { definition: 'Part des entreprises du secteur NAF qui font défaut chaque année.', source: 'API BODACC / ratios_inpi_bce_sectors (data.economie.gouv.fr)' },
+  'DSO sectoriel': { definition: 'Délai moyen de paiement des clients dans ce secteur NAF.', source: 'API ratios_inpi_bce_sectors (data.economie.gouv.fr)' },
+  'Tendance sectorielle': { definition: 'Orientation générale du secteur : croissance, stable, ralentissement ou crise.', source: 'API BODACC + Serper (actualités)' },
+};
+
 function Metric({ label, value }: { label: string; value: string }) {
+  const def = MACRO_DEFS[label];
   return (
     <div className="bg-[#f5f5f7] rounded-[14px] p-4">
-      <p className="text-[11px] text-[#86868b] mb-1">{label}</p>
+      {def ? (
+        <Tooltip definition={def.definition} source={def.source}>
+          <p className="text-[11px] text-[#86868b] mb-1">{label}</p>
+        </Tooltip>
+      ) : (
+        <p className="text-[11px] text-[#86868b] mb-1">{label}</p>
+      )}
       <p className="text-[15px] font-semibold text-[#2d2d2d] font-mono tracking-tight">{value}</p>
     </div>
   );

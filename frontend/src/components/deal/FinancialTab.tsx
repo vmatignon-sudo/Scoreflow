@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { triggerScoring } from '@/lib/api/scoring';
+import Tooltip from '@/components/ui/Tooltip';
+import { RATIO_DEFINITIONS } from '@/lib/utils/ratioDefinitions';
 
 type Props = {
   dealId: string;
@@ -311,7 +313,9 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
         <>
           <div className="grid grid-cols-2 gap-4">
             <div className="bg-white rounded-[20px] shadow p-5">
-              <h4 className="text-sm font-medium text-[#6e6e73] mb-1">Altman Z&apos;</h4>
+              <Tooltip definition={RATIO_DEFINITIONS.altman_z.definition} formula={RATIO_DEFINITIONS.altman_z.formula} source={RATIO_DEFINITIONS.altman_z.source}>
+                <h4 className="text-sm font-medium text-[#6e6e73] mb-1">Altman Z&apos;</h4>
+              </Tooltip>
               <div className="flex items-center gap-3">
                 <span className="text-2xl font-bold font-mono text-[#1d1d1f]">
                   {data.score_altman_z !== null ? data.score_altman_z.toFixed(2) : '—'}
@@ -325,7 +329,9 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
               <p className="text-xs text-[#a1a1a6] mt-1">&gt;2.9 sain | 1.23-2.9 gris | &lt;1.23 danger</p>
             </div>
             <div className="bg-white rounded-[20px] shadow p-5">
-              <h4 className="text-sm font-medium text-[#6e6e73] mb-1">Conan &amp; Holder</h4>
+              <Tooltip definition={RATIO_DEFINITIONS.conan_holder.definition} formula={RATIO_DEFINITIONS.conan_holder.formula} source={RATIO_DEFINITIONS.conan_holder.source}>
+                <h4 className="text-sm font-medium text-[#6e6e73] mb-1">Conan &amp; Holder</h4>
+              </Tooltip>
               <div className="flex items-center gap-3">
                 <span className="text-2xl font-bold font-mono text-[#1d1d1f]">
                   {data.score_conan_holder !== null ? data.score_conan_holder.toFixed(3) : '—'}
@@ -368,13 +374,20 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
             return (
               <div key={group.title} className="bg-white rounded-[20px] shadow p-6">
                 <h3 className="font-semibold text-[#2d2d2d] mb-4">{group.title}</h3>
-                <div className="grid grid-cols-2 gap-x-8 gap-y-3 text-sm">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 text-sm">
                   {group.keys.map((key) => {
                     const val = ratios[key];
                     if (val === null || val === undefined) return null;
+                    const def = RATIO_DEFINITIONS[key];
                     return (
-                      <div key={key} className="flex justify-between">
-                        <span className="text-[#6e6e73]">{RATIO_LABELS[key] || key}</span>
+                      <div key={key} className="flex justify-between items-center">
+                        {def ? (
+                          <Tooltip definition={def.definition} formula={def.formula} source={def.source}>
+                            <span className="text-[#6e6e73]">{def.label}</span>
+                          </Tooltip>
+                        ) : (
+                          <span className="text-[#6e6e73]">{RATIO_LABELS[key] || key}</span>
+                        )}
                         <span className="font-mono font-medium text-[#424245]">{fmt(val)}</span>
                       </div>
                     );
