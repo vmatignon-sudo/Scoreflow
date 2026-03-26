@@ -73,7 +73,7 @@ export default function StepProspect({ draft, updateDraft, onNext }: Props) {
     : null;
 
   return (
-    <div className="bg-[#f5f5f7] rounded-[20px] p-6">
+    <div className="bg-white rounded-[20px] shadow p-6">
       <h2 className="text-lg font-semibold text-[#1d1d1f] mb-1">Prospect</h2>
       <p className="text-sm text-[#6e6e73] mb-6">
         Entrez un SIREN ou une raison sociale

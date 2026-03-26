@@ -53,7 +53,7 @@ export default function DealsPage() {
         {loading ? (
           <div className="space-y-3">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="bg-[#f5f5f7] rounded-[20px] p-5 animate-pulse">
+              <div key={i} className="bg-white rounded-[20px] shadow p-5 animate-pulse">
                 <div className="h-5 bg-[#f5f5f7] rounded w-1/3 mb-2" />
                 <div className="h-4 bg-[#f5f5f7] rounded w-1/2" />
               </div>
@@ -72,7 +72,7 @@ export default function DealsPage() {
               <Link
                 key={deal.id}
                 href={`/deals/${deal.id}`}
-                className="block bg-[#f5f5f7] rounded-[20px] p-5 hover:bg-[#ededf0] transition-colors"
+                className="block bg-white rounded-[20px] shadow p-5 hover:bg-[#ededf0] transition-colors"
               >
                 <div className="flex items-center justify-between">
                   <div>

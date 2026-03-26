@@ -60,7 +60,7 @@ export default function StepDocuments({ draft, updateDraft, onNext, onBack }: Pr
     <div className="space-y-6">
       {/* INPI check */}
       {draft.siren && (
-        <div className="bg-[#f5f5f7] rounded-[20px] p-6">
+        <div className="bg-white rounded-[20px] shadow p-6">
           <div className="flex items-center justify-between">
             <div>
               <h3 className="font-semibold text-[#1d1d1f]">Liasses fiscales INPI</h3>
@@ -122,7 +122,7 @@ export default function StepDocuments({ draft, updateDraft, onNext, onBack }: Pr
 
       {/* Uploaded documents list */}
       {uploadedDocs.length > 0 && (
-        <div className="bg-[#f5f5f7] rounded-[20px] p-6">
+        <div className="bg-white rounded-[20px] shadow p-6">
           <h3 className="font-semibold text-[#1d1d1f] mb-4">
             Documents ({uploadedDocs.length})
           </h3>

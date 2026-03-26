@@ -25,7 +25,7 @@ export default function SettingsPage() {
 
         <div className="grid grid-cols-2 gap-6">
           {/* Pondération */}
-          <div className="bg-[#f5f5f7] rounded-[20px] p-6">
+          <div className="bg-white rounded-[20px] shadow p-6">
             <h2 className="text-lg font-semibold text-[#1d1d1f] mb-4">
               Pondération du scoring
             </h2>
@@ -70,7 +70,7 @@ export default function SettingsPage() {
           </div>
 
           {/* Seuils */}
-          <div className="bg-[#f5f5f7] rounded-[20px] p-6">
+          <div className="bg-white rounded-[20px] shadow p-6">
             <h2 className="text-lg font-semibold text-[#1d1d1f] mb-4">Seuils de verdict</h2>
             <div className="space-y-4">
               <div>

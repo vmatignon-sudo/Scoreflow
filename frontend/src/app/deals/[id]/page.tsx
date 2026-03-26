@@ -77,7 +77,7 @@ export default function DealDetailPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#fafafa]">
+    <div className="min-h-screen bg-[#f5f5f7]">
       <Sidebar />
       <main className="ml-0 sm:ml-[260px] lg:mr-[300px] min-h-screen">
         <div className="p-8">
@@ -170,14 +170,14 @@ export default function DealDetailPage() {
           {activeTab === 'overview' && (
             <div className="space-y-6">
               {/* Score radar */}
-              <div className="bg-[#f5f5f7] rounded-[20px] p-6">
+              <div className="bg-white rounded-[20px] shadow p-6">
                 <h3 className="font-semibold text-[#1d1d1f] mb-4">Score par dimension</h3>
                 <RadarChart score={score} />
               </div>
 
               {/* Deal summary */}
               <div className="grid grid-cols-2 gap-6">
-                <div className="bg-[#f5f5f7] rounded-[20px] p-6">
+                <div className="bg-white rounded-[20px] shadow p-6">
                   <h3 className="font-semibold text-[#1d1d1f] mb-4">Conditions du deal</h3>
                   <div className="space-y-3 text-sm">
                     <Row label="Montant financé" value={`${deal.montant_finance?.toLocaleString('fr-FR')} EUR`} />
@@ -187,7 +187,7 @@ export default function DealDetailPage() {
                     <Row label="Dépôt de garantie" value={`${deal.depot_garantie.toLocaleString('fr-FR')} EUR`} />
                   </div>
                 </div>
-                <div className="bg-[#f5f5f7] rounded-[20px] p-6">
+                <div className="bg-white rounded-[20px] shadow p-6">
                   <h3 className="font-semibold text-[#1d1d1f] mb-4">Bien financé</h3>
                   <div className="space-y-3 text-sm">
                     <Row label="Catégorie" value={asset?.asset_class?.replace(/_/g, ' ') || '—'} />
@@ -218,7 +218,7 @@ export default function DealDetailPage() {
           )}
 
           {activeTab === 'director' && (
-            <div className="bg-[#f5f5f7] rounded-[20px] p-6">
+            <div className="bg-white rounded-[20px] shadow p-6">
               <h3 className="font-semibold text-[#1d1d1f] mb-4">Analyse dirigeant</h3>
               <div className="space-y-3 text-sm">
                 <Row label="Dirigeant" value={`${deal.dirigeant_prenom} ${deal.dirigeant_nom}`} />

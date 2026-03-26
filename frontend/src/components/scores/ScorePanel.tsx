@@ -36,7 +36,7 @@ export default function ScorePanel({ score }: Props) {
   const v = verdict ? VERDICTS[verdict] : null;
 
   return (
-    <div className="hidden lg:block fixed right-0 top-0 w-[280px] h-screen bg-[#fbfbfd]/80 glass border-l border-black/[0.04] p-5 overflow-y-auto z-20">
+    <div className="hidden lg:block fixed right-0 top-0 w-[280px] h-screen bg-white/90 glass shadow-lg p-5 overflow-y-auto z-20">
       {/* Verdict */}
       {v && (
         <div className="rounded-[14px] px-4 py-3 mb-5 text-center" style={{ backgroundColor: `${v.color}08` }}>

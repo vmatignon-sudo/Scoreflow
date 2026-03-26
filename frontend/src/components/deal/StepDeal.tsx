@@ -83,7 +83,7 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
       </div>
 
       {/* Financing type */}
-      <div className="bg-[#f5f5f7] rounded-[20px] p-6">
+      <div className="bg-white rounded-[20px] shadow p-6">
         <h3 className="font-semibold text-[#1d1d1f] mb-4">Type de financement</h3>
         <div className="flex gap-2">
           {FINANCING_TYPES.map((t) => (
@@ -104,7 +104,7 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
       </div>
 
       {/* Deal fields */}
-      <div className="bg-[#f5f5f7] rounded-[20px] p-6">
+      <div className="bg-white rounded-[20px] shadow p-6">
         <h3 className="font-semibold text-[#1d1d1f] mb-4">Conditions du deal</h3>
         <div className="grid grid-cols-2 gap-4">
           <div>
@@ -192,7 +192,7 @@ export default function StepDeal({ draft, updateDraft, onNext, onBack }: Props) 
       </div>
 
       {/* Asset class */}
-      <div className="bg-[#f5f5f7] rounded-[20px] p-6">
+      <div className="bg-white rounded-[20px] shadow p-6">
         <h3 className="font-semibold text-[#1d1d1f] mb-4">Catégorie du bien</h3>
         <div className="grid grid-cols-4 gap-2 mb-4">
           {ASSET_CLASSES.map((a) => (

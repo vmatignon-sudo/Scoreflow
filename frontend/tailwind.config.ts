@@ -28,10 +28,11 @@ const config: Config = {
         xs: "var(--radius-xs)",
       },
       boxShadow: {
-        sm: "var(--shadow-sm)",
-        DEFAULT: "var(--shadow)",
-        lg: "var(--shadow-lg)",
-        xl: "var(--shadow-xl)",
+        sm: "0 1px 2px rgba(0,0,0,0.04)",
+        DEFAULT: "var(--shadow-card)",
+        md: "var(--shadow-card-hover)",
+        lg: "var(--shadow-elevated)",
+        xl: "0 20px 60px rgba(0,0,0,0.12)",
       },
       fontFamily: {
         mono: ["var(--font-geist-mono)", "SF Mono", "monospace"],

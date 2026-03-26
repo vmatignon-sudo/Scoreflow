@@ -110,7 +110,7 @@ export default function PortfolioPage() {
         </div>
 
         {/* Scatter plot */}
-        <div className="bg-[#f5f5f7] rounded-[20px] p-6 mb-8">
+        <div className="bg-white rounded-[20px] shadow p-6 mb-8">
           <h2 className="font-semibold text-[#1d1d1f] mb-4">Cartographie des deals</h2>
           <ResponsiveContainer width="100%" height={300}>
             <ScatterChart>
@@ -128,7 +128,7 @@ export default function PortfolioPage() {
         </div>
 
         {/* Deal table */}
-        <div className="bg-[#f5f5f7] rounded-[20px] overflow-hidden">
+        <div className="bg-white rounded-[20px] shadow overflow-hidden">
           <table className="w-full">
             <thead className="bg-[#f5f5f7] border-b border-black/[0.04]">
               <tr>
@@ -182,7 +182,7 @@ export default function PortfolioPage() {
 
 function AggCard({ label, value, color }: { label: string; value: string; color: string }) {
   return (
-    <div className="bg-[#f5f5f7] rounded-[20px] p-5">
+    <div className="bg-white rounded-[20px] shadow p-5">
       <p className="text-sm text-[#6e6e73] mb-1">{label}</p>
       <p className="text-2xl font-bold font-mono" style={{ color }}>{value}</p>
     </div>

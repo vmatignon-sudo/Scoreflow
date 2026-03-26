@@ -195,7 +195,7 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
 
   if (loading) {
     return (
-      <div className="bg-[#f5f5f7] rounded-[20px] p-6 animate-pulse">
+      <div className="bg-white rounded-[20px] shadow p-6 animate-pulse">
         <div className="h-6 bg-[#f5f5f7] rounded w-1/3 mb-4" />
         <div className="h-4 bg-[#f5f5f7] rounded w-full mb-2" />
         <div className="h-4 bg-[#f5f5f7] rounded w-2/3" />
@@ -208,7 +208,7 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
   return (
     <div className="space-y-6">
       {/* Upload zone + documents list */}
-      <div className="bg-[#f5f5f7] rounded-[20px] p-6">
+      <div className="bg-white rounded-[20px] shadow p-6">
         <div className="flex items-center justify-between mb-4">
           <h3 className="font-semibold text-[#1d1d1f]">Documents financiers</h3>
           <button
@@ -310,7 +310,7 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
       {data && (
         <>
           <div className="grid grid-cols-2 gap-4">
-            <div className="bg-[#f5f5f7] rounded-[20px] p-5">
+            <div className="bg-white rounded-[20px] shadow p-5">
               <h4 className="text-sm font-medium text-[#6e6e73] mb-1">Altman Z&apos;</h4>
               <div className="flex items-center gap-3">
                 <span className="text-2xl font-bold font-mono text-[#1d1d1f]">
@@ -324,7 +324,7 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
               </div>
               <p className="text-xs text-[#a1a1a6] mt-1">&gt;2.9 sain | 1.23-2.9 gris | &lt;1.23 danger</p>
             </div>
-            <div className="bg-[#f5f5f7] rounded-[20px] p-5">
+            <div className="bg-white rounded-[20px] shadow p-5">
               <h4 className="text-sm font-medium text-[#6e6e73] mb-1">Conan &amp; Holder</h4>
               <div className="flex items-center gap-3">
                 <span className="text-2xl font-bold font-mono text-[#1d1d1f]">
@@ -341,7 +341,7 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
           </div>
 
           {/* Données brutes */}
-          <div className="bg-[#f5f5f7] rounded-[20px] p-6">
+          <div className="bg-white rounded-[20px] shadow p-6">
             <h3 className="font-semibold text-[#1d1d1f] mb-4">
               Données comptables {data.annee ? `(${data.annee})` : ''}
             </h3>
@@ -363,7 +363,7 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
             const hasAny = group.keys.some((k) => ratios[k] !== null && ratios[k] !== undefined);
             if (!hasAny) return null;
             return (
-              <div key={group.title} className="bg-[#f5f5f7] rounded-[20px] p-6">
+              <div key={group.title} className="bg-white rounded-[20px] shadow p-6">
                 <h3 className="font-semibold text-[#1d1d1f] mb-4">{group.title}</h3>
                 <div className="grid grid-cols-2 gap-x-8 gap-y-3 text-sm">
                   {group.keys.map((key) => {
