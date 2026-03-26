@@ -178,7 +178,7 @@ export default function DealDetailPage() {
       </main>
 
       {/* Right panel — Score Deal sticky */}
-      <ScorePanel deal={deal} score={score} />
+      <ScorePanel score={score} />
     </div>
   );
 }

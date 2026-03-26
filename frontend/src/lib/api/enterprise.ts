@@ -1,5 +1,19 @@
-export async function searchEnterprise(query: string) {
-  const isValidSiren = /^\d{9}$/.test(query.replace(/\s/g, ''));
+type EnterpriseResult = {
+  siren: string;
+  raison_sociale: string;
+  forme_juridique: string;
+  code_naf: string;
+  secteur_label: string;
+  adresse: string;
+  date_creation_entreprise: string;
+  dirigeant_nom: string;
+  dirigeant_prenom: string;
+  dirigeant_date_nomination: string | null;
+  tranche_effectif: string;
+  etat_administratif: string;
+};
+
+export async function searchEnterprise(query: string): Promise<EnterpriseResult[]> {
   const params = new URLSearchParams({
     q: query.replace(/\s/g, ''),
     per_page: '5',
@@ -12,6 +26,7 @@ export async function searchEnterprise(query: string) {
   if (!res.ok) throw new Error('Erreur API Recherche Entreprises');
   const data = await res.json();
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (data.results || []).map((r: any) => {
     const siege = r.siege || {};
     const dirigeants = r.dirigeants || [];

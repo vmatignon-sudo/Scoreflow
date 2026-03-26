@@ -52,12 +52,6 @@ export default function StepProspect({ draft, updateDraft, onNext }: Props) {
     setQuery(enterprise.siren);
     setResults([]);
 
-    // Calculate jours_depuis_nomination
-    const nomination = enterprise.dirigeant_date_nomination;
-    const jours = nomination
-      ? Math.floor((Date.now() - new Date(nomination).getTime()) / 86400000)
-      : null;
-
     updateDraft({
       siren: enterprise.siren,
       raison_sociale: enterprise.raison_sociale,

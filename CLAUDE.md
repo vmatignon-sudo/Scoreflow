@@ -1,5 +1,35 @@
 # SCOREFLOW — Cahier des charges complet
 
+## RÈGLES GIT
+- Après chaque phase terminée, faire un git add . + git commit + git push
+- Si le repo GitHub n'existe pas encore, le créer avec :
+  gh repo create vincentmatignon/scoreflow --public
+- Format des commits : "Phase X terminée : [description courte]"
+- En cas d'erreur bloquante, commit et push ce qui est fait avant de s'arrêter
+
+## RÈGLES DE QUALITÉ DU CODE
+Après chaque fichier ou composant créé, tu dois obligatoirement :
+
+1. RELIRE le code que tu viens d'écrire
+2. VÉRIFIER :
+   - Pas d'erreurs de syntaxe
+   - Les imports sont corrects et les dépendances existent
+   - Les variables d'environnement utilisées sont dans .env.example
+   - Les types TypeScript sont cohérents
+   - Les appels API correspondent aux endpoints définis
+   - La logique métier respecte le cahier des charges
+3. CORRIGER immédiatement si tu trouves un problème
+4. TESTER si possible : lancer le build ou les tests unitaires
+   avant de passer à la phase suivante
+5. Ne jamais passer à la phase suivante si la phase courante
+   ne compile pas ou a des erreurs évidentes
+```
+
+**Cmd+S** pour sauvegarder, puis dans Claude Code :
+```
+Relis CLAUDE.md, intègre les nouvelles règles et continue.
+
+
 ## INSTRUCTIONS DE DÉVELOPPEMENT
 Développe l'application complète de manière autonome et séquentielle.
 Ne demande pas de validation entre les phases.

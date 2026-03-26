@@ -1,101 +1,104 @@
-import Image from "next/image";
+import Link from 'next/link';
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="min-h-screen bg-white">
+      {/* Nav */}
+      <nav className="flex items-center justify-between px-8 py-4 border-b border-[#E2E8F0]">
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 bg-[#1B4FD8] rounded-lg flex items-center justify-center">
+            <span className="text-white font-bold text-sm">SF</span>
+          </div>
+          <span className="font-bold text-[#0F1923] text-lg">ScoreFlow</span>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+        <div className="flex items-center gap-4">
+          <Link href="/auth/login" className="text-sm text-[#4A5568] hover:text-[#0F1923] font-medium">
+            Se connecter
+          </Link>
+          <Link
+            href="/auth/register"
+            className="text-sm bg-[#1B4FD8] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#1640B0] transition-colors"
+          >
+            Commencer gratuitement
+          </Link>
+        </div>
+      </nav>
+
+      {/* Hero */}
+      <section className="max-w-4xl mx-auto px-8 py-24 text-center">
+        <div className="inline-block px-3 py-1 bg-[#EBF0FF] text-[#1B4FD8] text-sm font-medium rounded-full mb-6">
+          Scoring de deals de financement
+        </div>
+        <h1 className="text-5xl font-bold text-[#0F1923] leading-tight mb-6">
+          Analysez un deal complet<br />
+          en <span className="text-[#1B4FD8]">5 minutes</span>
+        </h1>
+        <p className="text-lg text-[#4A5568] max-w-2xl mx-auto mb-10">
+          ScoreFlow note le deal, pas le client. Un scoring composite sur 5 dimensions
+          qui intègre le bien financé, sa valeur résiduelle et le risque opérationnel.
+        </p>
+        <div className="flex gap-4 justify-center">
+          <Link
+            href="/auth/register"
+            className="bg-[#1B4FD8] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#1640B0] transition-colors text-lg"
+          >
+            Créer un compte
+          </Link>
+          <Link
+            href="/auth/login"
+            className="bg-[#F7F8FA] text-[#0F1923] px-6 py-3 rounded-lg font-medium hover:bg-[#EEF0F5] transition-colors text-lg border border-[#E2E8F0]"
+          >
+            Se connecter
+          </Link>
+        </div>
+      </section>
+
+      {/* Features */}
+      <section className="max-w-5xl mx-auto px-8 pb-24">
+        <div className="grid grid-cols-3 gap-8">
+          <FeatureCard
+            title="5 dimensions"
+            description="Macro-sectoriel, financier, matériel, dirigeant et inscriptions — un scoring qui couvre tout."
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
+          <FeatureCard
+            title="Simulateur de risque"
+            description="Simulez un incident de paiement et visualisez l'impact sur votre exposition en temps réel."
           />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
+          <FeatureCard
+            title="APIs publiques FR"
+            description="Enrichissement automatique via SIREN, liasses INPI, ratios sectoriels et indicateurs macro."
           />
-          Go to nextjs.org →
-        </a>
+          <FeatureCard
+            title="Deal Optimizer"
+            description="Suggestions automatiques pour transformer un GO CONDITIONNEL en GO avec effort minimal."
+          />
+          <FeatureCard
+            title="Courbe RRN"
+            description="Visualisez le risque résiduel net et identifiez le mois où vous ne pouvez plus perdre."
+          />
+          <FeatureCard
+            title="Multi-tenant SaaS"
+            description="RLS Supabase, rôles admin/analyst/viewer, profils de scoring configurables."
+          />
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-[#E2E8F0] py-8 px-8">
+        <div className="max-w-5xl mx-auto flex items-center justify-between text-sm text-[#8A95A3]">
+          <span>ScoreFlow — Scoring de deals de financement</span>
+          <span>Art. 6.1.f RGPD — Prévention du risque de crédit</span>
+        </div>
       </footer>
+    </div>
+  );
+}
+
+function FeatureCard({ title, description }: { title: string; description: string }) {
+  return (
+    <div className="p-6 rounded-xl border border-[#E2E8F0] hover:border-[#CBD5E1] transition-colors">
+      <h3 className="font-semibold text-[#0F1923] mb-2">{title}</h3>
+      <p className="text-sm text-[#4A5568] leading-relaxed">{description}</p>
     </div>
   );
 }

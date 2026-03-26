@@ -1,9 +1,8 @@
 'use client';
 
-import type { Deal, DealScore } from '@/types/database';
+import type { DealScore } from '@/types/database';
 
 type Props = {
-  deal: Deal;
   score: DealScore | null;
 };
 
@@ -37,7 +36,7 @@ const DIMENSIONS = [
   { key: 'score_dirigeant' as const, label: 'Dirigeant' },
 ];
 
-export default function ScorePanel({ deal, score }: Props) {
+export default function ScorePanel({ score }: Props) {
   const totalScore = score?.score_deal_total || 0;
   const verdict = score?.verdict;
   const mention = getMention(totalScore);

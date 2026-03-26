@@ -18,13 +18,6 @@ type Props = {
   asset: DealAsset | null;
 };
 
-const QUICK_SCENARIOS = [
-  { label: 'Défaut M6', mois: 6 },
-  { label: 'Mi-parcours', mois: 0 }, // Will be calculated
-  { label: 'Tardif', mois: 0 },
-  { label: 'Pire cas M3/6m', mois: 3, delai: 6 },
-];
-
 export default function SimulatorPanel({ deal, asset }: Props) {
   const duree = deal.duree_mois || 48;
   const [moisDefaut, setMoisDefaut] = useState(Math.floor(duree / 2));
@@ -207,7 +200,7 @@ export default function SimulatorPanel({ deal, asset }: Props) {
               tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`}
             />
             <Tooltip
-              formatter={(value: number) => `${value.toLocaleString('fr-FR')} EUR`}
+              formatter={(value) => `${Number(value).toLocaleString('fr-FR')} EUR`}
               labelFormatter={(label) => `Mois ${label}`}
             />
             <Area

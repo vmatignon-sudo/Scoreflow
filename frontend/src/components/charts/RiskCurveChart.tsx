@@ -2,7 +2,6 @@
 
 import { useMemo } from 'react';
 import {
-  AreaChart,
   Area,
   XAxis,
   YAxis,
@@ -116,7 +115,7 @@ export default function RiskCurveChart({ deal, asset }: Props) {
               tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`}
             />
             <Tooltip
-              formatter={(value: number) => `${value.toLocaleString('fr-FR')} EUR`}
+              formatter={(value) => `${Number(value).toLocaleString('fr-FR')} EUR`}
               labelFormatter={(label) => `Mois ${label}`}
             />
             <Area
