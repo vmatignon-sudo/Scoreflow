@@ -214,7 +214,7 @@ export default function DealDetailPage() {
           )}
 
           {activeTab === 'financial' && (
-            <FinancialTab dealId={dealId} />
+            <FinancialTab dealId={dealId} organizationId={deal.organization_id} />
           )}
 
           {activeTab === 'director' && (
