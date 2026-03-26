@@ -56,7 +56,7 @@ export default function PortfolioPage() {
               .eq('deal_id', deal.id)
               .order('computed_at', { ascending: false })
               .limit(1)
-              .single();
+              .maybeSingle();
 
             const moisEcoules = Math.floor(
               (Date.now() - new Date(deal.created_at).getTime()) / (30 * 86400000)

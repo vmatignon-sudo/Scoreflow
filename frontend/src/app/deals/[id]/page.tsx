@@ -27,14 +27,14 @@ export default function DealDetailPage() {
         .from('deals')
         .select('*')
         .eq('id', dealId)
-        .single();
+        .maybeSingle();
       if (dealData) setDeal(dealData);
 
       const { data: assetData } = await supabase
         .from('deal_assets')
         .select('*')
         .eq('deal_id', dealId)
-        .single();
+        .maybeSingle();
       if (assetData) setAsset(assetData);
 
       const { data: scoreData } = await supabase
@@ -43,7 +43,7 @@ export default function DealDetailPage() {
         .eq('deal_id', dealId)
         .order('computed_at', { ascending: false })
         .limit(1)
-        .single();
+        .maybeSingle();
       if (scoreData) setScore(scoreData);
     }
     fetchDeal();

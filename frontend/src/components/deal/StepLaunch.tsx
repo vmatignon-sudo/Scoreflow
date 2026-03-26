@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
+import { triggerScoring } from '@/lib/api/scoring';
 import type { DealDraft } from '@/app/deals/new/page';
 
 type Props = {
@@ -111,15 +112,51 @@ export default function StepLaunch({ draft, onBack }: Props) {
         });
       }
 
-      // Simulate progressive analysis
-      for (const step of ANALYSIS_STEPS) {
-        setProgress((prev) => ({ ...prev, [step.key]: 'processing' }));
-        await new Promise((r) => setTimeout(r, 800 + Math.random() * 400));
-        setProgress((prev) => ({ ...prev, [step.key]: 'done' }));
+      // Call scoring backend
+      setProgress((prev) => ({ ...prev, macro: 'processing' }));
+
+      try {
+        const scoringResult = await triggerScoring(deal.id, profile.organization_id);
+
+        // Update progress as we receive results
+        setProgress({ macro: 'done', sector: 'done', financial: 'done', asset: 'done', director: 'done' });
+
+        // Save score to Supabase
+        await supabase.from('deal_scores').insert({
+          deal_id: deal.id,
+          score_macro: scoringResult.scores?.macro_sectoriel?.score_macro ?? null,
+          score_sectoriel: scoringResult.scores?.macro_sectoriel?.score_sectoriel ?? null,
+          score_macro_sectoriel_combine: scoringResult.scores?.macro_sectoriel?.score ?? null,
+          score_financier: scoringResult.scores?.financier?.score ?? null,
+          score_materiel: scoringResult.scores?.materiel?.score ?? null,
+          score_dirigeant: scoringResult.scores?.dirigeant?.score ?? null,
+          score_deal_total: scoringResult.score_total ?? null,
+          verdict: scoringResult.verdict?.verdict ?? null,
+          veto_raison: scoringResult.verdict?.raison ?? null,
+          recommandation: scoringResult.verdict?.message ?? null,
+          deal_optimizer_suggestions: scoringResult.optimizer ?? null,
+          ponderation_used: scoringResult.ponderation_used ?? null,
+        });
+
+        // Update deal status
+        await supabase
+          .from('deals')
+          .update({ status: 'completed', completed_at: new Date().toISOString() })
+          .eq('id', deal.id);
+
+      } catch (scoringError) {
+        console.error('Scoring API error:', scoringError);
+        // Fallback: mark steps as done anyway, score will be null
+        setProgress({ macro: 'done', sector: 'done', financial: 'done', asset: 'done', director: 'done' });
+
+        await supabase
+          .from('deals')
+          .update({ status: 'completed' })
+          .eq('id', deal.id);
       }
 
       // Navigate to deal view
-      await new Promise((r) => setTimeout(r, 500));
+      await new Promise((r) => setTimeout(r, 300));
       router.push(`/deals/${deal.id}`);
     } catch (err) {
       console.error('Error launching analysis:', err);
