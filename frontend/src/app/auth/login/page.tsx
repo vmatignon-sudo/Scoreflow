@@ -19,10 +19,7 @@ export default function LoginPage() {
     setLoading(true);
     setError('');
 
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
 
     if (error) {
       setError(error.message);
@@ -33,40 +30,32 @@ export default function LoginPage() {
   }
 
   async function handleMagicLink() {
-    if (!email) {
-      setError('Entrez votre email');
-      return;
-    }
+    if (!email) { setError('Entrez votre email'); return; }
     setLoading(true);
     setError('');
 
     const { error } = await supabase.auth.signInWithOtp({
       email,
-      options: {
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
-      },
+      options: { emailRedirectTo: `${window.location.origin}/auth/callback` },
     });
 
-    if (error) {
-      setError(error.message);
-    } else {
-      setMagicLinkSent(true);
-    }
+    if (error) setError(error.message);
+    else setMagicLinkSent(true);
     setLoading(false);
   }
 
   if (magicLinkSent) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#F7F8FA]">
-        <div className="bg-white p-8 rounded-xl shadow-sm border border-[#E2E8F0] max-w-md w-full text-center">
-          <div className="w-12 h-12 bg-[#EBF0FF] rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="w-6 h-6 text-[#1B4FD8]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+      <div className="min-h-screen flex items-center justify-center bg-[#fafafa]">
+        <div className="bg-white p-8 rounded-2xl shadow-lg max-w-sm w-full text-center animate-scale-in">
+          <div className="w-11 h-11 bg-[#0071e3]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg className="w-5 h-5 text-[#0071e3]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.6}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
             </svg>
           </div>
-          <h2 className="text-xl font-semibold text-[#0F1923] mb-2">Vérifiez votre email</h2>
-          <p className="text-[#4A5568]">
-            Un lien de connexion a été envoyé à <strong>{email}</strong>
+          <h2 className="text-[17px] font-semibold text-[#1d1d1f] tracking-tight mb-1">Vérifiez votre email</h2>
+          <p className="text-[13px] text-[#86868b]">
+            Lien de connexion envoyé à <strong className="text-[#1d1d1f]">{email}</strong>
           </p>
         </div>
       </div>
@@ -74,71 +63,56 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#F7F8FA]">
-      <div className="bg-white p-8 rounded-xl shadow-sm border border-[#E2E8F0] max-w-md w-full">
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold text-[#0F1923]">ScoreFlow</h1>
-          <p className="text-[#4A5568] mt-1">Connectez-vous à votre compte</p>
+    <div className="min-h-screen flex items-center justify-center bg-[#fafafa]">
+      <div className="bg-white p-8 rounded-2xl shadow-lg max-w-sm w-full animate-scale-in">
+        <div className="text-center mb-7">
+          <div className="w-10 h-10 bg-gradient-to-br from-[#0071e3] to-[#40a9ff] rounded-xl flex items-center justify-center mx-auto mb-3 shadow-sm">
+            <span className="text-white font-semibold text-[12px]">SF</span>
+          </div>
+          <h1 className="text-[20px] font-semibold text-[#1d1d1f] tracking-tight">Connexion</h1>
         </div>
 
-        <form onSubmit={handleLogin} className="space-y-4">
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-[#0F1923] mb-1">
-              Email
-            </label>
-            <input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="w-full px-3 py-2 border border-[#E2E8F0] rounded-lg focus:ring-2 focus:ring-[#1B4FD8] focus:border-transparent outline-none text-[#0F1923]"
-              placeholder="vous@entreprise.fr"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-[#0F1923] mb-1">
-              Mot de passe
-            </label>
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 border border-[#E2E8F0] rounded-lg focus:ring-2 focus:ring-[#1B4FD8] focus:border-transparent outline-none text-[#0F1923]"
-              placeholder="••••••••"
-            />
-          </div>
+        <form onSubmit={handleLogin} className="space-y-3">
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            placeholder="Email"
+            className="w-full px-3.5 py-2.5 bg-black/[0.03] rounded-xl text-[14px] text-[#1d1d1f] placeholder:text-[#86868b] outline-none focus:ring-2 focus:ring-[#0071e3]/30 transition-all"
+          />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Mot de passe"
+            className="w-full px-3.5 py-2.5 bg-black/[0.03] rounded-xl text-[14px] text-[#1d1d1f] placeholder:text-[#86868b] outline-none focus:ring-2 focus:ring-[#0071e3]/30 transition-all"
+          />
 
           {error && (
-            <div className="text-red-600 text-sm bg-red-50 p-3 rounded-lg">
-              {error}
-            </div>
+            <p className="text-[12px] text-[#ff3b30] bg-[#ff3b30]/[0.06] px-3 py-2 rounded-lg">{error}</p>
           )}
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-[#1B4FD8] text-white py-2.5 rounded-lg font-medium hover:bg-[#1640B0] transition-colors disabled:opacity-50"
+            className="w-full bg-[#0071e3] text-white py-2.5 rounded-xl text-[14px] font-medium hover:bg-[#0077ED] active:scale-[0.98] transition-all disabled:opacity-50"
           >
             {loading ? 'Connexion...' : 'Se connecter'}
           </button>
         </form>
 
-        <div className="mt-4">
-          <button
-            onClick={handleMagicLink}
-            disabled={loading}
-            className="w-full bg-[#EBF0FF] text-[#1B4FD8] py-2.5 rounded-lg font-medium hover:bg-[#D6E0FF] transition-colors disabled:opacity-50"
-          >
-            Recevoir un lien magique
-          </button>
-        </div>
+        <button
+          onClick={handleMagicLink}
+          disabled={loading}
+          className="w-full mt-2 bg-black/[0.03] text-[#1d1d1f] py-2.5 rounded-xl text-[13px] font-medium hover:bg-black/[0.05] active:scale-[0.98] transition-all disabled:opacity-50"
+        >
+          Recevoir un lien magique
+        </button>
 
-        <p className="text-center text-sm text-[#4A5568] mt-6">
+        <p className="text-center text-[12px] text-[#86868b] mt-5">
           Pas encore de compte ?{' '}
-          <Link href="/auth/register" className="text-[#1B4FD8] font-medium hover:underline">
+          <Link href="/auth/register" className="text-[#0071e3] font-medium hover:underline">
             Créer un compte
           </Link>
         </p>

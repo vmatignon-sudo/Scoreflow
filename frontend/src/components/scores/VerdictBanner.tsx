@@ -6,76 +6,80 @@ type Props = {
   score: DealScore | null;
 };
 
-const VERDICT_STYLES = {
+const VERDICT_CONFIG = {
   go: {
-    bg: 'bg-[#F0FDF4]',
-    text: 'text-[#059669]',
-    border: 'border-[#059669]',
+    bg: 'bg-[#34c759]/[0.08]',
+    text: 'text-[#248a3d]',
+    border: 'border-[#34c759]/20',
     label: 'GO',
     message: "L'analyse globale est favorable.",
   },
   go_conditionnel: {
-    bg: 'bg-[#FFFBEB]',
-    text: 'text-[#B45309]',
-    border: 'border-[#F59E0B]',
+    bg: 'bg-[#ff9f0a]/[0.08]',
+    text: 'text-[#c93400]',
+    border: 'border-[#ff9f0a]/20',
     label: 'GO CONDITIONNEL',
     message: 'Points de vigilance — financement possible sous conditions.',
   },
   no_go: {
-    bg: 'bg-[#FEF2F2]',
-    text: 'text-[#991B1B]',
-    border: 'border-[#DC2626]',
+    bg: 'bg-[#ff3b30]/[0.06]',
+    text: 'text-[#d70015]',
+    border: 'border-[#ff3b30]/15',
     label: 'NO GO',
     message: 'Risque trop élevé. Financement déconseillé.',
   },
   veto: {
-    bg: 'bg-[#FEF2F2]',
-    text: 'text-[#991B1B]',
-    border: 'border-[#991B1B]',
+    bg: 'bg-[#ff3b30]/[0.06]',
+    text: 'text-[#d70015]',
+    border: 'border-[#ff3b30]/20',
     label: 'VETO',
     message: 'Financement bloqué.',
   },
 };
 
 function getMention(score: number): { mention: string; color: string } {
-  if (score >= 17) return { mention: 'Excellent', color: '#059669' };
-  if (score >= 13) return { mention: 'Bon', color: '#10B981' };
-  if (score >= 10) return { mention: 'Passable', color: '#F59E0B' };
-  if (score >= 7) return { mention: 'Insuffisant', color: '#EF6C00' };
-  if (score >= 4) return { mention: 'Mauvais', color: '#DC2626' };
-  return { mention: 'Critique', color: '#991B1B' };
+  if (score >= 17) return { mention: 'Excellent', color: '#34c759' };
+  if (score >= 13) return { mention: 'Bon', color: '#30d158' };
+  if (score >= 10) return { mention: 'Passable', color: '#ff9f0a' };
+  if (score >= 7) return { mention: 'Insuffisant', color: '#ff6723' };
+  if (score >= 4) return { mention: 'Mauvais', color: '#ff3b30' };
+  return { mention: 'Critique', color: '#d70015' };
 }
 
 export default function VerdictBanner({ score }: Props) {
   if (!score?.verdict) {
     return (
-      <div className="mb-6 p-6 bg-[#F7F8FA] rounded-xl border border-[#E2E8F0] text-center">
-        <p className="text-[#8A95A3]">Analyse en cours...</p>
+      <div className="mb-6 p-5 bg-black/[0.02] rounded-2xl text-center animate-fade-in">
+        <p className="text-[13px] text-[#86868b]">Analyse en cours...</p>
       </div>
     );
   }
 
-  const style = VERDICT_STYLES[score.verdict];
+  const config = VERDICT_CONFIG[score.verdict];
   const totalScore = score.score_deal_total || 0;
   const mention = getMention(totalScore);
 
   return (
-    <div className={`mb-6 p-6 rounded-xl border-2 ${style.bg} ${style.border}`}>
+    <div className={`mb-6 p-5 rounded-2xl border ${config.bg} ${config.border} animate-scale-in`}>
       <div className="flex items-center justify-between">
         <div>
-          <div className={`text-2xl font-bold ${style.text}`}>{style.label}</div>
-          <p className={`text-sm mt-1 ${style.text} opacity-80`}>{style.message}</p>
+          <div className={`text-xl font-semibold tracking-tight ${config.text}`}>
+            {config.label}
+          </div>
+          <p className={`text-[13px] mt-0.5 ${config.text} opacity-70`}>
+            {config.message}
+          </p>
           {score.veto_raison && (
-            <p className="text-sm mt-2 text-[#991B1B] font-medium">
-              Raison : {score.veto_raison}
+            <p className="text-[13px] mt-1.5 text-[#d70015] font-medium">
+              {score.veto_raison}
             </p>
           )}
         </div>
         <div className="text-right">
-          <div className="text-4xl font-bold font-mono" style={{ color: mention.color }}>
+          <div className="text-[40px] font-bold font-mono leading-none tracking-tighter" style={{ color: mention.color }}>
             {totalScore.toFixed(1)}
           </div>
-          <div className="text-sm font-medium" style={{ color: mention.color }}>
+          <div className="text-[12px] font-medium mt-0.5" style={{ color: mention.color }}>
             /20 — {mention.mention}
           </div>
         </div>

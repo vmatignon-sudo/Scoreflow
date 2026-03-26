@@ -77,9 +77,9 @@ export default function DealDetailPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#F7F8FA]">
+    <div className="min-h-screen bg-[#fafafa]">
       <Sidebar />
-      <main className="ml-[240px] mr-[320px] min-h-screen">
+      <main className="ml-0 sm:ml-[260px] lg:mr-[300px] min-h-screen">
         <div className="p-8">
           {/* Header */}
           <div className="flex items-start justify-between mb-6">

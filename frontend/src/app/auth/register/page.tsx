@@ -34,84 +34,62 @@ export default function RegisterPage() {
       return;
     }
 
-    if (data.user) {
-      router.push('/onboarding');
-    }
+    if (data.user) router.push('/onboarding');
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#F7F8FA]">
-      <div className="bg-white p-8 rounded-xl shadow-sm border border-[#E2E8F0] max-w-md w-full">
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold text-[#0F1923]">ScoreFlow</h1>
-          <p className="text-[#4A5568] mt-1">Créez votre compte</p>
+    <div className="min-h-screen flex items-center justify-center bg-[#fafafa]">
+      <div className="bg-white p-8 rounded-2xl shadow-lg max-w-sm w-full animate-scale-in">
+        <div className="text-center mb-7">
+          <div className="w-10 h-10 bg-gradient-to-br from-[#0071e3] to-[#40a9ff] rounded-xl flex items-center justify-center mx-auto mb-3 shadow-sm">
+            <span className="text-white font-semibold text-[12px]">SF</span>
+          </div>
+          <h1 className="text-[20px] font-semibold text-[#1d1d1f] tracking-tight">Créer un compte</h1>
         </div>
 
-        <form onSubmit={handleRegister} className="space-y-4">
-          <div>
-            <label htmlFor="fullName" className="block text-sm font-medium text-[#0F1923] mb-1">
-              Nom complet
-            </label>
-            <input
-              id="fullName"
-              type="text"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-              required
-              className="w-full px-3 py-2 border border-[#E2E8F0] rounded-lg focus:ring-2 focus:ring-[#1B4FD8] focus:border-transparent outline-none text-[#0F1923]"
-              placeholder="Jean Dupont"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-[#0F1923] mb-1">
-              Email professionnel
-            </label>
-            <input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="w-full px-3 py-2 border border-[#E2E8F0] rounded-lg focus:ring-2 focus:ring-[#1B4FD8] focus:border-transparent outline-none text-[#0F1923]"
-              placeholder="vous@entreprise.fr"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-[#0F1923] mb-1">
-              Mot de passe
-            </label>
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              minLength={8}
-              className="w-full px-3 py-2 border border-[#E2E8F0] rounded-lg focus:ring-2 focus:ring-[#1B4FD8] focus:border-transparent outline-none text-[#0F1923]"
-              placeholder="Minimum 8 caractères"
-            />
-          </div>
+        <form onSubmit={handleRegister} className="space-y-3">
+          <input
+            type="text"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+            required
+            placeholder="Nom complet"
+            className="w-full px-3.5 py-2.5 bg-black/[0.03] rounded-xl text-[14px] text-[#1d1d1f] placeholder:text-[#86868b] outline-none focus:ring-2 focus:ring-[#0071e3]/30 transition-all"
+          />
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            placeholder="Email professionnel"
+            className="w-full px-3.5 py-2.5 bg-black/[0.03] rounded-xl text-[14px] text-[#1d1d1f] placeholder:text-[#86868b] outline-none focus:ring-2 focus:ring-[#0071e3]/30 transition-all"
+          />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            minLength={8}
+            placeholder="Mot de passe (8 caractères min.)"
+            className="w-full px-3.5 py-2.5 bg-black/[0.03] rounded-xl text-[14px] text-[#1d1d1f] placeholder:text-[#86868b] outline-none focus:ring-2 focus:ring-[#0071e3]/30 transition-all"
+          />
 
           {error && (
-            <div className="text-red-600 text-sm bg-red-50 p-3 rounded-lg">
-              {error}
-            </div>
+            <p className="text-[12px] text-[#ff3b30] bg-[#ff3b30]/[0.06] px-3 py-2 rounded-lg">{error}</p>
           )}
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-[#1B4FD8] text-white py-2.5 rounded-lg font-medium hover:bg-[#1640B0] transition-colors disabled:opacity-50"
+            className="w-full bg-[#0071e3] text-white py-2.5 rounded-xl text-[14px] font-medium hover:bg-[#0077ED] active:scale-[0.98] transition-all disabled:opacity-50"
           >
             {loading ? 'Création...' : 'Créer mon compte'}
           </button>
         </form>
 
-        <p className="text-center text-sm text-[#4A5568] mt-6">
+        <p className="text-center text-[12px] text-[#86868b] mt-5">
           Déjà un compte ?{' '}
-          <Link href="/auth/login" className="text-[#1B4FD8] font-medium hover:underline">
+          <Link href="/auth/login" className="text-[#0071e3] font-medium hover:underline">
             Se connecter
           </Link>
         </p>

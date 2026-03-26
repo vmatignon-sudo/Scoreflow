@@ -1,5 +1,47 @@
 # SCOREFLOW — Cahier des charges complet
 
+## DESIGN SYSTEM — STYLE APPLE MODERNE
+
+### Philosophie
+- Minimaliste, épuré, beaucoup d'espace blanc
+- Ombres subtiles au lieu de bordures lourdes
+- Coins arrondis généreux (16px cards, 12px buttons, 8px inputs)
+- Micro-interactions : active:scale-[0.98], transitions 0.2s ease
+- Glassmorphism sur sidebar et nav (backdrop-filter blur)
+- Typographie serrée (tracking-tight), tailles précises en pixels
+
+### Palette
+- Background : #fafafa (pas de gris foncé)
+- Cards : #ffffff avec shadow-sm (pas de border visible)
+- Texte principal : #1d1d1f
+- Texte secondaire : #86868b
+- Accent : #0071e3 (bleu Apple)
+- Success : #34c759, Warning : #ff9f0a, Danger : #ff3b30
+- Borders : rgba(0,0,0,0.04) — quasi invisibles
+
+### Composants
+- Boutons primaires : bg-[#0071e3] rounded-xl ou rounded-full
+- Inputs : bg-black/[0.03] rounded-xl, pas de border, focus:ring accent
+- Cards : bg-white rounded-2xl shadow-sm, pas de border
+- Sidebar : bg-white/80 glass, border-r border-black/[0.04]
+- Score gauge : arcs SVG fins (strokeWidth 8), animations ease-out
+
+### Responsive
+- Mobile first : tout doit être lisible sur iPhone
+- Sidebar : hidden sur mobile (sm:flex), visible à partir de 640px
+- Score panel droit : hidden sur mobile (lg:block)
+- Grids : grid-cols-1 sur mobile, sm:grid-cols-2, lg:grid-cols-3+
+- Padding : p-5 mobile, sm:p-8 desktop
+- Textes hero : text-[32px] mobile, sm:text-[52px] desktop
+- Boutons : flex-col sur mobile, sm:flex-row
+
+### Interdit
+- Bordures épaisses ou colorées
+- Couleurs saturées en background (#EBF0FF, #F0FDF4, etc.)
+- Ombres lourdes
+- Emojis dans les labels (OK dans les catégories d'actifs)
+- Largeurs fixes sans breakpoints responsive
+
 ## RÈGLES GIT
 - Après chaque phase terminée, faire un git add . + git commit + git push
 - Si le repo GitHub n'existe pas encore, le créer avec :
