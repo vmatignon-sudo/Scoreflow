@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import Any
 from app.scoring.financial import FinancialScorer
 from app.scoring.asset import AssetScorer

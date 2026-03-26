@@ -108,7 +108,7 @@ class TestAssetScorer:
         coeff = AssetScorer.get_recuperability_coefficient(
             "vehicule_leger", traceur_gps=True, contrat_recuperation=True,
         )
-        assert coeff == 0.95
+        assert abs(coeff - 0.95) < 1e-9
 
     def test_recuperability_informatique(self):
         coeff = AssetScorer.get_recuperability_coefficient(

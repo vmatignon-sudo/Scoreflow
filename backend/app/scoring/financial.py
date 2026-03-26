@@ -1,4 +1,5 @@
-import math
+from __future__ import annotations
+
 from typing import Any
 
 
@@ -93,7 +94,8 @@ class FinancialScorer:
             # Capacité
             "caf": caf,
             "dette_sur_caf": safe_div(dettes_fin, caf),
-            "dscr": safe_div(caf, dettes_fin / 12 * max(1, 1)) if dettes_fin else None,
+            # DSCR = CAF / service annuel de la dette (remboursement annuel)
+            "dscr": safe_div(caf, dettes_fin) if dettes_fin else None,
             "couverture_ff": safe_div(ebitda, ff),
             # Structure
             "autonomie_financiere": safe_div(fp, passif_total),
@@ -109,9 +111,15 @@ class FinancialScorer:
             "roce": safe_div(ebit, cap_perm) if cap_perm else None,
             # Activité
             "dso": safe_div(creances * 365, ca),
-            "dpo": None,  # Requires fournisseurs data
+            "dpo": safe_div(passif_circulant * 365, ca),
             "rotation_actif": safe_div(ca, actif_total),
         }
+        # CCC (Cash Conversion Cycle) = DSO + DIO - DPO
+        dio = safe_div(stocks * 365, ca)
+        if ratios["dso"] is not None and dio is not None and ratios["dpo"] is not None:
+            ratios["ccc"] = round(ratios["dso"] + dio - ratios["dpo"], 1)
+        else:
+            ratios["ccc"] = None
         return ratios
 
     def score_from_ratios(self, ratios: dict, duree_mois: int = 36) -> float:

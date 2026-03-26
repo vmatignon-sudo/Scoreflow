@@ -1,8 +1,25 @@
 import { createBrowserClient } from '@supabase/ssr';
 
+let client: ReturnType<typeof createBrowserClient> | null = null;
+
 export function createClient() {
-  return createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
+  if (client) return client;
+
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL ?? '';
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '';
+
+  if (!url || !key) {
+    // During SSR pre-rendering without env vars, return a dummy that won't crash.
+    // At runtime in the browser, the env vars will be available.
+    if (typeof window === 'undefined') {
+      return createBrowserClient('http://localhost:54321', 'dummy-key-for-build');
+    }
+    throw new Error(
+      'Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. ' +
+      'Copy .env.example to .env.local and fill in your Supabase credentials.'
+    );
+  }
+
+  client = createBrowserClient(url, key);
+  return client;
 }

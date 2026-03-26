@@ -48,7 +48,8 @@ export default function PortfolioPage() {
 
       if (dealData) {
         const enriched = await Promise.all(
-          dealData.map(async (deal) => {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          dealData.map(async (deal: Record<string, any>) => {
             const { data: score } = await supabase
               .from('deal_scores')
               .select('score_deal_total, verdict')

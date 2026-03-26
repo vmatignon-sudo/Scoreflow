@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import Any
 
 
@@ -23,7 +25,8 @@ RECUPERABILITY_COEFFICIENTS: dict[str, dict[str, float]] = {
 DEPRECIATION_RATES: dict[str, dict[str, float]] = {
     "vehicule_leger": {"an1_3": 0.175, "an4_plus": 0.08},
     "vehicule_utilitaire": {"an1_3": 0.18, "an4_plus": 0.10},
-    "vehicule_luxe_collection": {"an1_3": 0.10, "an4_plus": 0.05},
+    # Spec : "stable ou croissant" — taux très faible voire négatif (appréciation)
+    "vehicule_luxe_collection": {"an1_3": 0.03, "an4_plus": 0.0},
     "engin_tp": {"an1_3": 0.10, "an4_plus": 0.08},
     "machine_industrielle": {"standard": 0.125, "specifique": 0.25},
     "materiel_agricole": {"default": 0.10},
@@ -187,9 +190,8 @@ class AssetScorer:
             esg_bonus = 1.5
             score += esg_bonus
 
-        # Traceur GPS bonus already in coeff, but also score impact
-        if traceur_gps:
-            score += 0.5
+        # Traceur GPS : bonus déjà intégré dans le coefficient de récupérabilité
+        # Pas de double-comptage sur le score
 
         score = max(0, min(20, round(score, 2)))
 
