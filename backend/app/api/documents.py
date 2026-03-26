@@ -1,6 +1,11 @@
+from __future__ import annotations
+
 from fastapi import APIRouter, UploadFile, File, HTTPException
 
 router = APIRouter()
+
+# Max 90s per request (Claude API can take up to 60s)
+REQUEST_TIMEOUT = 90
 
 
 @router.post("/parse-liasse")
