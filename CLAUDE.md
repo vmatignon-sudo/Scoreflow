@@ -19,14 +19,14 @@
 - Texte courant : #424245 (body default)
 - Texte secondaire : #6e6e73
 - Texte muted : #86868b / #a1a1a6
-- Boutons action/CTA : #2563eb (bleu soutenu), hover #1d4ed8
+- Boutons action/CTA : #1e40af (bleu soutenu), hover #1e3a8a
 - Liens : #06c (bleu Apple)
-- Icônes actives/accent : #2563eb sur fond #2563eb/8%
+- Icônes actives/accent : #1e40af sur fond #1e40af/8%
 - Success : #2d9d3f, Warning : #bf5a00, Danger : #c4342d
 - Borders : rgba(0,0,0,0.04)
 
 ### Composants
-- Boutons primaires : bg-[#2563eb] text-white rounded-[12px] ou rounded-full
+- Boutons primaires : bg-[#1e40af] text-white rounded-[12px] ou rounded-full
 - Boutons secondaires : bg-[#f5f5f7] text-[#424245] rounded-[12px]
 - Inputs : bg-[#f5f5f7] rounded-[12px], pas de border, focus:ring-black/10
 - Tuiles features : bg-[#f5f5f7] rounded-[20px], hover:bg-[#ededf0]

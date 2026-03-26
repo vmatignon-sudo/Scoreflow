@@ -41,7 +41,7 @@ export default function DealsPage() {
           </div>
           <Link
             href="/deals/new"
-            className="flex items-center gap-2 bg-[#2563eb] text-white px-4 py-2.5 rounded-lg font-medium hover:bg-[#1d4ed8] transition-colors"
+            className="flex items-center gap-2 bg-[#1e40af] text-white px-4 py-2.5 rounded-lg font-medium hover:bg-[#1e3a8a] transition-colors"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />

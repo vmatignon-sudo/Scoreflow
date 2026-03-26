@@ -172,7 +172,7 @@ export default function StepDocuments({ draft, updateDraft, onNext, onBack }: Pr
         </button>
         <button
           onClick={onNext}
-          className="flex-1 bg-[#2563eb] text-white py-3 rounded-lg font-medium hover:bg-[#1d4ed8] transition-colors"
+          className="flex-1 bg-[#1e40af] text-white py-3 rounded-lg font-medium hover:bg-[#1e3a8a] transition-colors"
         >
           {uploadedDocs.length > 0 ? 'Continuer' : 'Passer cette étape'}
         </button>

@@ -27,7 +27,7 @@ export default function Sidebar() {
       {/* New deal */}
       <div className="px-3 pb-3">
         <Link href="/deals/new"
-          className="inline-flex items-center justify-center gap-1.5 w-full bg-[#2563eb] text-white py-[7px] rounded-[10px] text-[12px] font-medium hover:bg-[#1d4ed8] active:scale-[0.98] transition-all">
+          className="inline-flex items-center justify-center gap-1.5 w-full bg-[#1e40af] text-white py-[7px] rounded-[10px] text-[12px] font-medium hover:bg-[#1e3a8a] active:scale-[0.98] transition-all">
           <Plus className="w-3 h-3" strokeWidth={2.5} />
           Nouveau dossier
         </Link>
@@ -45,11 +45,11 @@ export default function Sidebar() {
                   className={cn(
                     'flex items-center gap-2.5 px-3 py-[8px] rounded-[10px] text-[13px] transition-all',
                     isActive
-                      ? 'bg-[#2563eb]/[0.08] text-[#2563eb] font-medium'
+                      ? 'bg-[#1e40af]/[0.08] text-[#1e40af] font-medium'
                       : 'text-[#6e6e73] hover:bg-[#f5f5f7] hover:text-[#2d2d2d] font-normal'
                   )}
                 >
-                  <item.icon className={cn("w-[17px] h-[17px]", isActive && "text-[#2563eb]")} strokeWidth={isActive ? 1.8 : 1.5} />
+                  <item.icon className={cn("w-[17px] h-[17px]", isActive && "text-[#1e40af]")} strokeWidth={isActive ? 1.8 : 1.5} />
                   {item.name}
                 </Link>
               </li>

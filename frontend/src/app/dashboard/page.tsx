@@ -17,7 +17,7 @@ export default function DashboardPage() {
           <p className="text-[14px] text-[#6e6e73] mt-0.5">Vue d&apos;ensemble de vos deals</p>
         </div>
         <Link href="/deals/new"
-          className="inline-flex items-center gap-1.5 bg-[#2563eb] text-white px-4 py-2 rounded-full text-[13px] font-medium hover:bg-[#1d4ed8] active:scale-[0.98] transition-all">
+          className="inline-flex items-center gap-1.5 bg-[#1e40af] text-white px-4 py-2 rounded-full text-[13px] font-medium hover:bg-[#1e3a8a] active:scale-[0.98] transition-all">
           <Plus className="w-3.5 h-3.5" strokeWidth={2.5} />
           Nouveau dossier
         </Link>
@@ -28,8 +28,8 @@ export default function DashboardPage() {
         {STATS.map((s) => (
           <div key={s.label} className="bg-white rounded-[20px] shadow hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 p-5">
             <div className="flex items-center gap-2 mb-3">
-              <div className="w-7 h-7 rounded-[8px] bg-[#2563eb]/[0.08] flex items-center justify-center">
-                <s.icon className="w-3.5 h-3.5 text-[#2563eb]" strokeWidth={1.8} />
+              <div className="w-7 h-7 rounded-[8px] bg-[#1e40af]/[0.08] flex items-center justify-center">
+                <s.icon className="w-3.5 h-3.5 text-[#1e40af]" strokeWidth={1.8} />
               </div>
               <p className="text-[12px] text-[#86868b]">{s.label}</p>
             </div>

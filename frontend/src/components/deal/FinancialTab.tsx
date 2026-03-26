@@ -214,7 +214,7 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
           <button
             onClick={handleReanalyze}
             disabled={reanalyzing}
-            className="flex items-center gap-2 px-4 py-2 bg-[#2563eb] text-white rounded-lg text-sm font-medium hover:bg-[#1d4ed8] transition-colors disabled:opacity-50"
+            className="flex items-center gap-2 px-4 py-2 bg-[#1e40af] text-white rounded-lg text-sm font-medium hover:bg-[#1e3a8a] transition-colors disabled:opacity-50"
           >
             {reanalyzing ? (
               <>

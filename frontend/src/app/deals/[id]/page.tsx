@@ -158,7 +158,7 @@ export default function DealDetailPage() {
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex items-center gap-1.5 px-4 py-2 rounded-[10px] text-[13px] font-medium transition-all ${
                     activeTab === tab.id
-                      ? 'bg-[#2563eb] text-white shadow-sm'
+                      ? 'bg-[#1e40af] text-white shadow-sm'
                       : 'text-[#6e6e73] hover:text-[#2d2d2d] hover:bg-black/[0.03]'
                   }`}
                 >

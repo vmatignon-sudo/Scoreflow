@@ -88,7 +88,7 @@ export default function ScorePanel({ score }: Props) {
 
       {/* Actions */}
       <div className="space-y-2">
-        <button className="w-full bg-[#2563eb] text-white py-2 rounded-[12px] text-[12px] font-medium hover:bg-[#1d4ed8] active:scale-[0.98] transition-all">
+        <button className="w-full bg-[#1e40af] text-white py-2 rounded-[12px] text-[12px] font-medium hover:bg-[#1e3a8a] active:scale-[0.98] transition-all">
           Exporter PDF
         </button>
         <button className="w-full bg-[#f5f5f7] text-[#1d1d1f] py-2 rounded-[12px] text-[12px] font-medium hover:bg-[#ededf0] active:scale-[0.98] transition-all">
