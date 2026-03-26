@@ -11,6 +11,7 @@ import SimulatorPanel from '@/components/simulator/SimulatorPanel';
 import RiskCurveChart from '@/components/charts/RiskCurveChart';
 import NegotiationSliders from '@/components/deal/NegotiationSliders';
 import FinancialTab from '@/components/deal/FinancialTab';
+import { LayoutGrid, BarChart3, Zap, ShieldAlert, User, Trash2 } from 'lucide-react';
 import type { Deal, DealAsset, DealScore } from '@/types/database';
 
 export default function DealDetailPage() {
@@ -69,11 +70,11 @@ export default function DealDetailPage() {
   }
 
   const TABS = [
-    { id: 'overview' as const, label: 'Vue d\'ensemble' },
-    { id: 'financial' as const, label: 'Financier' },
-    { id: 'simulator' as const, label: 'Simulateur' },
-    { id: 'risk' as const, label: 'Risque & Couverture' },
-    { id: 'director' as const, label: 'Dirigeant' },
+    { id: 'overview' as const, label: 'Vue d\'ensemble', icon: LayoutGrid },
+    { id: 'financial' as const, label: 'Financier', icon: BarChart3 },
+    { id: 'simulator' as const, label: 'Simulateur', icon: Zap },
+    { id: 'risk' as const, label: 'Risque', icon: ShieldAlert },
+    { id: 'director' as const, label: 'Dirigeant', icon: User },
   ];
 
   return (
@@ -91,11 +92,9 @@ export default function DealDetailPage() {
             </div>
             <button
               onClick={() => setShowDeleteConfirm(true)}
-              className="px-3 py-2 text-sm text-[#a1a1a6] hover:text-[#DC2626] hover:bg-red-50 rounded-lg transition-colors"
+              className="inline-flex items-center gap-1.5 px-3 py-2 text-[12px] text-[#86868b] hover:text-[#c4342d] hover:bg-[#c4342d]/[0.06] rounded-[10px] transition-all"
             >
-              <svg className="w-4 h-4 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-              </svg>
+              <Trash2 className="w-3.5 h-3.5" strokeWidth={1.8} />
               Supprimer
             </button>
           </div>
@@ -150,20 +149,24 @@ export default function DealDetailPage() {
           <VerdictBanner score={score} />
 
           {/* Tabs */}
-          <div className="flex gap-1 mb-6 border-b border-black/[0.04]">
-            {TABS.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
-                  activeTab === tab.id
-                    ? 'border-[#1d1d1f] text-[#1d1d1f]'
-                    : 'border-transparent text-[#6e6e73] hover:text-[#1d1d1f]'
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
+          <div className="flex gap-1 mb-6 bg-white rounded-[14px] shadow-sm p-1">
+            {TABS.map((tab) => {
+              const Icon = tab.icon;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`flex items-center gap-1.5 px-4 py-2 rounded-[10px] text-[13px] font-medium transition-all ${
+                    activeTab === tab.id
+                      ? 'bg-[#1d1d1f] text-white shadow-sm'
+                      : 'text-[#6e6e73] hover:text-[#1d1d1f] hover:bg-black/[0.03]'
+                  }`}
+                >
+                  <Icon className="w-3.5 h-3.5" strokeWidth={1.8} />
+                  <span className="hidden sm:inline">{tab.label}</span>
+                </button>
+              );
+            })}
           </div>
 
           {/* Tab content */}
