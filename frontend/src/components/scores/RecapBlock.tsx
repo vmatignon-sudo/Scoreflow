@@ -268,24 +268,22 @@ export default function RecapBlock({ score }: Props) {
                   borderRadius: '6px',
                   padding: '8px 10px', marginTop: '8px', cursor: 'pointer',
                 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
                   <p style={{ fontSize: '11px', fontWeight: 600, color: v ? v.color : '#B45309', margin: 0 }}>Recommandation</p>
-                  <ChevronDown style={{
+                  {v && (
+                    <span className="font-medium rounded-full" style={{
+                      fontSize: '10px', background: 'white', border: `1px solid ${v.border}`, color: v.color,
+                      padding: '2px 10px', whiteSpace: 'nowrap',
+                    }}>
+                      {v.label}
+                    </span>
+                  )}
+                  <ChevronDown className="ml-auto shrink-0" style={{
                     width: '10px', height: '10px', color: v ? v.color : '#B45309',
                     transform: isRecoOpen ? 'rotate(180deg)' : 'rotate(0deg)',
                     transition: 'transform 0.15s ease',
                   }} strokeWidth={1.5} />
                 </div>
-                {v && (
-                  <div style={{ marginBottom: '4px' }}>
-                    <span className="font-medium rounded-full" style={{
-                      fontSize: '10px', background: v.bg, border: `1px solid ${v.border}`, color: v.color,
-                      padding: '2px 10px', whiteSpace: 'nowrap',
-                    }}>
-                      {v.label}
-                    </span>
-                  </div>
-                )}
                 {score.recommandation && (
                   <p style={{
                     fontSize: '11px', color: v ? v.color : '#92400E', lineHeight: '1.4', margin: 0,
