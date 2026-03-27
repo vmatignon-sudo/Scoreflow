@@ -141,18 +141,7 @@ export default function RecapBlock({ score, analyzed = true }: Props) {
   const targetValues = AXIS_KEYS.map(k => show ? ((score?.[k] as number | null) ?? 0) : 0);
   const axisValues = targetValues.map(v => v * progress);
 
-  if (!score) {
-    return (
-      <div className="tile" style={{ padding: '16px' }}>
-        <div className="flex items-center mb-2">
-          <h4 className="text-[12px] font-medium" style={{ color: '#2a5082' }}>Synthèse</h4>
-        </div>
-        <div className="flex items-center justify-center" style={{ minHeight: '80px' }}>
-          <p className="text-[12px]" style={{ color: 'var(--text-muted)' }}>Relancez l'analyse pour obtenir les résultats</p>
-        </div>
-      </div>
-    );
-  }
+  // Pas de return anticipé — on affiche toujours la structure complète
 
   return (
     <div className="tile" style={{ padding: '16px', flexShrink: 0 }}>
