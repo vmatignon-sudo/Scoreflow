@@ -125,30 +125,56 @@ export default function DealDetailPage() {
               </p>
             </div>
             <div className="flex items-center gap-3">
-              {deal.status === 'completed' ? (
-                <span className="inline-flex items-center font-medium"
-                  style={{
-                    gap: '6px', fontSize: '12px', background: '#f0fdf4', border: '1px solid #059669',
-                    borderRadius: '8px', padding: '8px 16px', color: '#059669',
-                  }}>
-                  Analysé
-                </span>
-              ) : (
-                <button
-                  onClick={async () => {
-                    await supabase.from('deals').update({ status: 'analyzing' }).eq('id', dealId);
-                    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/deals/${dealId}/analyze`, { method: 'POST' });
-                    if (res.ok) window.location.reload();
-                  }}
-                  className="inline-flex items-center font-medium"
-                  style={{
-                    gap: '6px', fontSize: '12px', background: '#2a5082', border: 'none',
-                    borderRadius: '8px', padding: '8px 16px', color: 'white', cursor: 'pointer',
-                  }}>
-                  <RefreshCw className="w-3.5 h-3.5" strokeWidth={2} />
-                  Relancer l'analyse
-                </button>
-              )}
+              {/* Bloc statut — largeur fixe */}
+              <div className="flex flex-col items-center" style={{ width: '180px' }}>
+                {deal.status === 'completed' ? (
+                  <>
+                    <span className="inline-flex items-center justify-center font-medium w-full"
+                      style={{
+                        gap: '6px', fontSize: '12px', background: '#f0fdf4', border: '1px solid #059669',
+                        borderRadius: '8px', padding: '8px 16px', color: '#059669',
+                      }}>
+                      Analysé
+                    </span>
+                    {score && (
+                      <div className="flex items-center justify-center mt-2" style={{ gap: '8px' }}>
+                        <span className="font-mono font-bold" style={{ fontSize: '18px', color: score.score_deal_total >= 14 ? '#059669' : score.score_deal_total >= 10 ? '#B45309' : '#DC2626' }}>
+                          {score.score_deal_total.toFixed(1)}
+                        </span>
+                        <span style={{ fontSize: '10px', color: 'var(--text-muted)' }}>/20</span>
+                        {score.verdict && (
+                          <span className="font-medium" style={{
+                            fontSize: '9px', borderRadius: '6px', padding: '2px 8px', whiteSpace: 'nowrap',
+                            background: score.verdict === 'go' ? '#f0fdf4' : score.verdict === 'go_conditionnel' ? '#FFF7E6' : '#FEF2F2',
+                            color: score.verdict === 'go' ? '#059669' : score.verdict === 'go_conditionnel' ? '#B45309' : '#DC2626',
+                            border: `0.5px solid ${score.verdict === 'go' ? '#059669' : score.verdict === 'go_conditionnel' ? '#F59E0B' : '#DC2626'}`,
+                          }}>
+                            {score.verdict === 'go' ? 'GO' : score.verdict === 'go_conditionnel' ? 'GO COND.' : score.verdict === 'no_go' ? 'NO GO' : 'VETO'}
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <button
+                      onClick={async () => {
+                        await supabase.from('deals').update({ status: 'analyzing' }).eq('id', dealId);
+                        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/deals/${dealId}/analyze`, { method: 'POST' });
+                        if (res.ok) window.location.reload();
+                      }}
+                      className="inline-flex items-center justify-center font-medium w-full"
+                      style={{
+                        gap: '6px', fontSize: '12px', background: '#2a5082', border: 'none',
+                        borderRadius: '8px', padding: '8px 16px', color: 'white', cursor: 'pointer',
+                      }}>
+                      <RefreshCw className="w-3.5 h-3.5" strokeWidth={2} />
+                      Relancer l'analyse
+                    </button>
+                    <span className="mt-2" style={{ fontSize: '14px', color: 'var(--text-muted)' }}>—</span>
+                  </>
+                )}
+              </div>
               <button onClick={() => setShowDelete(true)} className="p-1.5 rounded-[4px]" style={{ color: 'var(--text-muted)' }}>
                 <Trash2 className="w-3.5 h-3.5" strokeWidth={1.5} />
               </button>
