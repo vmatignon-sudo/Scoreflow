@@ -35,7 +35,7 @@ export default function DealsPage() {
           .select('*')
           .in('deal_id', ids);
         const map: Record<string, DealAsset> = {};
-        assetData?.forEach(a => { map[a.deal_id] = a; });
+        assetData?.forEach((a: DealAsset) => { map[a.deal_id] = a; });
         setAssets(map);
 
         const { data: scoreData } = await supabase
