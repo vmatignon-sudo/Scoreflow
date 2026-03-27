@@ -123,7 +123,7 @@ export default function DealDetailPage() {
 
           {/* LEFT — Hypothèses */}
           <div className="hidden lg:flex flex-col w-[280px] xl:w-[280px] shrink-0 overflow-y-auto pt-4">
-            <p className="text-[12px] font-medium pl-2 mb-3" style={{ color: 'var(--text-primary)' }}>Hypothèses</p>
+            <p className="font-medium pl-2 mb-3" style={{ fontSize: '20px', color: '#185FA5' }}>Hypothèses</p>
             <HypothesesColumn deal={deal} asset={asset} dealId={dealId} supabase={supabase} />
           </div>
 
@@ -132,7 +132,7 @@ export default function DealDetailPage() {
 
             {/* Title line: Résultats + buttons */}
             <div className="flex items-center justify-between" style={{ marginBottom: '12px' }}>
-              <p className="text-[12px] font-medium pl-1" style={{ color: 'var(--text-primary)' }}>Résultats</p>
+              <p className="font-medium pl-1" style={{ fontSize: '20px', color: '#185FA5' }}>Résultats</p>
               <div className="flex items-center" style={{ gap: '8px' }}>
                 <button className="inline-flex items-center font-medium" style={{
                   gap: '5px', fontSize: '11px', background: 'white', border: '0.5px solid #E2E8F0',
