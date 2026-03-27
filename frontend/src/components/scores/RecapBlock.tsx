@@ -114,7 +114,7 @@ export default function RecapBlock({ score }: Props) {
   return (
     <div style={{
       background: 'white', border: '0.5px solid #E2E8F0', borderRadius: '12px',
-      boxShadow: '0 2px 8px rgba(0,0,0,0.08)', padding: '16px 16px 16px 16px',
+      boxShadow: '0 2px 8px rgba(0,0,0,0.08)', padding: '12px 16px 12px 16px',
       flexShrink: 0,
     }}>
 
