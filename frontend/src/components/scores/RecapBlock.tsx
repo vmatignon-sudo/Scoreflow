@@ -207,7 +207,7 @@ export default function RecapBlock({ score }: Props) {
         </div>
 
         {/* RIGHT — Toggle + mini-cartes par dimension */}
-        <div className="flex-1 min-w-0 flex flex-col items-end" style={{ paddingRight: '8px' }}>
+        <div className="flex-1 min-w-0 flex flex-col items-end" style={{ paddingRight: '13px' }}>
 
           {/* 4 mini-cartes dimension — note centrée verticalement */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '90%' }}>
