@@ -226,7 +226,7 @@ export default function RecapBlock({ score }: Props) {
               return (
                 <div key={key}
                   onClick={() => setExpanded(isOpen ? null : key)}
-                  style={{ display: 'flex', alignItems: 'flex-start', cursor: 'pointer', gap: '8px' }}>
+                  style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '8px' }}>
                   {/* Texte */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center" style={{ gap: '4px', marginBottom: '2px' }}>
