@@ -317,7 +317,7 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
                 <h4 className="text-sm font-medium text-[#6e6e73] mb-1">Altman Z&apos;</h4>
               </Tooltip>
               <div className="flex items-center gap-3">
-                <span className="text-2xl font-bold font-mono text-[#1d1d1f]">
+                <span className="text-2xl font-bold text-[#1d1d1f]">
                   {data.score_altman_z !== null ? data.score_altman_z.toFixed(2) : '—'}
                 </span>
                 {data.altman_zone && (
@@ -333,7 +333,7 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
                 <h4 className="text-sm font-medium text-[#6e6e73] mb-1">Conan &amp; Holder</h4>
               </Tooltip>
               <div className="flex items-center gap-3">
-                <span className="text-2xl font-bold font-mono text-[#1d1d1f]">
+                <span className="text-2xl font-bold text-[#1d1d1f]">
                   {data.score_conan_holder !== null ? data.score_conan_holder.toFixed(3) : '—'}
                 </span>
                 {data.conan_zone && (
