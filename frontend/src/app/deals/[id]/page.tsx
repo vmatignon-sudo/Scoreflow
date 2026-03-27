@@ -11,7 +11,7 @@ import FinancialTab from '@/components/deal/FinancialTab';
 import AssetTab from '@/components/deal/tabs/AssetTab';
 import DirectorTab from '@/components/deal/tabs/DirectorTab';
 import SimulatorPanel from '@/components/simulator/SimulatorPanel';
-import { Globe, BarChart3, Truck, User, Zap, Trash2, FileDown, Lightbulb } from 'lucide-react';
+import { Globe, BarChart3, Truck, User, Zap, Trash2, FileDown, Lightbulb, RefreshCw } from 'lucide-react';
 import type { Deal, DealAsset, DealScore } from '@/types/database';
 
 type TabId = 'macro' | 'financial' | 'asset' | 'director' | 'simulator';
