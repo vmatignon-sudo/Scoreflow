@@ -325,6 +325,21 @@ export default function RecapBlock({ score, analyzed = true }: Props) {
             })}
           </div>
 
+          {/* Barre Score Deal — visible en mode barres, en face de recommandation */}
+          {view === 'barres' && (
+            <div style={{ marginTop: '14px', width: '90%' }}>
+              <div className="flex justify-between items-center" style={{ fontSize: '11px', marginBottom: '6px' }}>
+                <span style={{ color: revealedDims >= 4 ? scoreColor : '#d1d5db', fontWeight: 600 }}>Score Deal</span>
+                <span className="font-mono font-bold" style={{ color: revealedDims >= 4 ? scoreColor : '#d1d5db' }}>
+                  {revealedDims >= 4 ? total.toFixed(1) : '—'}
+                </span>
+              </div>
+              <div className="rounded-full overflow-hidden" style={{ height: '12px', background: '#E2E8F0' }}>
+                <div className="h-full rounded-full" style={{ width: revealedDims >= 4 ? `${(total / 20) * 100}%` : '0%', backgroundColor: scoreColor, transition: 'width 0.8s ease-out' }} />
+              </div>
+            </div>
+          )}
+
           {/* Espace avant recommandation */}
           <div style={{ marginTop: '14px' }} />
 
