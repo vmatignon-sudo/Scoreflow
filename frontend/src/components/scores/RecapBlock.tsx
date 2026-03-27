@@ -257,7 +257,7 @@ export default function RecapBlock({ score }: Props) {
         {/* Right — Dimension syntheses — centered with rosace */}
         <div className="flex-1 min-w-0 flex flex-col justify-center" style={{ minHeight: '240px' }}>
           {/* 4 dimension lines — expandable */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
             {DIMS.map(({ key, label, color }) => {
               const val = (score?.[key] as number | null) ?? 0;
               const synthesis = getDimSynthesis(key, score);
