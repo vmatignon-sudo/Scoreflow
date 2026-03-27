@@ -61,8 +61,8 @@ export default function HypothesesColumn({ deal, asset, dealId, supabase, onChan
 
 type Field = { k: string; l: string; v: string; ro?: boolean; mono?: boolean; accent?: boolean };
 
-function Tile({ title, fields, empty, editable = true, dealId, table, supabase }: {
-  title: string; fields: Field[]; empty?: boolean; editable?: boolean;
+function Tile({ title, fields, empty, editable = true, dealId, table, supabase, onChanged }: {
+  title: string; fields: Field[]; empty?: boolean; editable?: boolean; onChanged?: () => void;
   dealId: string; table: string; supabase: SupabaseClient;
 }) {
   const [editing, setEditing] = useState(false);
