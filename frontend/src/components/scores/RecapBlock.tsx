@@ -275,8 +275,8 @@ export default function RecapBlock({ score }: Props) {
                 {/* Barre colorée gauche */}
                 <div style={{ width: '3px', background: recoBorder, flexShrink: 0 }} />
                 {/* Contenu */}
-                <div style={{ flex: 1, padding: '8px 10px', minWidth: 0 }}>
-                  <div className="flex items-center" style={{ gap: '6px', marginBottom: '3px' }}>
+                <div style={{ flex: 1, padding: '10px 12px', minWidth: 0 }}>
+                  <div className="flex items-center" style={{ gap: '6px', marginBottom: '8px' }}>
                     <span style={{ fontSize: '12px', fontWeight: 600, color: recoColor }}>Recommandation</span>
                     {v && (
                       <span className="font-medium rounded-full" style={{
