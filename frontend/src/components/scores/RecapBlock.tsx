@@ -90,15 +90,16 @@ function getDimSynthesis(key: keyof DealScore, score: DealScore): string {
   return '';
 }
 
-export default function RecapBlock({ score }: Props) {
+export default function RecapBlock({ score, analyzed = true }: Props) {
   const [view, setView] = useState<'rosace' | 'barres'>('rosace');
   const [expanded, setExpanded] = useState<string | null>(null);
-  const total = score?.score_deal_total || 0;
-  const verdict = score?.verdict;
+  const show = analyzed && !!score;
+  const total = show ? (score?.score_deal_total || 0) : 0;
+  const verdict = show ? score?.verdict : undefined;
   const v = verdict ? VERDICTS[verdict] : null;
-  const scoreColor = getColor(total);
+  const scoreColor = show ? getColor(total) : '#a1a1a6';
 
-  const axisValues = AXIS_KEYS.map(k => (score?.[k] as number | null) ?? 0);
+  const axisValues = AXIS_KEYS.map(k => show ? ((score?.[k] as number | null) ?? 0) : 0);
 
   if (!score) {
     return (
