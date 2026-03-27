@@ -72,7 +72,7 @@ export default function DealDetailPage() {
     );
   }
 
-  const verdict = score?.verdict;
+  const verdict = deal?.status === 'completed' ? score?.verdict : undefined;
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--page-bg)' }}>
