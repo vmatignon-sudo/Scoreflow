@@ -87,7 +87,7 @@ export default function DirectorTab({ deal, dealId }: Props) {
     signals.push({ text: 'Aucune donnée dirigeant disponible', type: 'warning' as const });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-3">
       <ScoreExplainer score={data?.score_reputation ?? null} label="Score Dirigeant & Inscriptions" signals={signals} />
 
       {/* Mandats */}

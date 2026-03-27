@@ -67,7 +67,7 @@ export default function AssetTab({ deal, asset }: Props) {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-3">
       <ScoreExplainer score={null} label="Évaluation du bien financé" signals={signals} />
 
       {/* Asset details */}

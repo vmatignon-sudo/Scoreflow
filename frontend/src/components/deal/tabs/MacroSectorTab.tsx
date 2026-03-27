@@ -83,13 +83,13 @@ export default function MacroSectorTab({ dealId, score }: Props) {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-3">
       {/* Score combiné */}
       <ScoreExplainer score={combined} label="Score Macro + Sectoriel combiné" signals={[
         ...(data?.matrice_croisement ? [{ text: `Matrice de croisement : ${data.matrice_croisement}`, type: (combined !== null && combined >= 12 ? 'positive' : combined !== null && combined < 8 ? 'negative' : 'warning') as 'positive' | 'negative' | 'warning' }] : []),
       ]} />
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
         {/* Macro */}
         <ScoreExplainer score={macroScore} label="Indicateurs macro-économiques" signals={macroSignals} />
 

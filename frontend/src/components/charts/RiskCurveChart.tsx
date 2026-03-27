@@ -67,7 +67,7 @@ export default function RiskCurveChart({ deal, asset }: Props) {
   }, [duree, montant, loyerClient, loyerBanque, apport, depot, valeurInitiale, tauxDepre, coeffRecup]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-3">
       {/* Key metrics */}
       <div className="grid grid-cols-3 gap-4">
         <div className="tile" style={{ padding: '20px' }}>

@@ -208,7 +208,7 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
   const ratios = data?.ratios || {};
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-3">
       {/* Upload zone + documents list */}
       <div className="tile" style={{ padding: '24px' }}>
         <div className="flex items-center justify-between mb-4">

@@ -78,7 +78,7 @@ export default function SimulatorPanel({ deal, asset }: Props) {
   }, [duree, deal.montant_finance, valeurBien, tauxDepre, coeffRecup, loyerClient, loyerBanque, fraisDossier]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-3">
       {/* Controls */}
       <div className="tile" style={{ padding: '24px' }}>
         <h3 className="font-semibold text-[#2d2d2d] mb-4">Simulateur d&apos;incident</h3>
