@@ -189,7 +189,7 @@ export default function RecapBlock({ score, analyzed = true }: Props) {
       <div className="flex" style={{ gap: '16px' }}>
 
         {/* LEFT — Rosace SVG (280px) */}
-        <div className="shrink-0 flex flex-col items-center justify-center" style={{ width: '320px', minHeight: '340px', paddingLeft: view === 'rosace' ? '28px' : '16px' }}>
+        <div className="shrink-0 flex flex-col items-center justify-center" style={{ width: '320px', minHeight: '340px', paddingLeft: view === 'rosace' ? '28px' : '40px', paddingRight: view === 'rosace' ? '0' : '0' }}>
           {view === 'rosace' ? (
             <svg viewBox="0 0 360 360" width="320" height="320" style={{ display: 'block' }}>
               {[0.2, 0.4, 0.6, 0.8, 1].map((f) => (
