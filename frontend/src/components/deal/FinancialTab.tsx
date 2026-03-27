@@ -312,7 +312,7 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
       {data && (
         <>
           <div className="grid grid-cols-2 gap-4">
-            <div className="bg-white rounded-[20px] shadow p-5">
+            <div className="tile" style={{ padding: '20px' }}>
               <Tooltip definition={RATIO_DEFINITIONS.altman_z.definition} formula={RATIO_DEFINITIONS.altman_z.formula} source={RATIO_DEFINITIONS.altman_z.source}>
                 <h4 className="text-sm font-medium text-[#6e6e73] mb-1">Altman Z&apos;</h4>
               </Tooltip>
@@ -328,7 +328,7 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
               </div>
               <p className="text-xs text-[#a1a1a6] mt-1">&gt;2.9 sain | 1.23-2.9 gris | &lt;1.23 danger</p>
             </div>
-            <div className="bg-white rounded-[20px] shadow p-5">
+            <div className="tile" style={{ padding: '20px' }}>
               <Tooltip definition={RATIO_DEFINITIONS.conan_holder.definition} formula={RATIO_DEFINITIONS.conan_holder.formula} source={RATIO_DEFINITIONS.conan_holder.source}>
                 <h4 className="text-sm font-medium text-[#6e6e73] mb-1">Conan &amp; Holder</h4>
               </Tooltip>
