@@ -147,6 +147,7 @@ export default function RecapBlock({ score, analyzed = true }: Props) {
               <polygon
                 points={polygonPoints(axisValues, 20)}
                 fill="rgba(24,95,165,0.20)" stroke="#185FA5" strokeWidth="2" strokeLinejoin="round"
+                style={{ transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)' }}
               />
               {AXES.map((label, i) => {
                 const val = axisValues[i];
