@@ -90,7 +90,7 @@ function fmt(v: number | null | undefined): string {
 
 function fmtEur(v: number | null | undefined): string {
   if (v === null || v === undefined) return '—';
-  return `${(v / 1_000).toLocaleString('fr-FR', { maximumFractionDigits: 0 })} k€`;
+  return (v / 1_000).toLocaleString('fr-FR', { maximumFractionDigits: 0 });
 }
 
 export default function FinancialTab({ dealId, organizationId }: Props) {
