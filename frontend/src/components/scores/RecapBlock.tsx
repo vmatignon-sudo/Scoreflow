@@ -115,7 +115,7 @@ export default function RecapBlock({ score }: Props) {
     <div className="tile" style={{ padding: '16px', flexShrink: 0 }}>
 
       {/* Title — same as Entreprise tile */}
-      <div className="flex items-center justify-between mb-2">
+      <div className="flex items-center justify-between mb-0">
         <h4 className="text-[12px] font-medium" style={{ color: '#185FA5' }}>Synthèse</h4>
       </div>
 
