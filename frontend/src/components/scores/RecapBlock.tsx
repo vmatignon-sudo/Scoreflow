@@ -120,7 +120,7 @@ export default function RecapBlock({ score }: Props) {
       </div>
 
       {/* Verdict + Score + Mention */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', marginBottom: '8px', gap: '20px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', marginBottom: '0', gap: '20px' }}>
         {v && (
           <span className="font-medium rounded-full" style={{
             fontSize: '14px', background: v.bg, border: `1px solid ${v.border}`, color: v.color,
