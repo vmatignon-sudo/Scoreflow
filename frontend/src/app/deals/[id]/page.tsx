@@ -138,8 +138,8 @@ export default function DealDetailPage() {
                     </span>
                     {score && (
                       <div className="flex items-center justify-center mt-2" style={{ gap: '8px' }}>
-                        <span className="font-mono font-bold" style={{ fontSize: '18px', color: score.score_deal_total >= 14 ? '#059669' : score.score_deal_total >= 10 ? '#B45309' : '#DC2626' }}>
-                          {score.score_deal_total.toFixed(1)}
+                        <span className="font-mono font-bold" style={{ fontSize: '18px', color: (score.score_deal_total ?? 0) >= 14 ? '#059669' : (score.score_deal_total ?? 0) >= 10 ? '#B45309' : '#DC2626' }}>
+                          {(score.score_deal_total ?? 0).toFixed(1)}
                         </span>
                         <span style={{ fontSize: '10px', color: 'var(--text-muted)' }}>/20</span>
                         {score.verdict && (
