@@ -351,7 +351,7 @@ export default function RecapBlock({ score, analyzed = true }: Props) {
                       </span>
                     )}
                   </div>
-                  {recoRevealed && score.recommandation && (
+                  {recoRevealed && score?.recommandation && (
                     <p style={{
                       fontSize: '11px', color: recoColor, lineHeight: '1.4', margin: 0,
                       animation: 'fadeIn 0.4s ease-out',
