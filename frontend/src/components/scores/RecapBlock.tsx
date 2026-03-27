@@ -119,7 +119,7 @@ export default function RecapBlock({ score }: Props) {
     }}>
 
       {/* TOP LINE: Synthèse (left) — Verdict + Score (right) */}
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '8px' }}>
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '4px' }}>
         <span style={{ fontSize: '12px', fontWeight: 500, color: '#185FA5', lineHeight: '1', paddingTop: '2px' }}>Synthèse</span>
 
         {/* Verdict + Note + Mention — centered on same axis */}
