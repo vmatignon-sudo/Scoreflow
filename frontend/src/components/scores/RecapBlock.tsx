@@ -28,15 +28,15 @@ const VERDICTS: Record<string, { label: string; bg: string; border: string; colo
 };
 
 const DIMS: { key: keyof DealScore; label: string; color: string }[] = [
-  { key: 'score_macro_sectoriel_combine', label: 'Macro & Secteur', color: '#185FA5' },
+  { key: 'score_macro_sectoriel_combine', label: 'Macro & Sect.', color: '#185FA5' },
   { key: 'score_financier', label: 'Financier', color: '#EF6C00' },
   { key: 'score_materiel', label: 'Matériel', color: '#059669' },
   { key: 'score_dirigeant', label: 'Dirigeant', color: '#185FA5' },
 ];
 
-// Diamond SVG rosace — 4 axes, 320x320
-const CX = 160, CY = 160, R = 120;
-const AXES = ['Macro & Secteur', 'Financier', 'Matériel', 'Dirigeant'];
+// Diamond SVG rosace — 4 axes, viewBox 360x360 for label space
+const CX = 180, CY = 180, R = 120;
+const AXES = ['Macro & Sect.', 'Financier', 'Matériel', 'Dirigeant'];
 const AXIS_KEYS: (keyof DealScore)[] = [
   'score_macro_sectoriel_combine', 'score_financier', 'score_materiel', 'score_dirigeant',
 ];
@@ -89,15 +89,6 @@ function getDimSynthesis(key: keyof DealScore, score: DealScore): string {
   return '';
 }
 
-// Label positioning for 4-axis diamond
-function getLabelProps(i: number, lx: number, ly: number): { x: number; y: number; anchor: 'start' | 'middle' | 'end' } {
-  // 0=top, 1=right, 2=bottom, 3=left
-  if (i === 0) return { x: lx, y: ly - 4, anchor: 'middle' };
-  if (i === 1) return { x: lx + 4, y: ly, anchor: 'start' };
-  if (i === 2) return { x: lx, y: ly + 12, anchor: 'middle' };
-  return { x: lx - 4, y: ly, anchor: 'end' };
-}
-
 export default function RecapBlock({ score }: Props) {
   const [view, setView] = useState<'rosace' | 'barres'>('rosace');
   const total = score?.score_deal_total || 0;
@@ -111,7 +102,7 @@ export default function RecapBlock({ score }: Props) {
     return (
       <div style={{
         background: 'white', border: '0.5px solid #E2E8F0', borderRadius: '12px',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.08)', padding: '16px', minHeight: '120px',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.08)', padding: '14px 16px', minHeight: '120px',
       }}>
         <p className="text-[11px]" style={{ color: 'var(--text-muted)' }}>Analyse en attente...</p>
       </div>
@@ -121,30 +112,31 @@ export default function RecapBlock({ score }: Props) {
   return (
     <div style={{
       background: 'white', border: '0.5px solid #E2E8F0', borderRadius: '12px',
-      boxShadow: '0 2px 8px rgba(0,0,0,0.08)', padding: '16px',
+      boxShadow: '0 2px 8px rgba(0,0,0,0.08)', padding: '14px 16px',
       flexShrink: 0,
     }}>
 
       {/* TOP LINE: Synthèse (left) — Verdict + Score (right) */}
-      <div className="flex items-center justify-between" style={{ marginBottom: '12px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
         <span style={{ fontSize: '12px', fontWeight: 500, color: '#185FA5' }}>Synthèse</span>
 
-        <div className="flex items-center" style={{ gap: '12px' }}>
+        {/* Verdict + Note + Mention — centered on same axis */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '20px' }}>
           {v && (
             <span className="font-medium rounded-full" style={{
-              fontSize: '12px', background: v.bg, border: `1px solid ${v.border}`, color: v.color,
-              padding: '4px 16px',
+              fontSize: '14px', background: v.bg, border: `1px solid ${v.border}`, color: v.color,
+              padding: '8px 20px', whiteSpace: 'nowrap',
             }}>
               {v.label}
             </span>
           )}
-          <div className="text-right">
-            <span className="font-bold font-mono leading-none tracking-tight" style={{ fontSize: '36px', color: scoreColor }}>
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px' }}>
+            <span className="font-bold font-mono leading-none tracking-tight" style={{ fontSize: '44px', color: scoreColor }}>
               {total.toFixed(1)}
             </span>
-            <span className="font-medium" style={{ fontSize: '14px', color: 'var(--text-muted)', marginLeft: '2px' }}>/20</span>
-            <p className="font-semibold" style={{ fontSize: '14px', color: scoreColor }}>{getMention(total)}</p>
+            <span className="font-medium" style={{ fontSize: '16px', color: 'var(--text-muted)' }}>/20</span>
           </div>
+          <span className="font-semibold" style={{ fontSize: '16px', color: scoreColor }}>{getMention(total)}</span>
         </div>
       </div>
 
@@ -154,7 +146,7 @@ export default function RecapBlock({ score }: Props) {
         {/* Left — Rosace SVG */}
         <div className="shrink-0" style={{ width: '320px' }}>
           {view === 'rosace' ? (
-            <svg viewBox="0 0 320 320" width="320" height="320" style={{ display: 'block' }}>
+            <svg viewBox="0 0 360 360" width="320" height="320" style={{ display: 'block' }}>
               {/* 5 grid polygons (20% 40% 60% 80% 100%) */}
               {[0.2, 0.4, 0.6, 0.8, 1].map((f) => (
                 <polygon key={f} points={gridPolygon(f, 4)} fill="none" stroke="#E2E8F0" strokeWidth="1" />
@@ -174,19 +166,52 @@ export default function RecapBlock({ score }: Props) {
                 const val = axisValues[i];
                 const angle = (360 / 4) * i;
                 const [px, py] = polarToXY(angle, (val / 20) * R);
-                const [lx, ly] = polarToXY(angle, R + 24);
-                const lp = getLabelProps(i, lx, ly);
                 // Score label offset from point
                 const scoreOffX = i === 1 ? 14 : i === 3 ? -14 : 0;
                 const scoreOffY = i === 0 ? -14 : i === 2 ? 14 : 0;
                 const scoreAnchor = (i === 1 ? 'start' : i === 3 ? 'end' : 'middle') as 'start' | 'middle' | 'end';
-                return (
-                  <g key={i}>
-                    {/* Axis label */}
-                    <text x={lp.x} y={lp.y} textAnchor={lp.anchor} dominantBaseline="central"
+
+                // Label positions: top/bottom horizontal, left/right vertical
+                let labelEl: React.ReactNode;
+                if (i === 0) {
+                  // Top — horizontal
+                  labelEl = (
+                    <text x={CX} y={CY - R - 28} textAnchor="middle" dominantBaseline="central"
                       style={{ fontSize: '11px', fill: '#4A5568', fontWeight: 500 }}>
                       {label}
                     </text>
+                  );
+                } else if (i === 2) {
+                  // Bottom — horizontal
+                  labelEl = (
+                    <text x={CX} y={CY + R + 32} textAnchor="middle" dominantBaseline="central"
+                      style={{ fontSize: '11px', fill: '#4A5568', fontWeight: 500 }}>
+                      {label}
+                    </text>
+                  );
+                } else if (i === 1) {
+                  // Right — vertical text
+                  labelEl = (
+                    <text x={CX + R + 28} y={CY} textAnchor="middle" dominantBaseline="central"
+                      transform={`rotate(90, ${CX + R + 28}, ${CY})`}
+                      style={{ fontSize: '11px', fill: '#4A5568', fontWeight: 500 }}>
+                      {label}
+                    </text>
+                  );
+                } else {
+                  // Left — vertical text
+                  labelEl = (
+                    <text x={CX - R - 28} y={CY} textAnchor="middle" dominantBaseline="central"
+                      transform={`rotate(-90, ${CX - R - 28}, ${CY})`}
+                      style={{ fontSize: '11px', fill: '#4A5568', fontWeight: 500 }}>
+                      {label}
+                    </text>
+                  );
+                }
+
+                return (
+                  <g key={i}>
+                    {labelEl}
                     {/* Point */}
                     <circle cx={px} cy={py} r={7} fill="#185FA5" stroke="white" strokeWidth="2" />
                     {/* Permanent score label next to point */}
@@ -229,15 +254,15 @@ export default function RecapBlock({ score }: Props) {
 
         {/* Right — Dimension syntheses */}
         <div className="flex-1 min-w-0 flex flex-col" style={{ minHeight: '240px' }}>
-          {/* 4 dimension lines + recommandation */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+          {/* 4 dimension lines */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
             {DIMS.map(({ key, label, color }) => {
               const val = (score?.[key] as number | null) ?? 0;
               const synthesis = getDimSynthesis(key, score);
               return (
                 <div key={key} style={{ display: 'grid', gridTemplateColumns: '110px 1fr', gap: '8px', alignItems: 'start', minHeight: '52px' }}>
                   <div className="flex items-center" style={{ gap: '6px' }}>
-                    <span style={{ fontSize: '12px', fontWeight: 600, color }}>{label}</span>
+                    <span style={{ fontSize: '11px', fontWeight: 600, color }}>{label}</span>
                     <span className="font-mono" style={{ fontSize: '11px', color: '#BBB' }}>{val.toFixed(0)}/20</span>
                   </div>
                   <p style={{
@@ -250,27 +275,23 @@ export default function RecapBlock({ score }: Props) {
                 </div>
               );
             })}
-
-            {/* Recommandation — same height as a dimension line */}
-            {score.recommandation && (
-              <div style={{
-                display: 'grid', gridTemplateColumns: '110px 1fr', gap: '8px', alignItems: 'start', minHeight: '52px',
-              }}>
-                <span style={{ fontSize: '12px', fontWeight: 600, color: '#B45309' }}>Recommandation</span>
-                <div style={{
-                  background: '#FFF7E6', borderLeft: '3px solid #F59E0B', borderRadius: '6px',
-                  padding: '6px 10px',
-                }}>
-                  <p style={{
-                    fontSize: '12px', color: '#92400E', lineHeight: '1.6', margin: 0,
-                    display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden',
-                  }}>
-                    {score.recommandation}
-                  </p>
-                </div>
-              </div>
-            )}
           </div>
+
+          {/* Recommandation — full-width orange card */}
+          {score.recommandation && (
+            <div style={{
+              background: '#FFF7E6', border: '0.5px solid #F59E0B', borderRadius: '8px',
+              padding: '12px 16px', marginTop: '12px',
+            }}>
+              <p style={{ fontSize: '12px', fontWeight: 500, color: '#B45309', margin: '0 0 4px 0' }}>Recommandation</p>
+              <p style={{
+                fontSize: '12px', color: '#92400E', lineHeight: '1.5', margin: 0,
+                display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden',
+              }}>
+                {score.recommandation}
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>
