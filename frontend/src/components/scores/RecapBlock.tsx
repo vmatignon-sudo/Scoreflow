@@ -323,10 +323,12 @@ export default function RecapBlock({ score, analyzed = true }: Props) {
 
           {/* Recommandation + Note finale — même structure que les mini-cartes */}
           {(() => {
-            const isRecoOpen = show ? expanded === 'reco' : false;
-            const recoColor = show ? (v ? v.color : '#B45309') : '#6e6e73';
-            const recoBg = show ? (v ? v.bg : '#FFF7E6') : '#f9f9fb';
-            const recoBorder = show ? (v ? v.border : '#F59E0B') : '#d1d5db';
+            const recoRevealed = revealedDims >= 4;
+            const recoComputing = show && !recoRevealed;
+            const isRecoOpen = recoRevealed ? expanded === 'reco' : false;
+            const recoColor = recoRevealed ? (v ? v.color : '#B45309') : '#6e6e73';
+            const recoBg = recoRevealed ? (v ? v.bg : '#FFF7E6') : '#f9f9fb';
+            const recoBorder = recoRevealed ? (v ? v.border : '#F59E0B') : '#d1d5db';
             return (
               <div
                 onClick={() => show && setExpanded(isRecoOpen ? null : 'reco')}
