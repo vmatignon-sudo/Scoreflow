@@ -177,7 +177,7 @@ export default function DealDetailPage() {
                       style={{
                         gap: '5px', padding: '7px 0', borderRadius: '6px',
                         fontSize: '10px', fontWeight: 500, border: 'none', cursor: 'pointer',
-                        background: active ? '#185FA5' : 'transparent',
+                        background: active ? '#2a5082' : 'transparent',
                         color: active ? 'white' : '#4A5568',
                         transition: 'all 0.15s ease',
                       }}>
