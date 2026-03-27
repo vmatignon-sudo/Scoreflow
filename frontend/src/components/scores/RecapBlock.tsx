@@ -248,7 +248,15 @@ export default function RecapBlock({ score }: Props) {
             })}
           </div>
 
-          {/* Recommandation + Note finale */}
+          {/* Note finale — flottante sur le blanc */}
+          <div className="flex items-baseline justify-end" style={{ marginTop: '10px', gap: '3px' }}>
+            <span className="font-bold font-mono leading-none tracking-tight" style={{ fontSize: '28px', color: scoreColor }}>
+              {total.toFixed(1)}
+            </span>
+            <span className="font-medium" style={{ fontSize: '11px', color: 'var(--text-muted)' }}>/20</span>
+          </div>
+
+          {/* Recommandation */}
           {(() => {
             const isRecoOpen = expanded === 'reco';
             return (
@@ -270,13 +278,7 @@ export default function RecapBlock({ score }: Props) {
                       {v.label}
                     </span>
                   )}
-                  <div className="ml-auto shrink-0 flex items-baseline" style={{ gap: '2px' }}>
-                    <span className="font-bold font-mono leading-none" style={{ fontSize: '18px', color: scoreColor }}>
-                      {total.toFixed(1)}
-                    </span>
-                    <span className="font-medium" style={{ fontSize: '10px', color: 'var(--text-muted)' }}>/20</span>
-                  </div>
-                  <ChevronDown className="shrink-0" style={{
+                  <ChevronDown className="ml-auto shrink-0" style={{
                     width: '10px', height: '10px', color: v ? v.color : '#B45309',
                     transform: isRecoOpen ? 'rotate(180deg)' : 'rotate(0deg)',
                     transition: 'transform 0.15s ease',
