@@ -147,13 +147,13 @@ export default function RecapBlock({ score }: Props) {
                 const scoreAnchor = (i === 1 ? 'start' : i === 3 ? 'end' : 'middle') as 'start' | 'middle' | 'end';
                 let labelEl: React.ReactNode;
                 if (i === 0) {
-                  labelEl = (<text x={CX} y={CY - R - 28} textAnchor="middle" dominantBaseline="central" style={{ fontSize: '11px', fill: dimColor, fontWeight: 500 }}>{label}</text>);
+                  labelEl = (<text x={CX} y={CY - R - 28} textAnchor="middle" dominantBaseline="central" style={{ fontSize: '11px', fill: '#6e6e73', fontWeight: 500 }}>{label}</text>);
                 } else if (i === 2) {
-                  labelEl = (<text x={CX} y={CY + R + 32} textAnchor="middle" dominantBaseline="central" style={{ fontSize: '11px', fill: dimColor, fontWeight: 500 }}>{label}</text>);
+                  labelEl = (<text x={CX} y={CY + R + 32} textAnchor="middle" dominantBaseline="central" style={{ fontSize: '11px', fill: '#6e6e73', fontWeight: 500 }}>{label}</text>);
                 } else if (i === 1) {
-                  labelEl = (<text x={CX + R + 28} y={CY} textAnchor="middle" dominantBaseline="central" transform={`rotate(90, ${CX + R + 28}, ${CY})`} style={{ fontSize: '11px', fill: dimColor, fontWeight: 500 }}>{label}</text>);
+                  labelEl = (<text x={CX + R + 28} y={CY} textAnchor="middle" dominantBaseline="central" transform={`rotate(90, ${CX + R + 28}, ${CY})`} style={{ fontSize: '11px', fill: '#6e6e73', fontWeight: 500 }}>{label}</text>);
                 } else {
-                  labelEl = (<text x={CX - R - 28} y={CY} textAnchor="middle" dominantBaseline="central" transform={`rotate(-90, ${CX - R - 28}, ${CY})`} style={{ fontSize: '11px', fill: dimColor, fontWeight: 500 }}>{label}</text>);
+                  labelEl = (<text x={CX - R - 28} y={CY} textAnchor="middle" dominantBaseline="central" transform={`rotate(-90, ${CX - R - 28}, ${CY})`} style={{ fontSize: '11px', fill: '#6e6e73', fontWeight: 500 }}>{label}</text>);
                 }
                 return (
                   <g key={i}>
