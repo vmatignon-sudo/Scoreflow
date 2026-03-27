@@ -124,7 +124,7 @@ export default function DealDetailPage() {
             <p className="font-medium pl-2" style={{ fontSize: '20px', color: '#2d6a4f' }}>Hypothèses</p>
           </div>
           <div className="flex-1 min-w-0 flex items-center justify-between">
-            <p className="font-medium pl-1" style={{ fontSize: '20px', color: '#0c2340' }}>Résultats</p>
+            <p className="font-medium pl-1" style={{ fontSize: '20px', color: '#1a3a6b' }}>Résultats</p>
             <div className="flex items-center" style={{ gap: '8px' }}>
               <button className="inline-flex items-center font-medium" style={{
                 gap: '5px', fontSize: '11px', background: 'white', border: '0.5px solid #E2E8F0',
