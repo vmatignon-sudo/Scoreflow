@@ -197,25 +197,6 @@ export default function RecapBlock({ score }: Props) {
         {/* RIGHT — Verdict + mini-cartes par dimension */}
         <div className="flex-1 min-w-0 flex flex-col">
 
-          {/* Verdict + Note finale */}
-          <div className="flex items-center justify-end" style={{ gap: '12px', marginBottom: '10px' }}>
-            {v && (
-              <span className="font-medium rounded-full" style={{
-                fontSize: '11px', background: v.bg, border: `1px solid ${v.border}`, color: v.color,
-                padding: '4px 14px', whiteSpace: 'nowrap',
-              }}>
-                {v.label}
-              </span>
-            )}
-            <span className="font-semibold" style={{ fontSize: '12px', color: scoreColor }}>{getMention(total)}</span>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: '2px' }}>
-              <span className="font-bold font-mono leading-none tracking-tight" style={{ fontSize: '32px', color: scoreColor }}>
-                {total.toFixed(1)}
-              </span>
-              <span className="font-medium" style={{ fontSize: '12px', color: 'var(--text-muted)' }}>/20</span>
-            </div>
-          </div>
-
           {/* 4 mini-cartes dimension */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
             {DIMS.map(({ key, label, color }) => {
