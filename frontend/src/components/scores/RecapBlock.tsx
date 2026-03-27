@@ -246,9 +246,9 @@ export default function RecapBlock({ score }: Props) {
                       {synthesis}
                     </p>
                   </div>
-                  {/* Note à droite */}
-                  <span className="font-mono font-bold shrink-0" style={{ fontSize: '13px', color: c, paddingTop: '1px' }}>
-                    {val.toFixed(0)}/20
+                  {/* Note à droite — alignée avec le texte, pas le titre */}
+                  <span className="font-mono font-bold shrink-0 self-center" style={{ fontSize: '13px', color: c }}>
+                    {val.toFixed(0)}
                   </span>
                 </div>
               );
