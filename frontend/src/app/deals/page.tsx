@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/client';
 import Sidebar from '@/components/layout/Sidebar';
-import type { Deal } from '@/types/database';
+import type { Deal, DealAsset } from '@/types/database';
 
 const STATUS_LABELS: Record<string, { label: string; style: string }> = {
   draft: { label: 'Brouillon', style: 'bg-[#f5f5f7] text-[#6e6e73]' },
@@ -15,6 +15,7 @@ const STATUS_LABELS: Record<string, { label: string; style: string }> = {
 
 export default function DealsPage() {
   const [deals, setDeals] = useState<Deal[]>([]);
+  const [assets, setAssets] = useState<Record<string, DealAsset>>({});
   const [loading, setLoading] = useState(true);
   const supabase = createClient();
 
@@ -25,6 +26,18 @@ export default function DealsPage() {
         .select('*')
         .order('created_at', { ascending: false });
       setDeals(data || []);
+
+      if (data && data.length > 0) {
+        const ids = data.map(d => d.id);
+        const { data: assetData } = await supabase
+          .from('deal_assets')
+          .select('*')
+          .in('deal_id', ids);
+        const map: Record<string, DealAsset> = {};
+        assetData?.forEach(a => { map[a.deal_id] = a; });
+        setAssets(map);
+      }
+
       setLoading(false);
     }
     fetchDeals();
