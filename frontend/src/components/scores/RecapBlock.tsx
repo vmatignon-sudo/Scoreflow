@@ -115,11 +115,11 @@ export default function RecapBlock({ score }: Props) {
     <div className="tile" style={{ padding: '16px', flexShrink: 0 }}>
 
       {/* Title — same as Entreprise tile */}
-      <div className="flex items-center mb-2" style={{ gap: '8px' }}>
+      <div className="flex items-center mb-2" style={{ gap: '12px' }}>
         <h4 className="text-[12px] font-medium" style={{ color: '#185FA5' }}>Synthèse</h4>
-        <button onClick={() => setView(view === 'rosace' ? 'barres' : 'rosace')} style={{ fontSize: '10px', background: 'none', border: 'none', cursor: 'pointer' }}>
+        <button onClick={() => setView(view === 'rosace' ? 'barres' : 'rosace')} style={{ fontSize: '9px', background: 'none', border: 'none', cursor: 'pointer' }}>
           <span style={{ color: view === 'rosace' ? '#185FA5' : '#BBB' }}>rosace</span>
-          <span style={{ margin: '0 4px', color: '#DDD' }}>·</span>
+          <span style={{ margin: '0 3px', color: '#DDD' }}>·</span>
           <span style={{ color: view === 'barres' ? '#185FA5' : '#BBB' }}>barres</span>
         </button>
       </div>
