@@ -123,7 +123,8 @@ export default function RecapBlock({ score }: Props) {
       <div className="flex" style={{ gap: '28px' }}>
 
         {/* LEFT — Rosace SVG (280px) */}
-        <div className="shrink-0" style={{ width: '320px', minHeight: '340px' }}>
+        <div className="shrink-0 flex flex-col" style={{ width: '320px', minHeight: '340px' }}>
+          <div className="flex-1 flex items-center justify-center">
           {view === 'rosace' ? (
             <svg viewBox="0 0 360 360" width="320" height="320" style={{ display: 'block' }}>
               {[0.2, 0.4, 0.6, 0.8, 1].map((f) => (
