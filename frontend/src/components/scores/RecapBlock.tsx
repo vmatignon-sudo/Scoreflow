@@ -102,11 +102,13 @@ export default function RecapBlock({ score }: Props) {
 
   if (!score) {
     return (
-      <div style={{
-        background: 'white', border: '0.5px solid #E2E8F0', borderRadius: '12px',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.08)', padding: '16px', minHeight: '120px',
-      }}>
-        <p className="text-[11px]" style={{ color: 'var(--text-muted)' }}>Analyse en attente...</p>
+      <div className="tile" style={{ padding: '16px' }}>
+        <div className="flex items-center mb-2">
+          <h4 className="text-[12px] font-medium" style={{ color: '#2a5082' }}>Synthèse</h4>
+        </div>
+        <div className="flex items-center justify-center" style={{ minHeight: '80px' }}>
+          <p className="text-[12px]" style={{ color: 'var(--text-muted)' }}>Relancez l'analyse pour obtenir les résultats</p>
+        </div>
       </div>
     );
   }
