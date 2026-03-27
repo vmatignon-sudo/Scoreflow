@@ -103,7 +103,7 @@ function Tile({ title, fields, empty, editable = true, dealId, table, supabase }
             </button>
           ) : (
             <button onClick={startEdit} aria-label="Modifier" className="p-0.5 rounded-[4px] transition-colors hover:bg-blue-50">
-              <PenLine className="w-[14px] h-[14px]" strokeWidth={1.8} style={{ color: '#185FA5' }} />
+              <PenLine className="w-[14px] h-[14px]" strokeWidth={1.8} style={{ color: '#2d6a4f' }} />
             </button>
           )
         )}
@@ -113,7 +113,7 @@ function Tile({ title, fields, empty, editable = true, dealId, table, supabase }
         <div className="flex items-center justify-between">
           <p className="text-[11px] italic" style={{ color: 'var(--text-muted)' }}>Non renseigné</p>
           <button onClick={startEdit} aria-label="Ajouter" className="p-0.5 rounded-[4px] transition-colors hover:bg-blue-50">
-            <PenLine className="w-[14px] h-[14px]" strokeWidth={1.8} style={{ color: '#185FA5' }} />
+            <PenLine className="w-[14px] h-[14px]" strokeWidth={1.8} style={{ color: '#2d6a4f' }} />
           </button>
         </div>
       ) : (
