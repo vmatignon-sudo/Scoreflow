@@ -218,7 +218,7 @@ export default function RecapBlock({ score }: Props) {
                   onClick={() => setExpanded(isOpen ? null : key)}
                   style={{
                     display: 'flex', alignItems: 'stretch', cursor: 'pointer',
-                    background: 'var(--color-background-secondary, #f5f5f7)',
+                    background: '#f9f9fb',
                     borderRadius: '6px', overflow: 'hidden',
                   }}>
                   {/* Barre colorée gauche */}
