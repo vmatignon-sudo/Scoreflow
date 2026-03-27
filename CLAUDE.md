@@ -58,6 +58,13 @@
 - Format des commits : "Phase X terminée : [description courte]"
 - En cas d'erreur bloquante, commit et push ce qui est fait avant de s'arrêter
 
+## RÈGLE BUILD OBLIGATOIRE
+Avant chaque git push, toujours lancer :
+cd frontend && npm run build
+Ne jamais pusher si le build échoue.
+Corriger toutes les erreurs TypeScript avant de pusher.
+Un build propre en local = zéro surprise sur Railway.
+
 ## RÈGLES DE QUALITÉ DU CODE
 Après chaque fichier ou composant créé, tu dois obligatoirement :
 
