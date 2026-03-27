@@ -254,8 +254,8 @@ export default function RecapBlock({ score }: Props) {
             })}
           </div>
 
-          {/* Trait d'addition + espace */}
-          <div style={{ height: '1px', background: '#1d1d1f', opacity: 0.15, marginTop: '8px', marginBottom: '12px' }} />
+          {/* Espace avant recommandation */}
+          <div style={{ marginTop: '14px' }} />
 
           {/* Recommandation + Note finale — même structure que les mini-cartes */}
           {(() => {
