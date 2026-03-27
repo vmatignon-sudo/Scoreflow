@@ -168,11 +168,12 @@ export default function RecapBlock({ score, analyzed = true }: Props) {
                   labelEl = (<text x={CX - R - 11} y={CY} textAnchor="middle" dominantBaseline="central" transform={`rotate(-90, ${CX - R - 11}, ${CY})`} style={{ fontSize: '10px', fill: '#6e6e73', fontWeight: 500 }}>{label}</text>);
                 }
                 return (
-                  <g key={i}>
+                  <g key={i} style={{ transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)', transitionDelay: `${i * 0.1}s` }}>
                     {labelEl}
-                    <circle cx={px} cy={py} r={7} fill="#185FA5" stroke="white" strokeWidth="2" />
+                    <circle cx={px} cy={py} r={7} fill="#185FA5" stroke="white" strokeWidth="2"
+                      style={{ transition: 'cx 0.6s cubic-bezier(0.16, 1, 0.3, 1), cy 0.6s cubic-bezier(0.16, 1, 0.3, 1)', transitionDelay: `${i * 0.1}s` }} />
                     <text x={px + scoreOffX} y={py + scoreOffY} textAnchor={scoreAnchor} dominantBaseline="central"
-                      style={{ fontSize: '11px', fill: '#6e6e73', fontWeight: 700, fontFamily: 'var(--font-geist-mono), monospace' }}>
+                      style={{ fontSize: '11px', fill: '#6e6e73', fontWeight: 700, fontFamily: 'var(--font-geist-mono), monospace', opacity: show ? 1 : 0, transition: 'opacity 0.4s ease', transitionDelay: `${0.3 + i * 0.1}s` }}>
                       {val.toFixed(0)}
                     </text>
                   </g>
