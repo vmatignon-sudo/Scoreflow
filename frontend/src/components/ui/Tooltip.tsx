@@ -31,7 +31,7 @@ export default function Tooltip({ definition, formula, source, children }: Props
       {open && (
         <div className={`absolute z-50 w-[280px] rounded-[10px] p-4 animate-fade-in ${
           position === 'top' ? 'bottom-full mb-2' : 'top-full mt-2'
-        } left-1/2 -translate-x-1/2`}
+        } left-0`}
           style={{
             background: 'white',
             border: '0.5px solid rgba(0,0,0,0.08)',
