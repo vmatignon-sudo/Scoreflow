@@ -189,7 +189,12 @@ export default function DealDetailPage() {
 
           {/* LEFT — Hypothèses */}
           <div className="hidden lg:flex flex-col w-[280px] xl:w-[280px] shrink-0 overflow-y-auto">
-            <HypothesesColumn deal={deal} asset={asset} dealId={dealId} supabase={supabase} />
+            <HypothesesColumn deal={deal} asset={asset} dealId={dealId} supabase={supabase} onChanged={async () => {
+              const { data: d } = await supabase.from('deals').select('*').eq('id', dealId).maybeSingle();
+              if (d) setDeal(d);
+              const { data: a } = await supabase.from('deal_assets').select('*').eq('deal_id', dealId).maybeSingle();
+              if (a) setAsset(a);
+            }} />
           </div>
 
           {/* RIGHT — Résultats */}
