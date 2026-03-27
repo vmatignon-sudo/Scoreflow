@@ -158,9 +158,9 @@ export default function RecapBlock({ score }: Props) {
                 return (
                   <g key={i}>
                     {labelEl}
-                    <circle cx={px} cy={py} r={4} fill={dimColor} stroke="white" strokeWidth="1.5" opacity="0.7" />
+                    <circle cx={px} cy={py} r={7} fill="#185FA5" stroke="white" strokeWidth="2" />
                     <text x={px + scoreOffX} y={py + scoreOffY} textAnchor={scoreAnchor} dominantBaseline="central"
-                      style={{ fontSize: '11px', fill: dimColor, fontWeight: 700, fontFamily: 'var(--font-geist-mono), monospace' }}>
+                      style={{ fontSize: '11px', fill: '#6e6e73', fontWeight: 700, fontFamily: 'var(--font-geist-mono), monospace' }}>
                       {val.toFixed(0)}
                     </text>
                   </g>
