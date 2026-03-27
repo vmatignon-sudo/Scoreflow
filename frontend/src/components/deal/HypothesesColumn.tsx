@@ -37,7 +37,7 @@ export default function HypothesesColumn({ deal, asset, dealId, supabase, onChan
         { k: '', l: 'Coeff. récup.', v: asset?.coefficient_recuperabilite ? `${(asset.coefficient_recuperabilite * 100).toFixed(0)}%` : '—', ro: true },
       ]} />
 
-      <Tile title="Financement banque" dealId={dealId} table="deals" supabase={supabase}
+      <Tile title="Financement banque" dealId={dealId} table="deals" supabase={supabase} onChanged={onChanged}
         empty={!deal.taux_refinancement_banque && !deal.loyer_mensuel_banque}
         fields={[
           { k: 'taux_refinancement_banque', l: 'Taux refinancement', v: deal.taux_refinancement_banque ? `${deal.taux_refinancement_banque}%` : '' },
