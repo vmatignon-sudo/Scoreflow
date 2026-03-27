@@ -5,9 +5,9 @@ import { PenLine, Check } from 'lucide-react';
 import type { Deal, DealAsset } from '@/types/database';
 import type { SupabaseClient } from '@supabase/supabase-js';
 
-type Props = { deal: Deal; asset: DealAsset | null; dealId: string; supabase: SupabaseClient };
+type Props = { deal: Deal; asset: DealAsset | null; dealId: string; supabase: SupabaseClient; onChanged?: () => void };
 
-export default function HypothesesColumn({ deal, asset, dealId, supabase }: Props) {
+export default function HypothesesColumn({ deal, asset, dealId, supabase, onChanged }: Props) {
   return (
     <div className="space-y-2">
       <Tile title="Entreprise" editable={false} dealId={dealId} table="deals" supabase={supabase} fields={[
