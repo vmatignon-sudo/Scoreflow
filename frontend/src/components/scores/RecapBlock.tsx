@@ -36,7 +36,7 @@ const DIMS: { key: keyof DealScore; label: string }[] = [
 ];
 
 // Diamond SVG rosace — 4 axes, viewBox 360x360 for label space
-const CX = 180, CY = 180, R = 120;
+const CX = 180, CY = 180, R = 140;
 const AXES = ['Mac. / Sec.', 'Financier', 'Matériel', 'Dirigeant'];
 const AXIS_KEYS: (keyof DealScore)[] = [
   'score_macro_sectoriel_combine', 'score_financier', 'score_materiel', 'score_dirigeant',
