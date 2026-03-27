@@ -280,6 +280,11 @@ export default function RecapBlock({ score }: Props) {
                 <div style={{ flex: 1, padding: '10px 12px', minWidth: 0 }}>
                   <div className="flex items-center" style={{ gap: '6px', marginBottom: '8px' }}>
                     <span style={{ fontSize: '12px', fontWeight: 600, color: recoColor }}>Recommandation</span>
+                    <ChevronDown style={{
+                      width: '10px', height: '10px', color: recoColor,
+                      transform: isRecoOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                      transition: 'transform 0.15s ease',
+                    }} strokeWidth={1.5} />
                     {v && (
                       <span className="font-medium" style={{
                         fontSize: '10px', background: 'white', border: `0.5px solid ${recoBorder}`,
@@ -289,11 +294,6 @@ export default function RecapBlock({ score }: Props) {
                         {v.label}
                       </span>
                     )}
-                    <ChevronDown style={{
-                      width: '10px', height: '10px', color: recoColor,
-                      transform: isRecoOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                      transition: 'transform 0.15s ease',
-                    }} strokeWidth={1.5} />
                   </div>
                   {score.recommandation && (
                     <p style={{
