@@ -216,7 +216,7 @@ export default function RecapBlock({ score, analyzed = true }: Props) {
 
           {/* 4 mini-cartes dimension — note centrée verticalement */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '90%' }}>
-            {DIMS.map(({ key, label }) => {
+            {DIMS.map(({ key, label }, idx) => {
               const val = show ? ((score?.[key] as number | null) ?? 0) : 0;
               const c = show ? getColor(val) : '#d1d5db';
               const synthesis = show ? getDimSynthesis(key, score) : '';
@@ -229,6 +229,8 @@ export default function RecapBlock({ score, analyzed = true }: Props) {
                     background: '#f9f9fb',
                     borderRadius: '6px', overflow: 'hidden',
                     boxShadow: '0 2px 6px rgba(0,0,0,0.08)',
+                    transition: 'all 0.4s ease',
+                    transitionDelay: show ? `${idx * 0.08}s` : '0s',
                   }}>
                   {/* Barre colorée gauche */}
                   <div style={{ width: '3px', background: c, flexShrink: 0 }} />
