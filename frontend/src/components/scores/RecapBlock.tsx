@@ -298,7 +298,6 @@ export default function RecapBlock({ score }: Props) {
                 {/* Note à droite */}
                 <div className="shrink-0 flex items-center justify-center" style={{
                   width: '56px',
-                  borderLeft: `0.5px solid ${recoBorder}44`,
                 }}>
                   <div className="flex flex-col items-center">
                     <span className="font-mono font-bold leading-none" style={{ fontSize: '20px', color: scoreColor }}>
