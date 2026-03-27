@@ -215,15 +215,15 @@ export default function RecapBlock({ score, analyzed = true }: Props) {
           {/* 4 mini-cartes dimension — note centrée verticalement */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '90%' }}>
             {DIMS.map(({ key, label }) => {
-              const val = (score?.[key] as number | null) ?? 0;
-              const c = getColor(val);
-              const synthesis = getDimSynthesis(key, score);
-              const isOpen = expanded === key;
+              const val = show ? ((score?.[key] as number | null) ?? 0) : 0;
+              const c = show ? getColor(val) : '#d1d5db';
+              const synthesis = show ? getDimSynthesis(key, score) : '';
+              const isOpen = show ? expanded === key : false;
               return (
                 <div key={key}
-                  onClick={() => setExpanded(isOpen ? null : key)}
+                  onClick={() => show && setExpanded(isOpen ? null : key)}
                   style={{
-                    display: 'flex', alignItems: 'stretch', cursor: 'pointer',
+                    display: 'flex', alignItems: 'stretch', cursor: show ? 'pointer' : 'default',
                     background: '#f9f9fb',
                     borderRadius: '6px', overflow: 'hidden',
                     boxShadow: '0 2px 6px rgba(0,0,0,0.08)',
@@ -233,26 +233,30 @@ export default function RecapBlock({ score, analyzed = true }: Props) {
                   {/* Texte */}
                   <div style={{ flex: 1, padding: '8px 10px', minWidth: 0 }}>
                     <div className="flex items-center" style={{ gap: '4px', marginBottom: '2px' }}>
-                      <span style={{ fontSize: '11px', fontWeight: 600, color: c }}>{label}</span>
-                      <ChevronDown style={{
+                      <span style={{ fontSize: '11px', fontWeight: 600, color: show ? c : '#6e6e73' }}>{label}</span>
+                      {show && <ChevronDown style={{
                         width: '10px', height: '10px', color: '#BBB',
                         transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
                         transition: 'transform 0.15s ease',
-                      }} strokeWidth={1.5} />
+                      }} strokeWidth={1.5} />}
                     </div>
-                    <p style={{
-                      fontSize: '11px', color: 'var(--text-secondary)', lineHeight: '1.3', margin: 0,
-                      ...(isOpen
-                        ? { display: '-webkit-box', WebkitLineClamp: 5, WebkitBoxOrient: 'vertical' as const, overflow: 'hidden' }
-                        : { display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical' as const, overflow: 'hidden' }
-                      ),
-                    }}>
-                      {synthesis}
-                    </p>
+                    {show ? (
+                      <p style={{
+                        fontSize: '11px', color: 'var(--text-secondary)', lineHeight: '1.3', margin: 0,
+                        ...(isOpen
+                          ? { display: '-webkit-box', WebkitLineClamp: 5, WebkitBoxOrient: 'vertical' as const, overflow: 'hidden' }
+                          : { display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical' as const, overflow: 'hidden' }
+                        ),
+                      }}>
+                        {synthesis}
+                      </p>
+                    ) : (
+                      <p style={{ fontSize: '11px', color: '#d1d5db', margin: 0 }}>—</p>
+                    )}
                   </div>
                   <div className="shrink-0 flex items-center justify-center" style={{ width: '56px' }}>
-                    <span className="font-mono font-bold" style={{ fontSize: '13px', color: c }}>
-                      {val.toFixed(1)}
+                    <span className="font-mono font-bold" style={{ fontSize: '13px', color: show ? c : '#d1d5db' }}>
+                      {show ? val.toFixed(1) : '—'}
                     </span>
                   </div>
                 </div>
