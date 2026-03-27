@@ -46,6 +46,16 @@ export default function DealDetailPage() {
       if (s) setScore(s);
     }
     load();
+
+    // Écouter les changements sur le deal (statut, hypothèses)
+    const channel = supabase
+      .channel(`deal-${dealId}`)
+      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'deals', filter: `id=eq.${dealId}` },
+        (payload) => { setDeal(payload.new as Deal); }
+      )
+      .subscribe();
+
+    return () => { supabase.removeChannel(channel); };
   }, [dealId, supabase]);
 
   if (!deal) {
