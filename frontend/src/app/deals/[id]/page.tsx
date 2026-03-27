@@ -117,49 +117,47 @@ export default function DealDetailPage() {
         </div>
 
         {/* TWO COLUMNS */}
-        <div className="flex flex-1 overflow-hidden m-3 mt-0 gap-0">
+        <div className="flex flex-1 overflow-hidden m-3 mt-0" style={{ gap: '24px' }}>
 
           {/* LEFT — Hypothèses */}
-          <div className="hidden lg:flex flex-col w-[280px] xl:w-[280px] shrink-0 overflow-y-auto pt-4 pr-3"
-            style={{ borderRight: '1px solid #E2E8F0' }}>
+          <div className="hidden lg:flex flex-col w-[280px] xl:w-[280px] shrink-0 overflow-y-auto pt-4">
             <p className="text-[18px] font-medium pl-2 mb-3" style={{ color: 'var(--accent)' }}>Hypothèses</p>
             <HypothesesColumn deal={deal} asset={asset} dealId={dealId} supabase={supabase} />
           </div>
 
           {/* RIGHT — Résultats */}
-          <div className="flex-1 min-w-0 flex flex-col overflow-hidden pl-3 pt-4">
+          <div className="flex-1 min-w-0 flex flex-col pt-4" style={{ height: 'calc(100vh - 76px)', overflow: 'hidden' }}>
             <p className="text-[18px] font-medium pl-1 mb-3" style={{ color: 'var(--accent)' }}>Résultats</p>
 
             {/* Récap block — NEVER scrolls */}
-            <div className="shrink-0 sticky top-2 z-10 mb-2">
+            <div className="shrink-0">
               <RecapBlock score={score} />
             </div>
 
-            {/* Scrollable zone: tabs + content */}
-            <div className="flex-1 min-h-0 overflow-y-auto">
-              {/* Tab bar — sticky in scroll zone */}
-              <div className="sticky top-0 z-[9] pb-2" style={{ background: 'var(--page-bg)' }}>
-                <div className="tile flex gap-0 overflow-x-auto" style={{ padding: '2px', borderRadius: '6px' }}>
-                  {TABS.map((tab) => {
-                    const Icon = tab.icon;
-                    const active = activeTab === tab.id;
-                    return (
-                      <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-                        className="flex items-center justify-center gap-1 flex-1 py-[7px] rounded-[5px] text-[10px] font-medium whitespace-nowrap transition-all"
-                        style={{
-                          background: active ? 'var(--accent)' : 'transparent',
-                          color: active ? 'white' : 'var(--text-secondary)',
-                        }}>
-                        <Icon className="w-3 h-3" strokeWidth={1.8} />
-                        <span className="hidden sm:inline">{tab.label}</span>
-                      </button>
-                    );
-                  })}
-                </div>
+            {/* Tab bar — NEVER scrolls */}
+            <div className="shrink-0" style={{ marginTop: '20px' }}>
+              <div className="tile flex gap-0 overflow-x-auto" style={{ padding: '2px', borderRadius: '6px' }}>
+                {TABS.map((tab) => {
+                  const Icon = tab.icon;
+                  const active = activeTab === tab.id;
+                  return (
+                    <button key={tab.id} onClick={() => setActiveTab(tab.id)}
+                      className="flex items-center justify-center gap-1 flex-1 py-[7px] rounded-[5px] text-[10px] font-medium whitespace-nowrap transition-all"
+                      style={{
+                        background: active ? 'var(--accent)' : 'transparent',
+                        color: active ? 'white' : 'var(--text-secondary)',
+                      }}>
+                      <Icon className="w-3 h-3" strokeWidth={1.8} />
+                      <span className="hidden sm:inline">{tab.label}</span>
+                    </button>
+                  );
+                })}
               </div>
+            </div>
 
-              {/* Tab content — sub-tiles floating on gray bg */}
-              <div className="pb-6 space-y-2">
+            {/* Scrollable zone: tab content ONLY */}
+            <div className="flex-1 min-h-0 overflow-y-auto mt-2 pb-6" style={{ scrollbarWidth: 'thin', scrollbarColor: '#E2E8F0 transparent' }}>
+              <div className="space-y-2">
                 {activeTab === 'macro' && <MacroSectorTab dealId={dealId} score={score} />}
                 {activeTab === 'financial' && <FinancialTab dealId={dealId} organizationId={deal.organization_id} />}
                 {activeTab === 'asset' && <AssetTab deal={deal} asset={asset} />}

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { PenLine, Check } from 'lucide-react';
 import type { Deal, DealAsset } from '@/types/database';
 import type { SupabaseClient } from '@supabase/supabase-js';
 
@@ -9,7 +10,7 @@ type Props = { deal: Deal; asset: DealAsset | null; dealId: string; supabase: Su
 export default function HypothesesColumn({ deal, asset, dealId, supabase }: Props) {
   return (
     <div className="space-y-2">
-      <Tile title="Entreprise" dealId={dealId} table="deals" supabase={supabase} fields={[
+      <Tile title="Entreprise" editable={false} dealId={dealId} table="deals" supabase={supabase} fields={[
         { k: 'raison_sociale', l: 'Raison sociale', v: deal.raison_sociale || '' },
         { k: 'forme_juridique', l: 'Forme juridique', v: deal.forme_juridique || '' },
         { k: 'siren', l: 'SIREN', v: deal.siren || '', mono: true },
@@ -60,8 +61,8 @@ export default function HypothesesColumn({ deal, asset, dealId, supabase }: Prop
 
 type Field = { k: string; l: string; v: string; ro?: boolean; mono?: boolean; accent?: boolean };
 
-function Tile({ title, fields, empty, dealId, table, supabase }: {
-  title: string; fields: Field[]; empty?: boolean;
+function Tile({ title, fields, empty, editable = true, dealId, table, supabase }: {
+  title: string; fields: Field[]; empty?: boolean; editable?: boolean;
   dealId: string; table: string; supabase: SupabaseClient;
 }) {
   const [editing, setEditing] = useState(false);
@@ -92,46 +93,49 @@ function Tile({ title, fields, empty, dealId, table, supabase }: {
   }
 
   return (
-    <div className="tile" style={{ padding: '16px' }}>
-      <h4 className="text-[12px] font-medium mb-2" style={{ color: 'var(--text-primary)' }}>{title}</h4>
+    <div className="tile" style={{ padding: '16px', position: 'relative' }}>
+      <div className="flex items-center justify-between mb-2">
+        <h4 className="text-[12px] font-medium" style={{ color: 'var(--text-primary)' }}>{title}</h4>
+        {editable && !empty && (
+          editing ? (
+            <button onClick={save} aria-label="Valider" className="p-0.5 rounded-[4px] transition-colors hover:bg-green-50">
+              <Check className="w-[14px] h-[14px]" strokeWidth={2} style={{ color: '#059669' }} />
+            </button>
+          ) : (
+            <button onClick={startEdit} aria-label="Modifier" className="p-0.5 rounded-[4px] transition-colors hover:bg-blue-50">
+              <PenLine className="w-[14px] h-[14px]" strokeWidth={1.8} style={{ color: '#185FA5' }} />
+            </button>
+          )
+        )}
+      </div>
 
       {empty && !editing ? (
         <div className="flex items-center justify-between">
           <p className="text-[11px] italic" style={{ color: 'var(--text-muted)' }}>Non renseigné</p>
-          <button onClick={startEdit} className="text-[9px] font-medium text-white rounded-[4px]"
-            style={{ background: 'var(--accent)', padding: '3px 10px' }}>Ajouter</button>
+          <button onClick={startEdit} aria-label="Ajouter" className="p-0.5 rounded-[4px] transition-colors hover:bg-blue-50">
+            <PenLine className="w-[14px] h-[14px]" strokeWidth={1.8} style={{ color: '#185FA5' }} />
+          </button>
         </div>
       ) : (
-        <>
-          <div className="space-y-[5px]">
-            {fields.map((f, i) => (
-              <div key={i} className="flex justify-between items-baseline text-[11px]">
-                <span style={{ color: 'var(--text-secondary)' }}>{f.l}</span>
-                {editing && f.k && !f.ro ? (
-                  <input value={values[f.k] ?? f.v}
-                    onChange={(e) => setValues(p => ({ ...p, [f.k]: e.target.value }))}
-                    className="w-[110px] text-right text-[10px] rounded-[4px] px-1.5 py-0.5 outline-none"
-                    style={{ background: 'var(--page-bg)', border: '0.5px solid #E2E8F0', color: 'var(--text-primary)', fontFamily: f.mono ? 'var(--font-geist-mono), monospace' : 'inherit' }}
-                  />
-                ) : (
-                  <span className={f.mono ? 'font-mono' : ''} style={{
-                    fontSize: '10px',
-                    color: f.accent ? '#059669' : (f.v && f.v !== '—' && f.v !== 'Non') ? 'var(--text-primary)' : 'var(--text-muted)',
-                  }}>{f.v || '—'}</span>
-                )}
-              </div>
-            ))}
-          </div>
-          <div className="flex justify-end mt-3">
-            {editing ? (
-              <button onClick={save} className="text-[9px] font-medium text-white rounded-[4px]"
-                style={{ background: '#059669', padding: '3px 10px' }}>Valider</button>
-            ) : (
-              <button onClick={startEdit} className="text-[9px] font-medium text-white rounded-[4px]"
-                style={{ background: 'var(--accent)', padding: '3px 10px' }}>Modifier</button>
-            )}
-          </div>
-        </>
+        <div className="space-y-[5px]">
+          {fields.map((f, i) => (
+            <div key={i} className="flex justify-between items-baseline text-[11px]">
+              <span style={{ color: 'var(--text-secondary)' }}>{f.l}</span>
+              {editing && f.k && !f.ro ? (
+                <input value={values[f.k] ?? f.v}
+                  onChange={(e) => setValues(p => ({ ...p, [f.k]: e.target.value }))}
+                  className="w-[110px] text-right text-[10px] rounded-[4px] px-1.5 py-0.5 outline-none"
+                  style={{ background: 'var(--page-bg)', border: '0.5px solid #E2E8F0', color: 'var(--text-primary)', fontFamily: f.mono ? 'var(--font-geist-mono), monospace' : 'inherit' }}
+                />
+              ) : (
+                <span className={f.mono ? 'font-mono' : ''} style={{
+                  fontSize: '10px',
+                  color: f.accent ? '#059669' : (f.v && f.v !== '—' && f.v !== 'Non') ? 'var(--text-primary)' : 'var(--text-muted)',
+                }}>{f.v || '—'}</span>
+              )}
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );
