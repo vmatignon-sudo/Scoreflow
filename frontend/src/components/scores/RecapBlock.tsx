@@ -114,13 +114,14 @@ export default function RecapBlock({ score }: Props) {
   return (
     <div style={{
       background: 'white', border: '0.5px solid #E2E8F0', borderRadius: '12px',
-      boxShadow: '0 2px 8px rgba(0,0,0,0.08)', padding: '12px 16px 12px 16px',
+      boxShadow: '0 2px 8px rgba(0,0,0,0.08)', padding: '16px',
       flexShrink: 0,
     }}>
 
-      {/* TOP LINE: Verdict + Score */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', marginBottom: '4px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '20px' }}>
+      {/* TOP LINE: Synthèse (left) — Verdict + Score (right) */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+        <h4 className="text-[12px] font-medium" style={{ color: '#185FA5' }}>Synthèse</h4>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
           {v && (
             <span className="font-medium rounded-full" style={{
               fontSize: '14px', background: v.bg, border: `1px solid ${v.border}`, color: v.color,
