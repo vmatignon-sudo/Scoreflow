@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { ChevronDown } from 'lucide-react';
 import type { DealScore } from '@/types/database';
 
 type Props = { score: DealScore | null };
@@ -91,6 +92,7 @@ function getDimSynthesis(key: keyof DealScore, score: DealScore): string {
 
 export default function RecapBlock({ score }: Props) {
   const [view, setView] = useState<'rosace' | 'barres'>('rosace');
+  const [expanded, setExpanded] = useState<string | null>(null);
   const total = score?.score_deal_total || 0;
   const verdict = score?.verdict;
   const v = verdict ? VERDICTS[verdict] : null;
@@ -254,44 +256,70 @@ export default function RecapBlock({ score }: Props) {
 
         {/* Right — Dimension syntheses — centered with rosace */}
         <div className="flex-1 min-w-0 flex flex-col justify-center" style={{ minHeight: '240px' }}>
-          {/* 4 dimension lines */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1px' }}>
+          {/* 4 dimension lines — expandable */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
             {DIMS.map(({ key, label, color }) => {
               const val = (score?.[key] as number | null) ?? 0;
               const synthesis = getDimSynthesis(key, score);
+              const isOpen = expanded === key;
               return (
-                <div key={key} style={{ display: 'grid', gridTemplateColumns: '110px 1fr', gap: '8px', alignItems: 'start', minHeight: '35px' }}>
+                <div key={key}
+                  onClick={() => setExpanded(isOpen ? null : key)}
+                  style={{ display: 'grid', gridTemplateColumns: '110px 1fr 16px', gap: '8px', alignItems: 'start', minHeight: '35px', cursor: 'pointer' }}>
                   <div className="flex items-center" style={{ gap: '6px' }}>
                     <span style={{ fontSize: '11px', fontWeight: 600, color }}>{label}</span>
                     <span className="font-mono" style={{ fontSize: '11px', color: '#BBB' }}>{val.toFixed(0)}/20</span>
                   </div>
                   <p style={{
                     fontSize: '12px', color: 'var(--text-secondary)', lineHeight: '1.3',
-                    display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden',
                     margin: 0,
+                    ...(isOpen
+                      ? { display: '-webkit-box', WebkitLineClamp: 5, WebkitBoxOrient: 'vertical' as const, overflow: 'hidden' }
+                      : { display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as const, overflow: 'hidden' }
+                    ),
                   }}>
                     {synthesis}
                   </p>
+                  <ChevronDown className="mt-0.5" style={{
+                    width: '12px', height: '12px', color: '#BBB',
+                    transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                    transition: 'transform 0.15s ease',
+                  }} strokeWidth={1.5} />
                 </div>
               );
             })}
           </div>
 
-          {/* Recommandation — full-width orange card */}
-          {score.recommandation && (
-            <div style={{
-              background: '#FFF7E6', border: '0.5px solid #F59E0B', borderRadius: '8px',
-              padding: '12px 16px', marginTop: '12px',
-            }}>
-              <p style={{ fontSize: '12px', fontWeight: 500, color: '#B45309', margin: '0 0 4px 0' }}>Recommandation</p>
-              <p style={{
-                fontSize: '12px', color: '#92400E', lineHeight: '1.5', margin: 0,
-                display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden',
-              }}>
-                {score.recommandation}
-              </p>
-            </div>
-          )}
+          {/* Recommandation — expandable */}
+          {score.recommandation && (() => {
+            const isRecoOpen = expanded === 'reco';
+            return (
+              <div
+                onClick={() => setExpanded(isRecoOpen ? null : 'reco')}
+                style={{
+                  background: '#FFF7E6', border: '0.5px solid #F59E0B', borderRadius: '8px',
+                  padding: '12px 16px', marginTop: '12px', cursor: 'pointer',
+                }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+                  <p style={{ fontSize: '12px', fontWeight: 500, color: '#B45309', margin: 0 }}>Recommandation</p>
+                  <ChevronDown style={{
+                    width: '12px', height: '12px', color: '#B45309',
+                    transform: isRecoOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                    transition: 'transform 0.15s ease',
+                  }} strokeWidth={1.5} />
+                </div>
+                <p style={{
+                  fontSize: '12px', color: '#92400E', lineHeight: '1.5', margin: 0,
+                  ...(isRecoOpen
+                    ? { display: '-webkit-box', WebkitLineClamp: 5, WebkitBoxOrient: 'vertical' as const, overflow: 'hidden' }
+                    : { display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as const, overflow: 'hidden' }
+                  ),
+                }}>
+                  {score.recommandation}
+                </p>
+              </div>
+            );
+          })()}
         </div>
       </div>
     </div>
