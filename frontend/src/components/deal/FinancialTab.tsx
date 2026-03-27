@@ -354,7 +354,7 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
             <h3 className="font-semibold text-[#2d2d2d] mb-4">
               Données comptables {data.annee ? `(${data.annee})` : ''} <span className="font-normal text-[#a1a1a6] text-xs">en k€</span>
             </h3>
-            <div className="grid grid-cols-3 gap-x-8 gap-y-3 text-sm">
+            <div className="grid grid-cols-3 gap-x-8 gap-y-3 text-xs">
               <KV label="Chiffre d'affaires" value={fmtEur(data.ca)} />
               <KV label="EBITDA" value={fmtEur(data.ebitda)} />
               <KV label="EBIT" value={fmtEur(data.ebit)} />
