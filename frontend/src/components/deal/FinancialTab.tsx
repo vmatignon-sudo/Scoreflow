@@ -406,7 +406,7 @@ function KV({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex justify-between">
       <span className="text-[#a1a1a6]">{label}</span>
-      <span className="font-mono text-[#1d1d1f]">{value}</span>
+      <span className="text-[#1d1d1f]" style={{ fontVariantNumeric: 'tabular-nums' }}>{value}</span>
     </div>
   );
 }
