@@ -99,11 +99,19 @@ export default function DealDetailPage() {
                 {deal.raison_sociale}
                 {asset?.marque && <span className="font-normal text-[#6e6e73]">{' — '}{[asset.marque, asset.modele].filter(Boolean).join(' ')}</span>}
               </h1>
-              <p className="text-[11px] mt-0.5" style={{ color: 'var(--text-secondary)' }}>
-                <span className="font-mono">{deal.siren}</span>
-                {' · '}{deal.code_naf} {deal.secteur_label}
+              <p className="text-[13px] mt-1" style={{ color: 'var(--text-secondary)' }}>
+                {deal.code_naf} {deal.secteur_label}
                 {' · '}{deal.type_financement?.replace('_', ' ')}
-                {deal.montant_finance && <>{' · '}<span className="font-mono">{deal.montant_finance.toLocaleString('fr-FR')} EUR</span></>}
+                {deal.montant_finance && <>{' · '}{(deal.montant_finance / 1000).toLocaleString('fr-FR', { maximumFractionDigits: 0 })} k€</>}
+                {deal.duree_mois && <>{' · '}{deal.duree_mois} mois</>}
+              </p>
+              <p className="text-[11px] mt-1 flex flex-wrap gap-x-3 gap-y-0.5" style={{ color: 'var(--text-tertiary, #a1a1a6)' }}>
+                <span>SIREN <span style={{ fontVariantNumeric: 'tabular-nums' }}>{deal.siren}</span></span>
+                {deal.dirigeant_nom && <span>Dirigeant {deal.dirigeant_prenom} {deal.dirigeant_nom}</span>}
+                {asset?.annee_fabrication && <span>{asset.marque} {asset.modele} {asset.annee_fabrication}</span>}
+                {asset?.etat && <span>{asset.etat.replace(/_/g, ' ')}</span>}
+                {deal.depot_garantie ? <span>Dépôt {(deal.depot_garantie / 1000).toLocaleString('fr-FR', { maximumFractionDigits: 0 })} k€</span> : null}
+                {deal.apport_initial ? <span>Apport {(deal.apport_initial / 1000).toLocaleString('fr-FR', { maximumFractionDigits: 0 })} k€</span> : null}
               </p>
             </div>
             <div className="flex items-center gap-2">
