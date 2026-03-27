@@ -345,26 +345,29 @@ export default function RecapBlock({ score, analyzed = true }: Props) {
                 <div style={{ width: '3px', background: recoBorder, flexShrink: 0 }} />
                 {/* Contenu */}
                 <div style={{ flex: 1, padding: '10px 12px', minWidth: 0 }}>
-                  <div className="flex items-center" style={{ gap: '6px', marginBottom: show ? '8px' : '0' }}>
+                  <div className="flex items-center" style={{ gap: '6px', marginBottom: recoRevealed ? '8px' : '0' }}>
                     <span style={{ fontSize: '12px', fontWeight: 600, color: recoColor }}>Recommandation</span>
-                    {show && <ChevronDown style={{
+                    {recoComputing && <Loader2 className="w-3 h-3 animate-spin" style={{ color: '#a1a1a6' }} strokeWidth={2} />}
+                    {recoRevealed && <ChevronDown style={{
                       width: '10px', height: '10px', color: recoColor,
                       transform: isRecoOpen ? 'rotate(180deg)' : 'rotate(0deg)',
                       transition: 'transform 0.15s ease',
                     }} strokeWidth={1.5} />}
-                    {show && v && (
+                    {recoRevealed && v && (
                       <span className="font-medium" style={{
                         fontSize: '10px', background: 'white', border: `0.5px solid ${recoBorder}`,
                         color: recoColor, borderRadius: '6px',
                         padding: '3px 10px', whiteSpace: 'nowrap',
+                        animation: 'fadeIn 0.4s ease-out',
                       }}>
                         {v.label}
                       </span>
                     )}
                   </div>
-                  {show && score.recommandation && (
+                  {recoRevealed && score.recommandation && (
                     <p style={{
                       fontSize: '11px', color: recoColor, lineHeight: '1.4', margin: 0,
+                      animation: 'fadeIn 0.4s ease-out',
                       ...(isRecoOpen
                         ? { display: '-webkit-box', WebkitLineClamp: 5, WebkitBoxOrient: 'vertical' as const, overflow: 'hidden' }
                         : { display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as const, overflow: 'hidden' }
