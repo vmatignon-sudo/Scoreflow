@@ -124,7 +124,7 @@ export default function RecapBlock({ score }: Props) {
             <span style={{ color: view === 'barres' ? '#185FA5' : '#BBB' }}>barres</span>
           </button>
         </div>
-        <span className="font-medium" style={{ fontSize: '10px', color: 'var(--text-muted)' }}>/20</span>
+        <span className="font-medium" style={{ fontSize: '10px', color: 'var(--text-muted)', width: '56px', textAlign: 'center' }}>/20</span>
       </div>
 
       {/* 2 COLUMNS: Rosace | Contenu droit (verdict + dimensions) */}
