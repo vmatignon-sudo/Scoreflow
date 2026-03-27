@@ -44,7 +44,7 @@ export default function DealsPage() {
           .in('deal_id', ids)
           .order('computed_at', { ascending: false });
         const smap: Record<string, DealScore> = {};
-        scoreData?.forEach(s => { if (!smap[s.deal_id]) smap[s.deal_id] = s; });
+        scoreData?.forEach((s: DealScore) => { if (!smap[s.deal_id]) smap[s.deal_id] = s; });
         setScores(smap);
       }
 
