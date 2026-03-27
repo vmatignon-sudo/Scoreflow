@@ -159,9 +159,15 @@ export default function DealDetailPage() {
                   <>
                     <button
                       onClick={async () => {
-                        await supabase.from('deals').update({ status: 'analyzing' }).eq('id', dealId);
-                        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/deals/${dealId}/analyze`, { method: 'POST' });
-                        if (res.ok) window.location.reload();
+                        setDeal({ ...deal, status: 'analyzing' });
+                        try {
+                          await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/deals/${dealId}/analyze`, { method: 'POST' });
+                        } catch {}
+                        // Recharger deal + score
+                        const { data: d } = await supabase.from('deals').select('*').eq('id', dealId).maybeSingle();
+                        if (d) setDeal(d);
+                        const { data: s } = await supabase.from('deal_scores').select('*').eq('deal_id', dealId).order('computed_at', { ascending: false }).limit(1).maybeSingle();
+                        if (s) setScore(s);
                       }}
                       className="inline-flex items-center justify-center font-medium w-full"
                       style={{
