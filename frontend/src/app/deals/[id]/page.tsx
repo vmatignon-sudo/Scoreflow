@@ -115,20 +115,30 @@ export default function DealDetailPage() {
               </p>
             </div>
             <div className="flex items-center gap-3">
-              <button
-                onClick={async () => {
-                  await supabase.from('deals').update({ status: 'analyzing' }).eq('id', dealId);
-                  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/deals/${dealId}/analyze`, { method: 'POST' });
-                  if (res.ok) window.location.reload();
-                }}
-                className="inline-flex items-center font-medium"
-                style={{
-                  gap: '6px', fontSize: '12px', background: '#2a5082', border: 'none',
-                  borderRadius: '8px', padding: '8px 16px', color: 'white', cursor: 'pointer',
-                }}>
-                <RefreshCw className="w-3.5 h-3.5" strokeWidth={2} />
-                Relancer l'analyse
-              </button>
+              {deal.status === 'completed' ? (
+                <span className="inline-flex items-center font-medium"
+                  style={{
+                    gap: '6px', fontSize: '12px', background: '#f0fdf4', border: '1px solid #059669',
+                    borderRadius: '8px', padding: '8px 16px', color: '#059669',
+                  }}>
+                  Analysé
+                </span>
+              ) : (
+                <button
+                  onClick={async () => {
+                    await supabase.from('deals').update({ status: 'analyzing' }).eq('id', dealId);
+                    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/deals/${dealId}/analyze`, { method: 'POST' });
+                    if (res.ok) window.location.reload();
+                  }}
+                  className="inline-flex items-center font-medium"
+                  style={{
+                    gap: '6px', fontSize: '12px', background: '#2a5082', border: 'none',
+                    borderRadius: '8px', padding: '8px 16px', color: 'white', cursor: 'pointer',
+                  }}>
+                  <RefreshCw className="w-3.5 h-3.5" strokeWidth={2} />
+                  Relancer l'analyse
+                </button>
+              )}
               <button onClick={() => setShowDelete(true)} className="p-1.5 rounded-[4px]" style={{ color: 'var(--text-muted)' }}>
                 <Trash2 className="w-3.5 h-3.5" strokeWidth={1.5} />
               </button>
