@@ -46,7 +46,7 @@ export default function HypothesesColumn({ deal, asset, dealId, supabase, onChan
           { k: 'penalites_remboursement_anticipe', l: 'Pénalités RA', v: deal.penalites_remboursement_anticipe ? `${deal.penalites_remboursement_anticipe.toLocaleString('fr-FR')} EUR` : '' },
         ]} />
 
-      <Tile title="Financement client" dealId={dealId} table="deals" supabase={supabase} fields={[
+      <Tile title="Financement client" dealId={dealId} table="deals" supabase={supabase} onChanged={onChanged} fields={[
         { k: '', l: 'Type', v: deal.type_financement?.replace('_', ' ') || '—', ro: true },
         { k: 'montant_finance', l: 'Montant financé', v: deal.montant_finance ? `${deal.montant_finance.toLocaleString('fr-FR')} EUR` : '' },
         { k: 'apport_initial', l: 'Apport initial', v: `${(deal.apport_initial || 0).toLocaleString('fr-FR')} EUR` },
