@@ -360,7 +360,7 @@ export default function RecapBlock({ score, analyzed = true }: Props) {
                         : { display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as const, overflow: 'hidden' }
                       ),
                     }}>
-                      {score.recommandation}
+                      {score?.recommandation}
                     </p>
                   )}
                 </div>
