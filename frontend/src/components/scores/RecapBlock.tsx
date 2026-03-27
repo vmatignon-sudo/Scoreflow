@@ -210,7 +210,7 @@ export default function RecapBlock({ score }: Props) {
         <div className="flex-1 min-w-0 flex flex-col items-end">
 
           {/* 4 mini-cartes dimension — note centrée verticalement */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '100%' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '90%' }}>
             {DIMS.map(({ key, label }) => {
               const val = (score?.[key] as number | null) ?? 0;
               const c = getColor(val);
