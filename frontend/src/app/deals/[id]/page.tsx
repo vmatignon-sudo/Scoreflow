@@ -92,7 +92,7 @@ export default function DealDetailPage() {
       <div className="sm:ml-[56px] min-h-screen flex flex-col">
 
         {/* HEADER — white tile above both columns */}
-        <div className="m-3 mb-0 tile" style={{ padding: '12px 16px' }}>
+        <div className="m-3 mb-0 tile" style={{ padding: '14px 18px' }}>
           <div className="flex items-start justify-between">
             <div>
               <h1 className="text-[18px] font-semibold" style={{ color: 'var(--text-primary)' }}>{deal.raison_sociale}</h1>
