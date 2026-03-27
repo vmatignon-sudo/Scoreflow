@@ -248,59 +248,70 @@ export default function RecapBlock({ score }: Props) {
             })}
           </div>
 
-          {/* Recommandation — carte jaune dépliable */}
-          {score.recommandation && (() => {
+          {/* Note finale — même style mini-carte mais accentuée */}
+          <div style={{
+            display: 'flex', alignItems: 'stretch',
+            background: 'var(--color-background-secondary, #f5f5f7)',
+            borderRadius: '6px', overflow: 'hidden', marginTop: '6px',
+          }}>
+            <div style={{ width: '3px', background: scoreColor, flexShrink: 0 }} />
+            <div style={{ flex: 1, padding: '8px 10px' }}>
+              <span style={{ fontSize: '11px', fontWeight: 600, color: scoreColor }}>Score Deal</span>
+            </div>
+            <div className="shrink-0 flex items-center justify-center" style={{
+              width: '44px',
+              borderLeft: '0.5px solid rgba(0,0,0,0.06)',
+            }}>
+              <span className="font-mono font-bold" style={{ fontSize: '14px', color: scoreColor }}>
+                {total.toFixed(1)}
+              </span>
+            </div>
+          </div>
+
+          {/* Recommandation + Verdict — carte dépliable */}
+          {(() => {
             const isRecoOpen = expanded === 'reco';
             return (
               <div
                 onClick={() => setExpanded(isRecoOpen ? null : 'reco')}
                 style={{
-                  background: '#FFF7E6', border: '0.5px solid #F59E0B', borderRadius: '6px',
+                  background: v ? v.bg : '#FFF7E6',
+                  border: `0.5px solid ${v ? v.border : '#F59E0B'}`,
+                  borderRadius: '6px',
                   padding: '8px 10px', marginTop: '6px', cursor: 'pointer',
                 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3px' }}>
-                  <p style={{ fontSize: '11px', fontWeight: 600, color: '#B45309', margin: 0 }}>Recommandation</p>
-                  <ChevronDown style={{
-                    width: '10px', height: '10px', color: '#B45309',
-                    transform: isRecoOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                    transition: 'transform 0.15s ease',
-                  }} strokeWidth={1.5} />
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: score.recommandation ? '3px' : '0' }}>
+                  {v && (
+                    <span className="font-medium rounded-full shrink-0" style={{
+                      fontSize: '10px', background: v.bg, border: `1px solid ${v.border}`, color: v.color,
+                      padding: '2px 10px', whiteSpace: 'nowrap',
+                    }}>
+                      {v.label}
+                    </span>
+                  )}
+                  {score.recommandation && (
+                    <>
+                      <p style={{
+                        fontSize: '11px', color: v ? v.color : '#92400E', lineHeight: '1.4', margin: 0,
+                        flex: 1, minWidth: 0,
+                        ...(isRecoOpen
+                          ? { display: '-webkit-box', WebkitLineClamp: 5, WebkitBoxOrient: 'vertical' as const, overflow: 'hidden' }
+                          : { display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical' as const, overflow: 'hidden' }
+                        ),
+                      }}>
+                        {score.recommandation}
+                      </p>
+                      <ChevronDown className="shrink-0" style={{
+                        width: '10px', height: '10px', color: v ? v.color : '#B45309',
+                        transform: isRecoOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                        transition: 'transform 0.15s ease',
+                      }} strokeWidth={1.5} />
+                    </>
+                  )}
                 </div>
-                <p style={{
-                  fontSize: '11px', color: '#92400E', lineHeight: '1.4', margin: 0,
-                  ...(isRecoOpen
-                    ? { display: '-webkit-box', WebkitLineClamp: 5, WebkitBoxOrient: 'vertical' as const, overflow: 'hidden' }
-                    : { display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as const, overflow: 'hidden' }
-                  ),
-                }}>
-                  {score.recommandation}
-                </p>
               </div>
             );
           })()}
-
-          {/* Verdict + Note finale — en bas */}
-          <div style={{
-            display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '12px',
-            marginTop: '10px', paddingTop: '8px',
-            borderTop: '0.5px solid rgba(0,0,0,0.06)',
-          }}>
-            {v && (
-              <span className="font-medium rounded-full" style={{
-                fontSize: '11px', background: v.bg, border: `1px solid ${v.border}`, color: v.color,
-                padding: '4px 14px', whiteSpace: 'nowrap',
-              }}>
-                {v.label}
-              </span>
-            )}
-            <span className="font-semibold" style={{ fontSize: '12px', color: scoreColor }}>{getMention(total)}</span>
-            <div className="flex items-baseline" style={{ gap: '2px' }}>
-              <span className="font-bold font-mono leading-none tracking-tight" style={{ fontSize: '28px', color: scoreColor }}>
-                {total.toFixed(1)}
-              </span>
-              <span className="font-medium" style={{ fontSize: '11px', color: 'var(--text-muted)' }}>/20</span>
-            </div>
-          </div>
         </div>
       </div>
     </div>
