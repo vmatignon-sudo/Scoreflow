@@ -381,6 +381,67 @@ export default function RecapBlock({ score, analyzed = true }: Props) {
           })()}
         </div>
       </div>
+
+      {/* VUE BARRES — pleine largeur, sous le layout 2 colonnes */}
+      {view === 'barres' && (
+        <div style={{ marginTop: '16px' }}>
+          {/* 4 barres dimensions */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px 24px' }}>
+            {DIMS.map(({ key, label }, idx) => {
+              const target = show ? ((score?.[key] as number | null) ?? 0) : 0;
+              const val = target * dimProgress[idx];
+              const revealed = revealedDims >= idx;
+              const computing = show && !revealed && dimProgress[idx] > 0;
+              const c = revealed ? getColor(target) : (dimProgress[idx] > 0 ? '#a1a1a6' : '#d1d5db');
+              return (
+                <div key={key}>
+                  <div className="flex justify-between items-center" style={{ fontSize: '11px', marginBottom: '5px' }}>
+                    <span style={{ color: revealed ? c : '#6e6e73', fontWeight: 600 }}>{label}</span>
+                    <div className="flex items-center" style={{ gap: '4px' }}>
+                      {computing && <Loader2 className="w-3 h-3 animate-spin" style={{ color: '#a1a1a6' }} strokeWidth={2} />}
+                      <span className="font-mono font-bold" style={{ color: c }}>
+                        {revealed ? target.toFixed(1) : dimProgress[idx] > 0 ? val.toFixed(1) : '—'}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="rounded-full overflow-hidden" style={{ height: '8px', background: '#E2E8F0' }}>
+                    <div className="h-full rounded-full" style={{ width: `${(val / 20) * 100}%`, backgroundColor: c }} />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Barre Score Deal — pleine largeur, en face de la recommandation */}
+          <div style={{ marginTop: '16px', paddingTop: '12px', borderTop: '0.5px solid rgba(0,0,0,0.06)' }}>
+            <div className="flex justify-between items-center" style={{ fontSize: '12px', marginBottom: '6px' }}>
+              <span style={{ color: revealedDims >= 4 ? scoreColor : '#d1d5db', fontWeight: 600 }}>Score Deal</span>
+              <div className="flex items-center" style={{ gap: '6px' }}>
+                {show && revealedDims < 4 && <Loader2 className="w-3.5 h-3.5 animate-spin" style={{ color: '#a1a1a6' }} strokeWidth={2} />}
+                {revealedDims >= 4 && v && (
+                  <span className="font-medium" style={{
+                    fontSize: '10px', borderRadius: '6px', padding: '2px 8px',
+                    background: v.bg, color: v.color, border: `0.5px solid ${v.border}`,
+                  }}>
+                    {v.label}
+                  </span>
+                )}
+                <span className="font-mono font-bold" style={{ fontSize: '16px', color: revealedDims >= 4 ? scoreColor : '#d1d5db' }}>
+                  {revealedDims >= 4 ? total.toFixed(1) : '—'}
+                </span>
+                <span style={{ fontSize: '10px', color: '#a1a1a6' }}>/20</span>
+              </div>
+            </div>
+            <div className="rounded-full overflow-hidden" style={{ height: '10px', background: '#E2E8F0' }}>
+              <div className="h-full rounded-full" style={{
+                width: revealedDims >= 4 ? `${(total / 20) * 100}%` : '0%',
+                backgroundColor: scoreColor,
+                transition: 'width 0.8s ease-out',
+              }} />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
