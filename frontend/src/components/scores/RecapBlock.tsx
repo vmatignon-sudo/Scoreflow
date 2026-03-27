@@ -115,13 +115,16 @@ export default function RecapBlock({ score }: Props) {
     <div className="tile" style={{ padding: '16px', flexShrink: 0 }}>
 
       {/* Title — same as Entreprise tile */}
-      <div className="flex items-center mb-2" style={{ gap: '16px' }}>
-        <h4 className="text-[12px] font-medium" style={{ color: '#185FA5' }}>Synthèse</h4>
-        <button onClick={() => setView(view === 'rosace' ? 'barres' : 'rosace')} style={{ fontSize: '9px', background: 'none', border: 'none', cursor: 'pointer' }}>
-          <span style={{ color: view === 'rosace' ? '#185FA5' : '#BBB' }}>rosace</span>
-          <span style={{ margin: '0 3px', color: '#DDD' }}>|</span>
-          <span style={{ color: view === 'barres' ? '#185FA5' : '#BBB' }}>barres</span>
-        </button>
+      <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center" style={{ gap: '16px' }}>
+          <h4 className="text-[12px] font-medium" style={{ color: '#185FA5' }}>Synthèse</h4>
+          <button onClick={() => setView(view === 'rosace' ? 'barres' : 'rosace')} style={{ fontSize: '9px', background: 'none', border: 'none', cursor: 'pointer' }}>
+            <span style={{ color: view === 'rosace' ? '#185FA5' : '#BBB' }}>rosace</span>
+            <span style={{ margin: '0 3px', color: '#DDD' }}>|</span>
+            <span style={{ color: view === 'barres' ? '#185FA5' : '#BBB' }}>barres</span>
+          </button>
+        </div>
+        <span className="font-medium" style={{ fontSize: '10px', color: 'var(--text-muted)' }}>/20</span>
       </div>
 
       {/* 2 COLUMNS: Rosace | Contenu droit (verdict + dimensions) */}
