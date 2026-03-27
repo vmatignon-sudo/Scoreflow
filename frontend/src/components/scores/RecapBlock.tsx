@@ -12,14 +12,6 @@ function getColor(v: number): string {
   return '#DC2626';
 }
 
-function getMention(v: number): string {
-  if (v >= 17) return 'Excellent';
-  if (v >= 13) return 'Bon';
-  if (v >= 10) return 'Passable';
-  if (v >= 7) return 'Insuffisant';
-  if (v >= 4) return 'Mauvais';
-  return 'Critique';
-}
 
 const VERDICTS: Record<string, { label: string; bg: string; border: string; color: string }> = {
   go: { label: 'GO', bg: '#F0FDF4', border: '#059669', color: '#059669' },
@@ -205,7 +197,7 @@ export default function RecapBlock({ score, analyzed = true }: Props) {
               />
               {AXES.map((label, i) => {
                 const val = axisValues[i];
-                const dimColor = getColor(val);
+
                 const angle = (360 / 4) * i;
                 const [px, py] = polarToXY(angle, (val / 20) * R);
                 const scoreOffX = i === 1 ? 14 : i === 3 ? -14 : 0;

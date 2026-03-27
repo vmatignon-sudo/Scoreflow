@@ -181,7 +181,7 @@ export default function DealDetailPage() {
                         borderRadius: '8px', padding: '8px 16px', color: 'white', cursor: 'pointer',
                       }}>
                       <RefreshCw className="w-3.5 h-3.5" strokeWidth={2} />
-                      Relancer l'analyse
+                      Relancer l&apos;analyse
                     </button>
                     <span className="mt-2" style={{ fontSize: '14px', color: 'var(--text-muted)' }}>—</span>
                   </>

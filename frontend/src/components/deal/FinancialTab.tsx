@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
-import { triggerScoring } from '@/lib/api/scoring';
+
 import Tooltip from '@/components/ui/Tooltip';
 import { RATIO_DEFINITIONS } from '@/lib/utils/ratioDefinitions';
 
@@ -98,7 +98,7 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
   const [docs, setDocs] = useState<DocRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
-  const [reanalyzing, setReanalyzing] = useState(false);
+
   const supabase = createClient();
 
   const fetchData = useCallback(async () => {
@@ -165,35 +165,6 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
     }
   }, [handleUpload]);
 
-  const handleReanalyze = useCallback(async () => {
-    setReanalyzing(true);
-    try {
-      const result = await triggerScoring(dealId, organizationId);
-
-      // Save updated score
-      await supabase.from('deal_scores').insert({
-        deal_id: dealId,
-        score_macro: result.scores?.macro_sectoriel?.score_macro ?? null,
-        score_sectoriel: result.scores?.macro_sectoriel?.score_sectoriel ?? null,
-        score_macro_sectoriel_combine: result.scores?.macro_sectoriel?.score ?? null,
-        score_financier: result.scores?.financier?.score ?? null,
-        score_materiel: result.scores?.materiel?.score ?? null,
-        score_dirigeant: result.scores?.dirigeant?.score ?? null,
-        score_deal_total: result.score_total ?? null,
-        verdict: result.verdict?.verdict ?? null,
-        veto_raison: result.verdict?.raison ?? null,
-        recommandation: result.verdict?.message ?? null,
-        deal_optimizer_suggestions: result.optimizer ?? null,
-        ponderation_used: result.ponderation_used ?? null,
-      });
-
-      // Refresh financial data
-      await fetchData();
-    } catch (err) {
-      console.error('Re-analysis error:', err);
-    }
-    setReanalyzing(false);
-  }, [dealId, organizationId, supabase, fetchData]);
 
   if (loading) {
     return (
