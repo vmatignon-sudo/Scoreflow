@@ -282,9 +282,11 @@ export default function RecapBlock({ score }: Props) {
                     <span style={{ fontSize: '12px', fontWeight: 600, color: recoColor }}>Recommandation</span>
                     {v && (
                       <span className="font-medium" style={{
-                        fontSize: '11px', color: recoColor, whiteSpace: 'nowrap',
+                        fontSize: '10px', background: 'white', border: `0.5px solid ${recoBorder}`,
+                        color: recoColor, borderRadius: '6px',
+                        padding: '3px 10px', whiteSpace: 'nowrap',
                       }}>
-                        — {v.label}
+                        {v.label}
                       </span>
                     )}
                     <ChevronDown className="ml-auto shrink-0" style={{
