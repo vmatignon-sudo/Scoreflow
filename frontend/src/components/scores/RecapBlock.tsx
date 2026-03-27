@@ -194,40 +194,31 @@ export default function RecapBlock({ score }: Props) {
           </div>
         </div>
 
-        {/* RIGHT — Verdict/note + synthèses avec notes en face */}
-        <div className="flex-1 min-w-0 flex flex-col">
-          {/* Verdict + Note finale en haut */}
-          <div className="flex items-center justify-end" style={{ gap: '14px', marginBottom: '12px' }}>
-            {v && (
-              <span className="font-medium rounded-full" style={{
-                fontSize: '11px', background: v.bg, border: `1px solid ${v.border}`, color: v.color,
-                padding: '4px 14px', whiteSpace: 'nowrap',
-              }}>
-                {v.label}
-              </span>
-            )}
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: '2px' }}>
-              <span className="font-bold font-mono leading-none tracking-tight" style={{ fontSize: '36px', color: scoreColor }}>
-                {total.toFixed(1)}
-              </span>
-              <span className="font-medium" style={{ fontSize: '13px', color: 'var(--text-muted)' }}>/20</span>
-            </div>
-            <span className="font-semibold" style={{ fontSize: '12px', color: scoreColor }}>{getMention(total)}</span>
-          </div>
+        {/* RIGHT — 2 sous-colonnes : textes synthèse | colonne notes fixe */}
+        <div className="flex-1 min-w-0 flex" style={{ gap: '0' }}>
 
-          {/* 4 dimensions : label + texte | note alignée à droite */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            {DIMS.map(({ key, label, color }) => {
-              const val = (score?.[key] as number | null) ?? 0;
-              const c = getColor(val);
-              const synthesis = getDimSynthesis(key, score);
-              const isOpen = expanded === key;
-              return (
-                <div key={key}
-                  onClick={() => setExpanded(isOpen ? null : key)}
-                  style={{ display: 'flex', gap: '12px', alignItems: 'flex-start', cursor: 'pointer' }}>
-                  {/* Texte synthèse */}
-                  <div className="flex-1 min-w-0">
+          {/* Textes synthèse */}
+          <div className="flex-1 min-w-0 flex flex-col">
+            {/* Spacer pour aligner avec la note finale */}
+            <div style={{ marginBottom: '12px' }}>
+              {v && (
+                <span className="font-medium rounded-full" style={{
+                  fontSize: '11px', background: v.bg, border: `1px solid ${v.border}`, color: v.color,
+                  padding: '4px 14px', whiteSpace: 'nowrap',
+                }}>
+                  {v.label}
+                </span>
+              )}
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              {DIMS.map(({ key, label, color }) => {
+                const synthesis = getDimSynthesis(key, score);
+                const isOpen = expanded === key;
+                return (
+                  <div key={key}
+                    onClick={() => setExpanded(isOpen ? null : key)}
+                    style={{ cursor: 'pointer' }}>
                     <div className="flex items-center" style={{ gap: '4px', marginBottom: '2px' }}>
                       <span style={{ fontSize: '11px', fontWeight: 600, color }}>{label}</span>
                       <ChevronDown style={{
@@ -246,45 +237,69 @@ export default function RecapBlock({ score }: Props) {
                       {synthesis}
                     </p>
                   </div>
-                  {/* Note à droite — alignée avec le texte, pas le titre */}
-                  <span className="font-mono font-bold shrink-0 self-center" style={{ fontSize: '13px', color: c }}>
-                    {val.toFixed(0)}
-                  </span>
+                );
+              })}
+            </div>
+
+            {/* Recommandation */}
+            {score.recommandation && (() => {
+              const isRecoOpen = expanded === 'reco';
+              return (
+                <div
+                  onClick={() => setExpanded(isRecoOpen ? null : 'reco')}
+                  style={{
+                    background: '#FFF7E6', border: '0.5px solid #F59E0B', borderRadius: '8px',
+                    padding: '10px 12px', marginTop: '10px', cursor: 'pointer',
+                  }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2px' }}>
+                    <p style={{ fontSize: '11px', fontWeight: 500, color: '#B45309', margin: 0 }}>Recommandation</p>
+                    <ChevronDown style={{
+                      width: '10px', height: '10px', color: '#B45309',
+                      transform: isRecoOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                      transition: 'transform 0.15s ease',
+                    }} strokeWidth={1.5} />
+                  </div>
+                  <p style={{
+                    fontSize: '11px', color: '#92400E', lineHeight: '1.4', margin: 0,
+                    ...(isRecoOpen
+                      ? { display: '-webkit-box', WebkitLineClamp: 5, WebkitBoxOrient: 'vertical' as const, overflow: 'hidden' }
+                      : { display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as const, overflow: 'hidden' }
+                    ),
+                  }}>
+                    {score.recommandation}
+                  </p>
                 </div>
               );
-            })}
+            })()}
           </div>
 
-          {/* Recommandation */}
-          {score.recommandation && (() => {
-            const isRecoOpen = expanded === 'reco';
-            return (
-              <div
-                onClick={() => setExpanded(isRecoOpen ? null : 'reco')}
-                style={{
-                  background: '#FFF7E6', border: '0.5px solid #F59E0B', borderRadius: '8px',
-                  padding: '10px 12px', marginTop: '10px', cursor: 'pointer',
-                }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2px' }}>
-                  <p style={{ fontSize: '11px', fontWeight: 500, color: '#B45309', margin: 0 }}>Recommandation</p>
-                  <ChevronDown style={{
-                    width: '10px', height: '10px', color: '#B45309',
-                    transform: isRecoOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                    transition: 'transform 0.15s ease',
-                  }} strokeWidth={1.5} />
-                </div>
-                <p style={{
-                  fontSize: '11px', color: '#92400E', lineHeight: '1.4', margin: 0,
-                  ...(isRecoOpen
-                    ? { display: '-webkit-box', WebkitLineClamp: 5, WebkitBoxOrient: 'vertical' as const, overflow: 'hidden' }
-                    : { display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as const, overflow: 'hidden' }
-                  ),
-                }}>
-                  {score.recommandation}
-                </p>
+          {/* Colonne notes — fixe à droite, empilées sous la note finale */}
+          <div className="shrink-0 flex flex-col items-end" style={{ width: '50px', paddingLeft: '12px' }}>
+            {/* Note finale */}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', marginBottom: '12px' }}>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: '2px' }}>
+                <span className="font-bold font-mono leading-none tracking-tight" style={{ fontSize: '36px', color: scoreColor }}>
+                  {total.toFixed(1)}
+                </span>
               </div>
-            );
-          })()}
+              <span className="font-medium" style={{ fontSize: '10px', color: 'var(--text-muted)' }}>/20</span>
+            </div>
+
+            {/* Sous-notes empilées */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '100%' }}>
+              {DIMS.map(({ key }) => {
+                const val = (score?.[key] as number | null) ?? 0;
+                const c = getColor(val);
+                return (
+                  <div key={key} style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <span className="font-mono font-bold" style={{ fontSize: '13px', color: c }}>
+                      {val.toFixed(0)}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
     </div>
