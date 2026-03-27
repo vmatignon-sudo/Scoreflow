@@ -34,12 +34,11 @@ const DIMS: { key: keyof DealScore; label: string; color: string }[] = [
   { key: 'score_dirigeant', label: 'Dirigeant', color: '#185FA5' },
 ];
 
-// Pentagon SVG rosace — 5 axes
+// Diamond SVG rosace — 4 axes
 const CX = 120, CY = 120, R = 90;
-const AXES = ['Macro', 'Secteur', 'Financier', 'Matériel', 'Dirigeant'];
+const AXES = ['Macro & Secteur', 'Financier', 'Matériel', 'Dirigeant'];
 const AXIS_KEYS: (keyof DealScore)[] = [
-  'score_macro_sectoriel_combine', 'score_macro_sectoriel_combine',
-  'score_financier', 'score_materiel', 'score_dirigeant',
+  'score_macro_sectoriel_combine', 'score_financier', 'score_materiel', 'score_dirigeant',
 ];
 
 function polarToXY(angle: number, r: number): [number, number] {
@@ -104,7 +103,7 @@ export default function RecapBlock({ score }: Props) {
     return (
       <div style={{
         background: 'white', border: '0.5px solid #E2E8F0', borderRadius: '12px',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.08)', padding: '20px', minHeight: '120px',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.08)', padding: '16px', minHeight: '120px',
       }}>
         <p className="text-[11px]" style={{ color: 'var(--text-muted)' }}>Analyse en attente...</p>
       </div>
@@ -114,12 +113,12 @@ export default function RecapBlock({ score }: Props) {
   return (
     <div style={{
       background: 'white', border: '0.5px solid #E2E8F0', borderRadius: '12px',
-      boxShadow: '0 2px 8px rgba(0,0,0,0.08)', padding: '20px',
+      boxShadow: '0 2px 8px rgba(0,0,0,0.08)', padding: '16px',
       flexShrink: 0,
     }}>
 
       {/* TOP LINE: Synthèse (left) — Verdict + Score (right) */}
-      <div className="flex items-center justify-between" style={{ marginBottom: '16px' }}>
+      <div className="flex items-center justify-between" style={{ marginBottom: '12px' }}>
         <span style={{ fontSize: '12px', fontWeight: 500, color: 'var(--text-primary)' }}>Synthèse</span>
 
         <div className="flex items-center" style={{ gap: '12px' }}>
@@ -150,11 +149,11 @@ export default function RecapBlock({ score }: Props) {
             <svg viewBox="0 0 240 240" width="240" height="240" style={{ display: 'block' }}>
               {/* Grid polygons */}
               {[0.33, 0.66, 1].map((f) => (
-                <polygon key={f} points={gridPolygon(f, 5)} fill="none" stroke="#E2E8F0" strokeWidth="1" />
+                <polygon key={f} points={gridPolygon(f, 4)} fill="none" stroke="#E2E8F0" strokeWidth="1" />
               ))}
               {/* Axis lines */}
               {AXES.map((_, i) => {
-                const [x, y] = polarToXY((360 / 5) * i, R);
+                const [x, y] = polarToXY((360 / 4) * i, R);
                 return <line key={i} x1={CX} y1={CY} x2={x} y2={y} stroke="#E2E8F0" strokeWidth="0.5" />;
               })}
               {/* Data polygon */}
@@ -165,7 +164,7 @@ export default function RecapBlock({ score }: Props) {
               {/* Data points + labels */}
               {AXES.map((label, i) => {
                 const val = axisValues[i];
-                const angle = (360 / 5) * i;
+                const angle = (360 / 4) * i;
                 const [px, py] = polarToXY(angle, (val / 20) * R);
                 const [lx, ly] = polarToXY(angle, R + 18);
                 const isHovered = hoveredAxis === i;
