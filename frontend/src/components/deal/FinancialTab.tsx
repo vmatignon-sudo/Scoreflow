@@ -388,7 +388,7 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
                         ) : (
                           <span className="text-[#6e6e73]">{RATIO_LABELS[key] || key}</span>
                         )}
-                        <span className="font-mono font-medium text-[#424245]">{fmt(val)}</span>
+                        <span className="font-medium text-[#424245]" style={{ fontFamily: 'var(--font-geist-sans), -apple-system, system-ui, sans-serif', fontVariantNumeric: 'tabular-nums' }}>{fmt(val)}</span>
                       </div>
                     );
                   })}
