@@ -123,7 +123,9 @@ export default function DealDetailPage() {
 
           {/* LEFT — Hypothèses */}
           <div className="hidden lg:flex flex-col w-[280px] xl:w-[280px] shrink-0 overflow-y-auto pt-4">
-            <p className="font-medium pl-2 mb-3" style={{ fontSize: '20px', color: '#185FA5' }}>Hypothèses</p>
+            <div className="flex items-center mb-3" style={{ height: '34px' }}>
+              <p className="font-medium pl-2" style={{ fontSize: '20px', color: '#185FA5' }}>Hypothèses</p>
+            </div>
             <HypothesesColumn deal={deal} asset={asset} dealId={dealId} supabase={supabase} />
           </div>
 
