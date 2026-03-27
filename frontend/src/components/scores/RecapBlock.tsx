@@ -271,6 +271,7 @@ export default function RecapBlock({ score }: Props) {
                 onClick={() => setExpanded(isRecoOpen ? null : 'reco')}
                 style={{
                   display: 'flex', alignItems: 'stretch',
+                  width: '90%',
                   background: recoBg,
                   border: `0.5px solid ${recoBorder}`,
                   borderRadius: '6px', overflow: 'hidden',
