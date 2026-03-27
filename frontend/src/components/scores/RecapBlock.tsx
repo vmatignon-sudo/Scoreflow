@@ -281,11 +281,10 @@ export default function RecapBlock({ score }: Props) {
                   <div className="flex items-center" style={{ gap: '6px', marginBottom: '8px' }}>
                     <span style={{ fontSize: '12px', fontWeight: 600, color: recoColor }}>Recommandation</span>
                     {v && (
-                      <span className="font-medium rounded-full" style={{
-                        fontSize: '11px', background: 'white', border: `1px solid ${recoBorder}`, color: recoColor,
-                        padding: '3px 12px', whiteSpace: 'nowrap',
+                      <span className="font-medium" style={{
+                        fontSize: '11px', color: recoColor, whiteSpace: 'nowrap',
                       }}>
-                        {v.label}
+                        — {v.label}
                       </span>
                     )}
                     <ChevronDown className="ml-auto shrink-0" style={{
