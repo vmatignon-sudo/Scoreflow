@@ -197,7 +197,7 @@ export default function RecapBlock({ score }: Props) {
         {/* RIGHT — Verdict + mini-cartes par dimension */}
         <div className="flex-1 min-w-0 flex flex-col">
 
-          {/* 4 mini-cartes dimension */}
+          {/* 4 mini-cartes dimension — note centrée verticalement */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
             {DIMS.map(({ key, label, color }) => {
               const val = (score?.[key] as number | null) ?? 0;
@@ -208,32 +208,30 @@ export default function RecapBlock({ score }: Props) {
                 <div key={key}
                   onClick={() => setExpanded(isOpen ? null : key)}
                   style={{
-                    display: 'flex', cursor: 'pointer',
+                    display: 'flex', alignItems: 'stretch', cursor: 'pointer',
                     background: 'var(--color-background-secondary, #f5f5f7)',
                     borderRadius: '6px', overflow: 'hidden',
                   }}>
                   {/* Barre colorée gauche */}
-                  <div style={{ width: '3px', background: c, borderRadius: '6px 0 0 6px', flexShrink: 0 }} />
-                  {/* Contenu */}
+                  <div style={{ width: '3px', background: c, flexShrink: 0 }} />
+                  {/* Note centrée au milieu de la carte */}
+                  <div className="shrink-0 flex items-center justify-center" style={{
+                    width: '44px',
+                    borderRight: '0.5px solid rgba(0,0,0,0.06)',
+                  }}>
+                    <span className="font-mono font-bold" style={{ fontSize: '13px', color: c }}>
+                      {val.toFixed(1)}
+                    </span>
+                  </div>
+                  {/* Texte */}
                   <div style={{ flex: 1, padding: '8px 10px', minWidth: 0 }}>
-                    <div className="flex items-center justify-between" style={{ marginBottom: '3px' }}>
-                      <div className="flex items-center" style={{ gap: '4px' }}>
-                        <span style={{ fontSize: '11px', fontWeight: 600, color }}>{label}</span>
-                        <ChevronDown style={{
-                          width: '10px', height: '10px', color: '#BBB',
-                          transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                          transition: 'transform 0.15s ease',
-                        }} strokeWidth={1.5} />
-                      </div>
-                      {/* Badge note */}
-                      <span className="font-mono font-bold" style={{
-                        fontSize: '11px', color: c,
-                        background: 'white', borderRadius: '4px',
-                        padding: '1px 6px',
-                        border: `0.5px solid ${c}22`,
-                      }}>
-                        {val.toFixed(1)}
-                      </span>
+                    <div className="flex items-center" style={{ gap: '4px', marginBottom: '2px' }}>
+                      <span style={{ fontSize: '11px', fontWeight: 600, color }}>{label}</span>
+                      <ChevronDown style={{
+                        width: '10px', height: '10px', color: '#BBB',
+                        transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                        transition: 'transform 0.15s ease',
+                      }} strokeWidth={1.5} />
                     </div>
                     <p style={{
                       fontSize: '11px', color: 'var(--text-secondary)', lineHeight: '1.3', margin: 0,
@@ -250,30 +248,53 @@ export default function RecapBlock({ score }: Props) {
             })}
           </div>
 
-          {/* Verdict + Recommandation + Note — en bas */}
+          {/* Recommandation — carte jaune dépliable */}
+          {score.recommandation && (() => {
+            const isRecoOpen = expanded === 'reco';
+            return (
+              <div
+                onClick={() => setExpanded(isRecoOpen ? null : 'reco')}
+                style={{
+                  background: '#FFF7E6', border: '0.5px solid #F59E0B', borderRadius: '6px',
+                  padding: '8px 10px', marginTop: '6px', cursor: 'pointer',
+                }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3px' }}>
+                  <p style={{ fontSize: '11px', fontWeight: 600, color: '#B45309', margin: 0 }}>Recommandation</p>
+                  <ChevronDown style={{
+                    width: '10px', height: '10px', color: '#B45309',
+                    transform: isRecoOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                    transition: 'transform 0.15s ease',
+                  }} strokeWidth={1.5} />
+                </div>
+                <p style={{
+                  fontSize: '11px', color: '#92400E', lineHeight: '1.4', margin: 0,
+                  ...(isRecoOpen
+                    ? { display: '-webkit-box', WebkitLineClamp: 5, WebkitBoxOrient: 'vertical' as const, overflow: 'hidden' }
+                    : { display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as const, overflow: 'hidden' }
+                  ),
+                }}>
+                  {score.recommandation}
+                </p>
+              </div>
+            );
+          })()}
+
+          {/* Verdict + Note finale — en bas */}
           <div style={{
-            display: 'flex', alignItems: 'center', gap: '10px',
+            display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '12px',
             marginTop: '10px', paddingTop: '8px',
             borderTop: '0.5px solid rgba(0,0,0,0.06)',
           }}>
             {v && (
-              <span className="font-medium rounded-full shrink-0" style={{
+              <span className="font-medium rounded-full" style={{
                 fontSize: '11px', background: v.bg, border: `1px solid ${v.border}`, color: v.color,
                 padding: '4px 14px', whiteSpace: 'nowrap',
               }}>
                 {v.label}
               </span>
             )}
-            {score.recommandation && (
-              <p style={{
-                fontSize: '11px', color: 'var(--text-secondary)', lineHeight: '1.3', margin: 0,
-                flex: 1, minWidth: 0,
-                display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as const, overflow: 'hidden',
-              }}>
-                {score.recommandation}
-              </p>
-            )}
-            <div className="shrink-0 flex items-baseline" style={{ gap: '2px' }}>
+            <span className="font-semibold" style={{ fontSize: '12px', color: scoreColor }}>{getMention(total)}</span>
+            <div className="flex items-baseline" style={{ gap: '2px' }}>
               <span className="font-bold font-mono leading-none tracking-tight" style={{ fontSize: '28px', color: scoreColor }}>
                 {total.toFixed(1)}
               </span>
