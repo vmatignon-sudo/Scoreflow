@@ -93,43 +93,69 @@ function getDimSynthesis(key: keyof DealScore, score: DealScore): string {
 export default function RecapBlock({ score, analyzed = true }: Props) {
   const [view, setView] = useState<'rosace' | 'barres'>('rosace');
   const [expanded, setExpanded] = useState<string | null>(null);
-  const [progress, setProgress] = useState(0); // 0→1 pour la rosace
+  // Par axe : -1 = pas commencé, 0→1 = en cours d'animation
+  const [dimProgress, setDimProgress] = useState<number[]>([0, 0, 0, 0]);
   const [revealedDims, setRevealedDims] = useState(-1); // -1 = aucune, 0-3 = dim révélée, 4 = note finale
   const prevShow = useRef(false);
+  const animRef = useRef<number[]>([]);
 
   const show = analyzed && !!score;
 
-  // Animation quand show passe à true
+  // Animation séquentielle : chaque dimension s'anime une par une
   useEffect(() => {
     if (show && !prevShow.current) {
       // Reset
-      setProgress(0);
+      setDimProgress([0, 0, 0, 0]);
       setRevealedDims(-1);
 
-      // Animer la rosace de 0 à 1 sur 1.2s
-      const start = performance.now();
-      const duration = 1200;
-      function tick(now: number) {
-        const t = Math.min((now - start) / duration, 1);
-        // ease-out cubic
-        const eased = 1 - Math.pow(1 - t, 3);
-        setProgress(eased);
-        if (t < 1) requestAnimationFrame(tick);
-      }
-      requestAnimationFrame(tick);
+      // Annuler les anciens timeouts
+      animRef.current.forEach(t => clearTimeout(t));
+      animRef.current = [];
 
-      // Révéler les dims une par une avec spinner
+      const DELAY_BETWEEN = 1500; // 1.5s entre chaque dimension
+      const ANIM_DURATION = 1000; // 1s pour animer chaque axe
+
       DIMS.forEach((_, i) => {
-        setTimeout(() => setRevealedDims(i), 800 + i * 400);
+        const startDelay = 300 + i * DELAY_BETWEEN;
+
+        // Commencer le spinner
+        animRef.current.push(window.setTimeout(() => {
+          // Animer le progress de cet axe de 0 à 1
+          const start = performance.now();
+          function tick(now: number) {
+            const t = Math.min((now - start) / ANIM_DURATION, 1);
+            const eased = 1 - Math.pow(1 - t, 3); // ease-out cubic
+            setDimProgress(prev => {
+              const next = [...prev];
+              next[i] = eased;
+              return next;
+            });
+            if (t < 1) {
+              requestAnimationFrame(tick);
+            } else {
+              // Animation terminée → révéler la note
+              setRevealedDims(i);
+            }
+          }
+          requestAnimationFrame(tick);
+        }, startDelay));
       });
-      // Note finale
-      setTimeout(() => setRevealedDims(4), 800 + DIMS.length * 400);
+
+      // Note finale + recommandation
+      const finalDelay = 300 + DIMS.length * DELAY_BETWEEN + 500;
+      animRef.current.push(window.setTimeout(() => setRevealedDims(4), finalDelay));
     }
     if (!show) {
-      setProgress(0);
+      setDimProgress([0, 0, 0, 0]);
       setRevealedDims(-1);
+      animRef.current.forEach(t => clearTimeout(t));
+      animRef.current = [];
     }
     prevShow.current = show;
+
+    return () => {
+      animRef.current.forEach(t => clearTimeout(t));
+    };
   }, [show]);
 
   const total = show ? (score?.score_deal_total || 0) : 0;
@@ -137,9 +163,9 @@ export default function RecapBlock({ score, analyzed = true }: Props) {
   const v = verdict ? VERDICTS[verdict] : null;
   const scoreColor = show ? getColor(total) : '#a1a1a6';
 
-  // Rosace animée par progress
+  // Rosace : chaque axe a son propre progress
   const targetValues = AXIS_KEYS.map(k => show ? ((score?.[k] as number | null) ?? 0) : 0);
-  const axisValues = targetValues.map(v => v * progress);
+  const axisValues = targetValues.map((v, i) => v * dimProgress[i]);
 
   // Pas de return anticipé — on affiche toujours la structure complète
 
