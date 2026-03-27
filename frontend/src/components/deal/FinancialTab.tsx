@@ -486,7 +486,7 @@ function PredictiveCard({ dealId, organizationId }: { dealId: string; organizati
         <div>
           <p className="text-[12px] text-[#6e6e73] mb-0.5">Probabilité à 18 mois</p>
           <div className="flex items-baseline gap-2">
-            <span className="text-[36px] font-semibold font-mono tracking-tighter" style={{ color: risk.color }}>
+            <span className="text-[36px] font-semibold tracking-tighter" style={{ color: risk.color }}>
               {pct18}%
             </span>
             <span className="text-[13px] font-medium px-2.5 py-0.5 rounded-full" style={{
