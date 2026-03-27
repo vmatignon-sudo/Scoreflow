@@ -115,104 +115,49 @@ export default function RecapBlock({ score }: Props) {
     <div className="tile" style={{ padding: '16px', flexShrink: 0 }}>
 
       {/* Title — same as Entreprise tile */}
-      <div className="flex items-center justify-between mb-0">
+      <div className="flex items-center justify-between mb-2">
         <h4 className="text-[12px] font-medium" style={{ color: '#185FA5' }}>Synthèse</h4>
       </div>
 
-      {/* Verdict + Score + Mention */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', marginBottom: '0', gap: '20px' }}>
-        {v && (
-          <span className="font-medium rounded-full" style={{
-            fontSize: '14px', background: v.bg, border: `1px solid ${v.border}`, color: v.color,
-            padding: '8px 20px', whiteSpace: 'nowrap',
-          }}>
-            {v.label}
-          </span>
-        )}
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px' }}>
-          <span className="font-bold font-mono leading-none tracking-tight" style={{ fontSize: '44px', color: scoreColor }}>
-            {total.toFixed(1)}
-          </span>
-          <span className="font-medium" style={{ fontSize: '16px', color: 'var(--text-muted)' }}>/20</span>
-        </div>
-        <span className="font-semibold" style={{ fontSize: '16px', color: scoreColor }}>{getMention(total)}</span>
-      </div>
+      {/* 3 COLUMNS: Rosace | Textes synthèse | Décomposition notes */}
+      <div className="flex" style={{ gap: '16px' }}>
 
-      {/* ROSACE + SYNTHÈSE TEXT */}
-      <div className="flex" style={{ gap: '24px' }}>
-
-        {/* Left — Rosace SVG */}
-        <div className="shrink-0" style={{ width: '320px' }}>
+        {/* LEFT — Rosace SVG */}
+        <div className="shrink-0" style={{ width: '240px' }}>
           {view === 'rosace' ? (
-            <svg viewBox="0 0 360 360" width="320" height="320" style={{ display: 'block' }}>
-              {/* 5 grid polygons (20% 40% 60% 80% 100%) */}
+            <svg viewBox="0 0 360 360" width="240" height="240" style={{ display: 'block' }}>
               {[0.2, 0.4, 0.6, 0.8, 1].map((f) => (
                 <polygon key={f} points={gridPolygon(f, 4)} fill="none" stroke="#E2E8F0" strokeWidth="1" />
               ))}
-              {/* Axis lines */}
               {AXES.map((_, i) => {
                 const [x, y] = polarToXY((360 / 4) * i, R);
                 return <line key={i} x1={CX} y1={CY} x2={x} y2={y} stroke="#E2E8F0" strokeWidth="0.5" />;
               })}
-              {/* Data polygon */}
               <polygon
                 points={polygonPoints(axisValues, 20)}
                 fill="rgba(24,95,165,0.20)" stroke="#185FA5" strokeWidth="2" strokeLinejoin="round"
               />
-              {/* Data points + labels + permanent score */}
               {AXES.map((label, i) => {
                 const val = axisValues[i];
                 const angle = (360 / 4) * i;
                 const [px, py] = polarToXY(angle, (val / 20) * R);
-                // Score label offset from point
                 const scoreOffX = i === 1 ? 14 : i === 3 ? -14 : 0;
                 const scoreOffY = i === 0 ? -14 : i === 2 ? 14 : 0;
                 const scoreAnchor = (i === 1 ? 'start' : i === 3 ? 'end' : 'middle') as 'start' | 'middle' | 'end';
-
-                // Label positions: top/bottom horizontal, left/right vertical
                 let labelEl: React.ReactNode;
                 if (i === 0) {
-                  // Top — horizontal
-                  labelEl = (
-                    <text x={CX} y={CY - R - 28} textAnchor="middle" dominantBaseline="central"
-                      style={{ fontSize: '11px', fill: '#4A5568', fontWeight: 500 }}>
-                      {label}
-                    </text>
-                  );
+                  labelEl = (<text x={CX} y={CY - R - 28} textAnchor="middle" dominantBaseline="central" style={{ fontSize: '11px', fill: '#4A5568', fontWeight: 500 }}>{label}</text>);
                 } else if (i === 2) {
-                  // Bottom — horizontal
-                  labelEl = (
-                    <text x={CX} y={CY + R + 32} textAnchor="middle" dominantBaseline="central"
-                      style={{ fontSize: '11px', fill: '#4A5568', fontWeight: 500 }}>
-                      {label}
-                    </text>
-                  );
+                  labelEl = (<text x={CX} y={CY + R + 32} textAnchor="middle" dominantBaseline="central" style={{ fontSize: '11px', fill: '#4A5568', fontWeight: 500 }}>{label}</text>);
                 } else if (i === 1) {
-                  // Right — vertical text
-                  labelEl = (
-                    <text x={CX + R + 28} y={CY} textAnchor="middle" dominantBaseline="central"
-                      transform={`rotate(90, ${CX + R + 28}, ${CY})`}
-                      style={{ fontSize: '11px', fill: '#4A5568', fontWeight: 500 }}>
-                      {label}
-                    </text>
-                  );
+                  labelEl = (<text x={CX + R + 28} y={CY} textAnchor="middle" dominantBaseline="central" transform={`rotate(90, ${CX + R + 28}, ${CY})`} style={{ fontSize: '11px', fill: '#4A5568', fontWeight: 500 }}>{label}</text>);
                 } else {
-                  // Left — vertical text
-                  labelEl = (
-                    <text x={CX - R - 28} y={CY} textAnchor="middle" dominantBaseline="central"
-                      transform={`rotate(-90, ${CX - R - 28}, ${CY})`}
-                      style={{ fontSize: '11px', fill: '#4A5568', fontWeight: 500 }}>
-                      {label}
-                    </text>
-                  );
+                  labelEl = (<text x={CX - R - 28} y={CY} textAnchor="middle" dominantBaseline="central" transform={`rotate(-90, ${CX - R - 28}, ${CY})`} style={{ fontSize: '11px', fill: '#4A5568', fontWeight: 500 }}>{label}</text>);
                 }
-
                 return (
                   <g key={i}>
                     {labelEl}
-                    {/* Point */}
                     <circle cx={px} cy={py} r={7} fill="#185FA5" stroke="white" strokeWidth="2" />
-                    {/* Permanent score label next to point */}
                     <text x={px + scoreOffX} y={py + scoreOffY} textAnchor={scoreAnchor} dominantBaseline="central"
                       style={{ fontSize: '11px', fill: '#185FA5', fontWeight: 700, fontFamily: 'var(--font-geist-mono), monospace' }}>
                       {val.toFixed(0)}
@@ -240,7 +185,6 @@ export default function RecapBlock({ score }: Props) {
               })}
             </div>
           )}
-          {/* Toggle */}
           <div className="text-center" style={{ marginTop: '4px' }}>
             <button onClick={() => setView(view === 'rosace' ? 'barres' : 'rosace')} style={{ fontSize: '10px', background: 'none', border: 'none', cursor: 'pointer' }}>
               <span style={{ color: view === 'rosace' ? '#185FA5' : '#BBB' }}>rosace</span>
@@ -250,25 +194,26 @@ export default function RecapBlock({ score }: Props) {
           </div>
         </div>
 
-        {/* Right — Dimension syntheses — centered with rosace */}
-        <div className="flex-1 min-w-0 flex flex-col justify-center" style={{ minHeight: '240px' }}>
-          {/* 4 dimension lines — expandable */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        {/* CENTER — Textes synthèse par dimension */}
+        <div className="flex-1 min-w-0 flex flex-col justify-center">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             {DIMS.map(({ key, label, color }) => {
-              const val = (score?.[key] as number | null) ?? 0;
               const synthesis = getDimSynthesis(key, score);
               const isOpen = expanded === key;
               return (
                 <div key={key}
                   onClick={() => setExpanded(isOpen ? null : key)}
-                  style={{ display: 'grid', gridTemplateColumns: '110px 1fr 16px', gap: '8px', alignItems: 'start', minHeight: '35px', cursor: 'pointer' }}>
-                  <div className="flex items-center" style={{ gap: '6px' }}>
+                  style={{ cursor: 'pointer' }}>
+                  <div className="flex items-center" style={{ gap: '4px', marginBottom: '2px' }}>
                     <span style={{ fontSize: '11px', fontWeight: 600, color }}>{label}</span>
-                    <span className="font-mono" style={{ fontSize: '11px', color: '#BBB' }}>{val.toFixed(0)}/20</span>
+                    <ChevronDown style={{
+                      width: '10px', height: '10px', color: '#BBB',
+                      transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                      transition: 'transform 0.15s ease',
+                    }} strokeWidth={1.5} />
                   </div>
                   <p style={{
-                    fontSize: '12px', color: 'var(--text-secondary)', lineHeight: '1.3',
-                    margin: 0,
+                    fontSize: '11px', color: 'var(--text-secondary)', lineHeight: '1.3', margin: 0,
                     ...(isOpen
                       ? { display: '-webkit-box', WebkitLineClamp: 5, WebkitBoxOrient: 'vertical' as const, overflow: 'hidden' }
                       : { display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as const, overflow: 'hidden' }
@@ -276,17 +221,12 @@ export default function RecapBlock({ score }: Props) {
                   }}>
                     {synthesis}
                   </p>
-                  <ChevronDown className="mt-0.5" style={{
-                    width: '12px', height: '12px', color: '#BBB',
-                    transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                    transition: 'transform 0.15s ease',
-                  }} strokeWidth={1.5} />
                 </div>
               );
             })}
           </div>
 
-          {/* Recommandation — expandable */}
+          {/* Recommandation */}
           {score.recommandation && (() => {
             const isRecoOpen = expanded === 'reco';
             return (
@@ -294,18 +234,18 @@ export default function RecapBlock({ score }: Props) {
                 onClick={() => setExpanded(isRecoOpen ? null : 'reco')}
                 style={{
                   background: '#FFF7E6', border: '0.5px solid #F59E0B', borderRadius: '8px',
-                  padding: '12px 16px', marginTop: '12px', cursor: 'pointer',
+                  padding: '10px 12px', marginTop: '10px', cursor: 'pointer',
                 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
-                  <p style={{ fontSize: '12px', fontWeight: 500, color: '#B45309', margin: 0 }}>Recommandation</p>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2px' }}>
+                  <p style={{ fontSize: '11px', fontWeight: 500, color: '#B45309', margin: 0 }}>Recommandation</p>
                   <ChevronDown style={{
-                    width: '12px', height: '12px', color: '#B45309',
+                    width: '10px', height: '10px', color: '#B45309',
                     transform: isRecoOpen ? 'rotate(180deg)' : 'rotate(0deg)',
                     transition: 'transform 0.15s ease',
                   }} strokeWidth={1.5} />
                 </div>
                 <p style={{
-                  fontSize: '12px', color: '#92400E', lineHeight: '1.5', margin: 0,
+                  fontSize: '11px', color: '#92400E', lineHeight: '1.4', margin: 0,
                   ...(isRecoOpen
                     ? { display: '-webkit-box', WebkitLineClamp: 5, WebkitBoxOrient: 'vertical' as const, overflow: 'hidden' }
                     : { display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as const, overflow: 'hidden' }
@@ -316,6 +256,44 @@ export default function RecapBlock({ score }: Props) {
               </div>
             );
           })()}
+        </div>
+
+        {/* RIGHT — Note finale + décomposition */}
+        <div className="shrink-0 flex flex-col items-end" style={{ width: '120px' }}>
+          {/* Verdict badge */}
+          {v && (
+            <span className="font-medium rounded-full" style={{
+              fontSize: '11px', background: v.bg, border: `1px solid ${v.border}`, color: v.color,
+              padding: '4px 14px', whiteSpace: 'nowrap', marginBottom: '6px',
+            }}>
+              {v.label}
+            </span>
+          )}
+          {/* Note finale */}
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: '2px', marginBottom: '2px' }}>
+            <span className="font-bold font-mono leading-none tracking-tight" style={{ fontSize: '36px', color: scoreColor }}>
+              {total.toFixed(1)}
+            </span>
+            <span className="font-medium" style={{ fontSize: '13px', color: 'var(--text-muted)' }}>/20</span>
+          </div>
+          <span className="font-semibold" style={{ fontSize: '12px', color: scoreColor, marginBottom: '12px' }}>{getMention(total)}</span>
+
+          {/* Séparateur */}
+          <div style={{ width: '100%', height: '1px', background: '#E2E8F0', marginBottom: '10px' }} />
+
+          {/* Décomposition 4 sous-scores */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', width: '100%' }}>
+            {DIMS.map(({ key, label, color }) => {
+              const val = (score?.[key] as number | null) ?? 0;
+              const c = getColor(val);
+              return (
+                <div key={key} className="flex items-center justify-between" style={{ width: '100%' }}>
+                  <span style={{ fontSize: '10px', color: 'var(--text-secondary)' }}>{label}</span>
+                  <span className="font-mono font-bold" style={{ fontSize: '11px', color: c }}>{val.toFixed(0)}/20</span>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>
