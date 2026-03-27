@@ -260,7 +260,7 @@ export default function RecapBlock({ score, analyzed = true }: Props) {
                   <span style={{ color: revealedDims >= 4 ? scoreColor : '#d1d5db', fontWeight: 600 }}>Score Deal</span>
                   <span className="font-mono font-bold" style={{ color: revealedDims >= 4 ? scoreColor : '#d1d5db' }}>{revealedDims >= 4 ? `${total.toFixed(1)}/20` : '—'}</span>
                 </div>
-                <div className="rounded-full overflow-hidden" style={{ height: '8px', background: '#E2E8F0' }}>
+                <div className="rounded-full overflow-hidden" style={{ height: '5px', background: '#E2E8F0' }}>
                   <div className="h-full rounded-full" style={{ width: revealedDims >= 4 ? `${(total / 20) * 100}%` : '0%', backgroundColor: scoreColor, transition: 'width 0.8s ease-out' }} />
                 </div>
               </div>
