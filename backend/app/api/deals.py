@@ -45,3 +45,36 @@ async def compute_risk_curve(deal_id: str):
 async def get_deal_score(deal_id: str):
     # Will be implemented with Supabase queries
     return {"deal_id": deal_id, "message": "Not yet implemented"}
+
+
+@router.post("/{deal_id}/analyze")
+async def analyze_deal(deal_id: str):
+    """Lance l'analyse complète d'un deal : scoring sur les 5 dimensions."""
+    from app.scoring.engine import ScoringEngine
+    from app.core.config import get_supabase
+
+    supabase = get_supabase()
+    # Récupérer l'organization_id du deal
+    deal = supabase.table("deals").select("organization_id").eq("id", deal_id).single().execute()
+    if not deal.data:
+        raise HTTPException(status_code=404, detail="Deal not found")
+
+    organization_id = deal.data["organization_id"]
+
+    # Passer le statut à analyzing
+    supabase.table("deals").update({"status": "analyzing"}).eq("id", deal_id).execute()
+
+    engine = ScoringEngine()
+    try:
+        result = await engine.compute_full_score(
+            deal_id=deal_id,
+            organization_id=organization_id,
+            force=True,
+        )
+        # Passer le statut à completed
+        supabase.table("deals").update({"status": "completed"}).eq("id", deal_id).execute()
+        return result
+    except Exception as e:
+        # En cas d'erreur, repasser en draft
+        supabase.table("deals").update({"status": "draft"}).eq("id", deal_id).execute()
+        raise HTTPException(status_code=500, detail=str(e))
