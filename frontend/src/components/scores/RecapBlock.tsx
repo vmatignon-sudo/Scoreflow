@@ -233,7 +233,7 @@ export default function RecapBlock({ score, analyzed = true }: Props) {
                     transitionDelay: show ? `${idx * 0.08}s` : '0s',
                   }}>
                   {/* Barre colorée gauche */}
-                  <div style={{ width: '3px', background: c, flexShrink: 0 }} />
+                  <div style={{ width: '3px', background: c, flexShrink: 0, transition: 'background 0.4s ease' }} />
                   {/* Texte */}
                   <div style={{ flex: 1, padding: '8px 10px', minWidth: 0 }}>
                     <div className="flex items-center" style={{ gap: '4px', marginBottom: '2px' }}>
