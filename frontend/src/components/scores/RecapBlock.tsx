@@ -114,26 +114,28 @@ export default function RecapBlock({ score }: Props) {
   return (
     <div className="tile" style={{ padding: '16px', flexShrink: 0 }}>
 
-      {/* TOP LINE: Synthèse (left) — Verdict + Score (right) */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+      {/* Title — same as Entreprise tile */}
+      <div className="flex items-center justify-between mb-2">
         <h4 className="text-[12px] font-medium" style={{ color: '#185FA5' }}>Synthèse</h4>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-          {v && (
-            <span className="font-medium rounded-full" style={{
-              fontSize: '14px', background: v.bg, border: `1px solid ${v.border}`, color: v.color,
-              padding: '8px 20px', whiteSpace: 'nowrap',
-            }}>
-              {v.label}
-            </span>
-          )}
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px' }}>
-            <span className="font-bold font-mono leading-none tracking-tight" style={{ fontSize: '44px', color: scoreColor }}>
-              {total.toFixed(1)}
-            </span>
-            <span className="font-medium" style={{ fontSize: '16px', color: 'var(--text-muted)' }}>/20</span>
-          </div>
-          <span className="font-semibold" style={{ fontSize: '16px', color: scoreColor }}>{getMention(total)}</span>
+      </div>
+
+      {/* Verdict + Score + Mention */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', marginBottom: '8px', gap: '20px' }}>
+        {v && (
+          <span className="font-medium rounded-full" style={{
+            fontSize: '14px', background: v.bg, border: `1px solid ${v.border}`, color: v.color,
+            padding: '8px 20px', whiteSpace: 'nowrap',
+          }}>
+            {v.label}
+          </span>
+        )}
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px' }}>
+          <span className="font-bold font-mono leading-none tracking-tight" style={{ fontSize: '44px', color: scoreColor }}>
+            {total.toFixed(1)}
+          </span>
+          <span className="font-medium" style={{ fontSize: '16px', color: 'var(--text-muted)' }}>/20</span>
         </div>
+        <span className="font-semibold" style={{ fontSize: '16px', color: scoreColor }}>{getMention(total)}</span>
       </div>
 
       {/* ROSACE + SYNTHÈSE TEXT */}
