@@ -199,7 +199,7 @@ export default function RecapBlock({ score }: Props) {
 
           {/* 4 mini-cartes dimension — note centrée verticalement */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-            {DIMS.map(({ key, label, color }) => {
+            {DIMS.map(({ key, label }) => {
               const val = (score?.[key] as number | null) ?? 0;
               const c = getColor(val);
               const synthesis = getDimSynthesis(key, score);
