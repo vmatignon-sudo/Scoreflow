@@ -248,27 +248,15 @@ export default function RecapBlock({ score }: Props) {
             })}
           </div>
 
-          {/* Note finale — même style mini-carte mais accentuée */}
-          <div style={{
-            display: 'flex', alignItems: 'stretch',
-            background: 'var(--color-background-secondary, #f5f5f7)',
-            borderRadius: '6px', overflow: 'hidden', marginTop: '6px',
-          }}>
-            <div style={{ width: '3px', background: scoreColor, flexShrink: 0 }} />
-            <div style={{ flex: 1, padding: '8px 10px' }}>
-              <span style={{ fontSize: '11px', fontWeight: 600, color: scoreColor }}>Score Deal</span>
-            </div>
-            <div className="shrink-0 flex items-center justify-center" style={{
-              width: '44px',
-              borderLeft: '0.5px solid rgba(0,0,0,0.06)',
-            }}>
-              <span className="font-mono font-bold" style={{ fontSize: '14px', color: scoreColor }}>
-                {total.toFixed(1)}
-              </span>
-            </div>
+          {/* Note finale — flottante sur le blanc */}
+          <div className="flex items-baseline justify-end" style={{ marginTop: '10px', gap: '3px' }}>
+            <span className="font-bold font-mono leading-none tracking-tight" style={{ fontSize: '28px', color: scoreColor }}>
+              {total.toFixed(1)}
+            </span>
+            <span className="font-medium" style={{ fontSize: '11px', color: 'var(--text-muted)' }}>/20</span>
           </div>
 
-          {/* Recommandation + Verdict — carte dépliable */}
+          {/* Recommandation + Verdict */}
           {(() => {
             const isRecoOpen = expanded === 'reco';
             return (
@@ -278,7 +266,7 @@ export default function RecapBlock({ score }: Props) {
                   background: v ? v.bg : '#FFF7E6',
                   border: `0.5px solid ${v ? v.border : '#F59E0B'}`,
                   borderRadius: '6px',
-                  padding: '8px 10px', marginTop: '6px', cursor: 'pointer',
+                  padding: '8px 10px', marginTop: '8px', cursor: 'pointer',
                 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: score.recommandation ? '3px' : '0' }}>
                   {v && (
