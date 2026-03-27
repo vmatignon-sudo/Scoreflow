@@ -139,6 +139,7 @@ export default function RecapBlock({ score }: Props) {
               />
               {AXES.map((label, i) => {
                 const val = axisValues[i];
+                const dimColor = getColor(val);
                 const angle = (360 / 4) * i;
                 const [px, py] = polarToXY(angle, (val / 20) * R);
                 const scoreOffX = i === 1 ? 14 : i === 3 ? -14 : 0;
@@ -146,20 +147,20 @@ export default function RecapBlock({ score }: Props) {
                 const scoreAnchor = (i === 1 ? 'start' : i === 3 ? 'end' : 'middle') as 'start' | 'middle' | 'end';
                 let labelEl: React.ReactNode;
                 if (i === 0) {
-                  labelEl = (<text x={CX} y={CY - R - 28} textAnchor="middle" dominantBaseline="central" style={{ fontSize: '11px', fill: '#4A5568', fontWeight: 500 }}>{label}</text>);
+                  labelEl = (<text x={CX} y={CY - R - 28} textAnchor="middle" dominantBaseline="central" style={{ fontSize: '11px', fill: dimColor, fontWeight: 500 }}>{label}</text>);
                 } else if (i === 2) {
-                  labelEl = (<text x={CX} y={CY + R + 32} textAnchor="middle" dominantBaseline="central" style={{ fontSize: '11px', fill: '#4A5568', fontWeight: 500 }}>{label}</text>);
+                  labelEl = (<text x={CX} y={CY + R + 32} textAnchor="middle" dominantBaseline="central" style={{ fontSize: '11px', fill: dimColor, fontWeight: 500 }}>{label}</text>);
                 } else if (i === 1) {
-                  labelEl = (<text x={CX + R + 28} y={CY} textAnchor="middle" dominantBaseline="central" transform={`rotate(90, ${CX + R + 28}, ${CY})`} style={{ fontSize: '11px', fill: '#4A5568', fontWeight: 500 }}>{label}</text>);
+                  labelEl = (<text x={CX + R + 28} y={CY} textAnchor="middle" dominantBaseline="central" transform={`rotate(90, ${CX + R + 28}, ${CY})`} style={{ fontSize: '11px', fill: dimColor, fontWeight: 500 }}>{label}</text>);
                 } else {
-                  labelEl = (<text x={CX - R - 28} y={CY} textAnchor="middle" dominantBaseline="central" transform={`rotate(-90, ${CX - R - 28}, ${CY})`} style={{ fontSize: '11px', fill: '#4A5568', fontWeight: 500 }}>{label}</text>);
+                  labelEl = (<text x={CX - R - 28} y={CY} textAnchor="middle" dominantBaseline="central" transform={`rotate(-90, ${CX - R - 28}, ${CY})`} style={{ fontSize: '11px', fill: dimColor, fontWeight: 500 }}>{label}</text>);
                 }
                 return (
                   <g key={i}>
                     {labelEl}
-                    <circle cx={px} cy={py} r={7} fill="#185FA5" stroke="white" strokeWidth="2" />
+                    <circle cx={px} cy={py} r={7} fill={dimColor} stroke="white" strokeWidth="2" />
                     <text x={px + scoreOffX} y={py + scoreOffY} textAnchor={scoreAnchor} dominantBaseline="central"
-                      style={{ fontSize: '11px', fill: '#185FA5', fontWeight: 700, fontFamily: 'var(--font-geist-mono), monospace' }}>
+                      style={{ fontSize: '11px', fill: dimColor, fontWeight: 700, fontFamily: 'var(--font-geist-mono), monospace' }}>
                       {val.toFixed(0)}
                     </text>
                   </g>
