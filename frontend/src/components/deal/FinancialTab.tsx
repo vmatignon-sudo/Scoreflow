@@ -197,7 +197,7 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
 
   if (loading) {
     return (
-      <div className="bg-white rounded-[20px] shadow p-6 animate-pulse">
+      <div className="tile animate-pulse" style={{ padding: '24px' }}>
         <div className="h-6 bg-[#f5f5f7] rounded w-1/3 mb-4" />
         <div className="h-4 bg-[#f5f5f7] rounded w-full mb-2" />
         <div className="h-4 bg-[#f5f5f7] rounded w-2/3" />
