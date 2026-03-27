@@ -258,8 +258,8 @@ export default function RecapBlock({ score, analyzed = true }: Props) {
                       <p style={{ fontSize: '11px', color: '#d1d5db', margin: 0 }}>—</p>
                     )}
                   </div>
-                  <div className="shrink-0 flex items-center justify-center" style={{ width: '56px' }}>
-                    <span className="font-mono font-bold" style={{ fontSize: '13px', color: show ? c : '#d1d5db' }}>
+                  <div className="shrink-0 flex items-center justify-center" style={{ width: '56px', transition: 'all 0.4s ease', transitionDelay: show ? `${0.2 + idx * 0.08}s` : '0s' }}>
+                    <span className="font-mono font-bold" style={{ fontSize: '13px', color: show ? c : '#d1d5db', transition: 'color 0.4s ease' }}>
                       {show ? val.toFixed(1) : '—'}
                     </span>
                   </div>
