@@ -118,42 +118,44 @@ export default function DealDetailPage() {
           </div>
         </div>
 
+        {/* SHARED TITLE ROW */}
+        <div className="hidden lg:flex m-3 mt-0 mb-0 pt-4 pb-3" style={{ gap: '24px' }}>
+          <div className="w-[280px] xl:w-[280px] shrink-0">
+            <p className="font-medium pl-2" style={{ fontSize: '20px', color: '#185FA5' }}>Hypothèses</p>
+          </div>
+          <div className="flex-1 min-w-0 flex items-center justify-between">
+            <p className="font-medium pl-1" style={{ fontSize: '20px', color: '#185FA5' }}>Résultats</p>
+            <div className="flex items-center" style={{ gap: '8px' }}>
+              <button className="inline-flex items-center font-medium" style={{
+                gap: '5px', fontSize: '11px', background: 'white', border: '0.5px solid #E2E8F0',
+                borderRadius: '6px', padding: '5px 12px', color: 'var(--text-secondary)',
+              }}>
+                <FileDown className="w-3.5 h-3.5" strokeWidth={1.5} />
+                Exporter PDF
+              </button>
+              {verdict && (verdict === 'go_conditionnel' || verdict === 'no_go') && (
+                <button className="inline-flex items-center font-medium" style={{
+                  gap: '5px', fontSize: '11px', background: '#185FA5', border: 'none',
+                  borderRadius: '6px', padding: '5px 12px', color: 'white',
+                }}>
+                  <Lightbulb className="w-3.5 h-3.5" strokeWidth={1.5} />
+                  Optimiser le deal
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+
         {/* TWO COLUMNS */}
         <div className="flex flex-1 overflow-hidden m-3 mt-0" style={{ gap: '24px' }}>
 
           {/* LEFT — Hypothèses */}
-          <div className="hidden lg:flex flex-col w-[280px] xl:w-[280px] shrink-0 overflow-y-auto pt-4">
-            <div className="flex items-center mb-3" style={{ height: '34px' }}>
-              <p className="font-medium pl-2" style={{ fontSize: '20px', color: '#185FA5' }}>Hypothèses</p>
-            </div>
+          <div className="hidden lg:flex flex-col w-[280px] xl:w-[280px] shrink-0 overflow-y-auto">
             <HypothesesColumn deal={deal} asset={asset} dealId={dealId} supabase={supabase} />
           </div>
 
           {/* RIGHT — Résultats */}
-          <div className="flex-1 min-w-0 flex flex-col pt-4" style={{ height: 'calc(100vh - 76px)', overflow: 'hidden' }}>
-
-            {/* Title line: Résultats + buttons */}
-            <div className="flex items-center justify-between mb-3" style={{ height: '34px' }}>
-              <p className="font-medium pl-1" style={{ fontSize: '20px', color: '#185FA5' }}>Résultats</p>
-              <div className="flex items-center" style={{ gap: '8px' }}>
-                <button className="inline-flex items-center font-medium" style={{
-                  gap: '5px', fontSize: '11px', background: 'white', border: '0.5px solid #E2E8F0',
-                  borderRadius: '6px', padding: '5px 12px', color: 'var(--text-secondary)',
-                }}>
-                  <FileDown className="w-3.5 h-3.5" strokeWidth={1.5} />
-                  Exporter PDF
-                </button>
-                {verdict && (verdict === 'go_conditionnel' || verdict === 'no_go') && (
-                  <button className="inline-flex items-center font-medium" style={{
-                    gap: '5px', fontSize: '11px', background: '#185FA5', border: 'none',
-                    borderRadius: '6px', padding: '5px 12px', color: 'white',
-                  }}>
-                    <Lightbulb className="w-3.5 h-3.5" strokeWidth={1.5} />
-                    Optimiser le deal
-                  </button>
-                )}
-              </div>
-            </div>
+          <div className="flex-1 min-w-0 flex flex-col" style={{ height: 'calc(100vh - 76px - 52px)', overflow: 'hidden' }}>
 
             {/* Synthèse block — NEVER scrolls */}
             <div className="shrink-0">
