@@ -238,8 +238,8 @@ export default function RecapBlock({ score, analyzed = true }: Props) {
           )}
         </div>
 
-        {/* RIGHT — Toggle + mini-cartes par dimension */}
-        <div className="flex-1 min-w-0 flex flex-col items-end" style={{ paddingRight: '13px' }}>
+        {/* RIGHT — mini-cartes par dimension (visible seulement en rosace) */}
+        <div className="flex-1 min-w-0 flex flex-col items-end" style={{ paddingRight: '13px', display: view === 'rosace' ? 'flex' : 'none' }}>
 
           {/* 4 mini-cartes dimension — note centrée verticalement */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '90%' }}>
