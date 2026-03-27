@@ -194,33 +194,62 @@ export default function RecapBlock({ score }: Props) {
           </div>
         </div>
 
-        {/* CENTER — Textes synthèse par dimension */}
-        <div className="flex-1 min-w-0 flex flex-col justify-center">
+        {/* RIGHT — Verdict/note + synthèses avec notes en face */}
+        <div className="flex-1 min-w-0 flex flex-col">
+          {/* Verdict + Note finale en haut */}
+          <div className="flex items-center justify-end" style={{ gap: '14px', marginBottom: '12px' }}>
+            {v && (
+              <span className="font-medium rounded-full" style={{
+                fontSize: '11px', background: v.bg, border: `1px solid ${v.border}`, color: v.color,
+                padding: '4px 14px', whiteSpace: 'nowrap',
+              }}>
+                {v.label}
+              </span>
+            )}
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: '2px' }}>
+              <span className="font-bold font-mono leading-none tracking-tight" style={{ fontSize: '36px', color: scoreColor }}>
+                {total.toFixed(1)}
+              </span>
+              <span className="font-medium" style={{ fontSize: '13px', color: 'var(--text-muted)' }}>/20</span>
+            </div>
+            <span className="font-semibold" style={{ fontSize: '12px', color: scoreColor }}>{getMention(total)}</span>
+          </div>
+
+          {/* 4 dimensions : label + texte | note alignée à droite */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             {DIMS.map(({ key, label, color }) => {
+              const val = (score?.[key] as number | null) ?? 0;
+              const c = getColor(val);
               const synthesis = getDimSynthesis(key, score);
               const isOpen = expanded === key;
               return (
                 <div key={key}
                   onClick={() => setExpanded(isOpen ? null : key)}
-                  style={{ cursor: 'pointer' }}>
-                  <div className="flex items-center" style={{ gap: '4px', marginBottom: '2px' }}>
-                    <span style={{ fontSize: '11px', fontWeight: 600, color }}>{label}</span>
-                    <ChevronDown style={{
-                      width: '10px', height: '10px', color: '#BBB',
-                      transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                      transition: 'transform 0.15s ease',
-                    }} strokeWidth={1.5} />
+                  style={{ display: 'flex', gap: '12px', alignItems: 'flex-start', cursor: 'pointer' }}>
+                  {/* Texte synthèse */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center" style={{ gap: '4px', marginBottom: '2px' }}>
+                      <span style={{ fontSize: '11px', fontWeight: 600, color }}>{label}</span>
+                      <ChevronDown style={{
+                        width: '10px', height: '10px', color: '#BBB',
+                        transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                        transition: 'transform 0.15s ease',
+                      }} strokeWidth={1.5} />
+                    </div>
+                    <p style={{
+                      fontSize: '11px', color: 'var(--text-secondary)', lineHeight: '1.3', margin: 0,
+                      ...(isOpen
+                        ? { display: '-webkit-box', WebkitLineClamp: 5, WebkitBoxOrient: 'vertical' as const, overflow: 'hidden' }
+                        : { display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as const, overflow: 'hidden' }
+                      ),
+                    }}>
+                      {synthesis}
+                    </p>
                   </div>
-                  <p style={{
-                    fontSize: '11px', color: 'var(--text-secondary)', lineHeight: '1.3', margin: 0,
-                    ...(isOpen
-                      ? { display: '-webkit-box', WebkitLineClamp: 5, WebkitBoxOrient: 'vertical' as const, overflow: 'hidden' }
-                      : { display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as const, overflow: 'hidden' }
-                    ),
-                  }}>
-                    {synthesis}
-                  </p>
+                  {/* Note à droite */}
+                  <span className="font-mono font-bold shrink-0" style={{ fontSize: '13px', color: c, paddingTop: '1px' }}>
+                    {val.toFixed(0)}/20
+                  </span>
                 </div>
               );
             })}
@@ -256,44 +285,6 @@ export default function RecapBlock({ score }: Props) {
               </div>
             );
           })()}
-        </div>
-
-        {/* RIGHT — Note finale + décomposition */}
-        <div className="shrink-0 flex flex-col items-end" style={{ width: '120px' }}>
-          {/* Verdict badge */}
-          {v && (
-            <span className="font-medium rounded-full" style={{
-              fontSize: '11px', background: v.bg, border: `1px solid ${v.border}`, color: v.color,
-              padding: '4px 14px', whiteSpace: 'nowrap', marginBottom: '6px',
-            }}>
-              {v.label}
-            </span>
-          )}
-          {/* Note finale */}
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: '2px', marginBottom: '2px' }}>
-            <span className="font-bold font-mono leading-none tracking-tight" style={{ fontSize: '36px', color: scoreColor }}>
-              {total.toFixed(1)}
-            </span>
-            <span className="font-medium" style={{ fontSize: '13px', color: 'var(--text-muted)' }}>/20</span>
-          </div>
-          <span className="font-semibold" style={{ fontSize: '12px', color: scoreColor, marginBottom: '12px' }}>{getMention(total)}</span>
-
-          {/* Séparateur */}
-          <div style={{ width: '100%', height: '1px', background: '#E2E8F0', marginBottom: '10px' }} />
-
-          {/* Décomposition 4 sous-scores */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', width: '100%' }}>
-            {DIMS.map(({ key, label, color }) => {
-              const val = (score?.[key] as number | null) ?? 0;
-              const c = getColor(val);
-              return (
-                <div key={key} className="flex items-center justify-between" style={{ width: '100%' }}>
-                  <span style={{ fontSize: '10px', color: 'var(--text-secondary)' }}>{label}</span>
-                  <span className="font-mono font-bold" style={{ fontSize: '11px', color: c }}>{val.toFixed(0)}/20</span>
-                </div>
-              );
-            })}
-          </div>
         </div>
       </div>
     </div>
