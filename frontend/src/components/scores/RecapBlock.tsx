@@ -186,7 +186,6 @@ export default function RecapBlock({ score }: Props) {
               })}
             </div>
           )}
-          </div>
           <div className="text-center shrink-0" style={{ marginTop: '4px' }}>
             <button onClick={() => setView(view === 'rosace' ? 'barres' : 'rosace')} style={{ fontSize: '10px', background: 'none', border: 'none', cursor: 'pointer' }}>
               <span style={{ color: view === 'rosace' ? '#185FA5' : '#BBB' }}>rosace</span>
