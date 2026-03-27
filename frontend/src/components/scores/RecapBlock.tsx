@@ -248,51 +248,63 @@ export default function RecapBlock({ score }: Props) {
             })}
           </div>
 
-          {/* Recommandation + Note finale */}
+          {/* Recommandation + Note finale — même structure que les mini-cartes */}
           {(() => {
             const isRecoOpen = expanded === 'reco';
+            const recoColor = v ? v.color : '#B45309';
+            const recoBg = v ? v.bg : '#FFF7E6';
+            const recoBorder = v ? v.border : '#F59E0B';
             return (
               <div
                 onClick={() => setExpanded(isRecoOpen ? null : 'reco')}
                 style={{
-                  background: v ? v.bg : '#FFF7E6',
-                  border: `0.5px solid ${v ? v.border : '#F59E0B'}`,
-                  borderRadius: '6px',
-                  padding: '8px 10px', marginTop: '8px', cursor: 'pointer',
+                  display: 'flex', alignItems: 'stretch',
+                  background: recoBg,
+                  border: `0.5px solid ${recoBorder}`,
+                  borderRadius: '6px', overflow: 'hidden',
+                  marginTop: '8px', cursor: 'pointer',
                 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-                  <p style={{ fontSize: '11px', fontWeight: 600, color: v ? v.color : '#B45309', margin: 0 }}>Recommandation</p>
-                  {v && (
-                    <span className="font-medium rounded-full" style={{
-                      fontSize: '10px', background: 'white', border: `1px solid ${v.border}`, color: v.color,
-                      padding: '2px 10px', whiteSpace: 'nowrap',
-                    }}>
-                      {v.label}
-                    </span>
-                  )}
-                  <div className="ml-auto shrink-0 flex items-baseline" style={{ gap: '2px' }}>
-                    <span className="font-bold font-mono leading-none" style={{ fontSize: '18px', color: scoreColor }}>
-                      {total.toFixed(1)}
-                    </span>
-                    <span className="font-medium" style={{ fontSize: '10px', color: 'var(--text-muted)' }}>/20</span>
+                {/* Barre colorée gauche */}
+                <div style={{ width: '3px', background: recoBorder, flexShrink: 0 }} />
+                {/* Contenu */}
+                <div style={{ flex: 1, padding: '8px 10px', minWidth: 0 }}>
+                  <div className="flex items-center" style={{ gap: '6px', marginBottom: '3px' }}>
+                    <span style={{ fontSize: '11px', fontWeight: 600, color: recoColor }}>Recommandation</span>
+                    {v && (
+                      <span className="font-medium rounded-full" style={{
+                        fontSize: '10px', background: 'white', border: `1px solid ${recoBorder}`, color: recoColor,
+                        padding: '2px 10px', whiteSpace: 'nowrap',
+                      }}>
+                        {v.label}
+                      </span>
+                    )}
+                    <ChevronDown className="ml-auto shrink-0" style={{
+                      width: '10px', height: '10px', color: recoColor,
+                      transform: isRecoOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                      transition: 'transform 0.15s ease',
+                    }} strokeWidth={1.5} />
                   </div>
-                  <ChevronDown className="shrink-0" style={{
-                    width: '10px', height: '10px', color: v ? v.color : '#B45309',
-                    transform: isRecoOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                    transition: 'transform 0.15s ease',
-                  }} strokeWidth={1.5} />
+                  {score.recommandation && (
+                    <p style={{
+                      fontSize: '11px', color: recoColor, lineHeight: '1.4', margin: 0,
+                      ...(isRecoOpen
+                        ? { display: '-webkit-box', WebkitLineClamp: 5, WebkitBoxOrient: 'vertical' as const, overflow: 'hidden' }
+                        : { display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as const, overflow: 'hidden' }
+                      ),
+                    }}>
+                      {score.recommandation}
+                    </p>
+                  )}
                 </div>
-                {score.recommandation && (
-                  <p style={{
-                    fontSize: '11px', color: v ? v.color : '#92400E', lineHeight: '1.4', margin: 0,
-                    ...(isRecoOpen
-                      ? { display: '-webkit-box', WebkitLineClamp: 5, WebkitBoxOrient: 'vertical' as const, overflow: 'hidden' }
-                      : { display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as const, overflow: 'hidden' }
-                    ),
-                  }}>
-                    {score.recommandation}
-                  </p>
-                )}
+                {/* Note à droite */}
+                <div className="shrink-0 flex items-center justify-center" style={{
+                  width: '44px',
+                  borderLeft: `0.5px solid ${recoBorder}44`,
+                }}>
+                  <span className="font-mono font-bold" style={{ fontSize: '14px', color: scoreColor }}>
+                    {total.toFixed(1)}
+                  </span>
+                </div>
               </div>
             );
           })()}
