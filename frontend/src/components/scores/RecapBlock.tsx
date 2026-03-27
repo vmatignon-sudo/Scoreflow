@@ -267,7 +267,9 @@ export default function RecapBlock({ score }: Props) {
                   background: recoBg,
                   border: `0.5px solid ${recoBorder}`,
                   borderRadius: '6px', overflow: 'hidden',
-                  marginTop: '16px', cursor: 'pointer',
+                  marginTop: '20px', paddingTop: '16px',
+                  borderTop: '0.5px solid rgba(0,0,0,0.06)',
+                  cursor: 'pointer',
                 }}>
                 {/* Barre colorée gauche */}
                 <div style={{ width: '3px', background: recoBorder, flexShrink: 0 }} />
