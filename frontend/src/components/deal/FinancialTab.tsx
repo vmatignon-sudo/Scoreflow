@@ -351,7 +351,7 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
 
           {/* Données brutes */}
           <div className="tile" style={{ padding: '24px' }}>
-            <h3 className="font-semibold text-[#2d2d2d] mb-4">
+            <h3 className="text-[12px] font-medium text-[#185FA5] mb-4">
               Données comptables {data.annee ? `(${data.annee})` : ''} <span className="font-normal text-[#a1a1a6] text-xs">en k€</span>
             </h3>
             <div className="grid grid-cols-3 gap-x-8 gap-y-3 text-xs">
@@ -373,7 +373,7 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
             if (!hasAny) return null;
             return (
               <div key={group.title} className="tile" style={{ padding: '24px' }}>
-                <h3 className="font-semibold text-[#2d2d2d] mb-4">{group.title}</h3>
+                <h3 className="text-[12px] font-medium text-[#185FA5] mb-4">{group.title}</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 text-sm">
                   {group.keys.map((key) => {
                     const val = ratios[key];
