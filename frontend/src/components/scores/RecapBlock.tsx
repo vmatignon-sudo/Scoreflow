@@ -234,13 +234,17 @@ export default function RecapBlock({ score }: Props) {
                       {synthesis}
                     </p>
                   </div>
-                  {/* Note centrée à droite — même largeur que la note finale */}
-                  <div className="shrink-0 flex items-center justify-center" style={{
-                    width: '56px',
-                  }}>
-                    <span className="font-mono font-bold" style={{ fontSize: '13px', color: c }}>
-                      {val.toFixed(1)}
-                    </span>
+                  {/* Note dans un rond */}
+                  <div className="shrink-0 flex items-center justify-center" style={{ width: '56px' }}>
+                    <div style={{
+                      width: '34px', height: '34px', borderRadius: '50%',
+                      background: `${c}14`, border: `1.5px solid ${c}`,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    }}>
+                      <span className="font-mono font-bold" style={{ fontSize: '12px', color: c }}>
+                        {val.toFixed(0)}
+                      </span>
+                    </div>
                   </div>
                 </div>
               );
