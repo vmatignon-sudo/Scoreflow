@@ -123,9 +123,9 @@ export default function RecapBlock({ score }: Props) {
       <div className="flex" style={{ gap: '16px' }}>
 
         {/* LEFT — Rosace SVG (280px) */}
-        <div className="shrink-0" style={{ width: '340px' }}>
+        <div className="shrink-0" style={{ width: '280px' }}>
           {view === 'rosace' ? (
-            <svg viewBox="0 0 360 360" width="340" height="340" style={{ display: 'block' }}>
+            <svg viewBox="0 0 360 360" width="280" height="280" style={{ display: 'block' }}>
               {[0.2, 0.4, 0.6, 0.8, 1].map((f) => (
                 <polygon key={f} points={gridPolygon(f, 4)} fill="none" stroke="#E2E8F0" strokeWidth="1" />
               ))}
