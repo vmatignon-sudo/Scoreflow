@@ -16,6 +16,7 @@ const STATUS_LABELS: Record<string, { label: string; style: string }> = {
 export default function DealsPage() {
   const [deals, setDeals] = useState<Deal[]>([]);
   const [assets, setAssets] = useState<Record<string, DealAsset>>({});
+  const [scores, setScores] = useState<Record<string, DealScore>>({});
   const [loading, setLoading] = useState(true);
   const supabase = createClient();
 
