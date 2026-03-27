@@ -190,7 +190,7 @@ export default function RecapBlock({ score }: Props) {
                 );
               })}
               {/* Barre score total */}
-              <div style={{ marginTop: '4px', paddingTop: '8px', borderTop: '0.5px solid rgba(0,0,0,0.06)' }}>
+              <div style={{ marginTop: '12px', paddingTop: '10px', borderTop: '0.5px solid rgba(0,0,0,0.06)' }}>
                 <div className="flex justify-between" style={{ fontSize: '10px', marginBottom: '4px' }}>
                   <span style={{ color: scoreColor, fontWeight: 600 }}>Score Deal</span>
                   <span className="font-mono font-bold" style={{ color: scoreColor }}>{total.toFixed(1)}/20</span>
