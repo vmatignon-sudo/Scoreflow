@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { ChevronDown, Loader2 } from 'lucide-react';
 import type { DealScore } from '@/types/database';
 
 type Props = { score: DealScore | null; analyzed?: boolean };
