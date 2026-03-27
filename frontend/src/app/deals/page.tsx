@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/client';
 import Sidebar from '@/components/layout/Sidebar';
-import type { Deal, DealAsset } from '@/types/database';
+import type { Deal, DealAsset, DealScore } from '@/types/database';
 
 const STATUS_LABELS: Record<string, { label: string; style: string }> = {
   draft: { label: 'Brouillon', style: 'bg-[#f5f5f7] text-[#6e6e73]' },
