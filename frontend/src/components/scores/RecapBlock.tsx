@@ -194,10 +194,10 @@ export default function RecapBlock({ score }: Props) {
           </div>
         </div>
 
-        {/* RIGHT — Verdict + dimensions (texte + note sur chaque ligne) */}
+        {/* RIGHT — Verdict + mini-cartes par dimension */}
         <div className="flex-1 min-w-0 flex flex-col">
 
-          {/* Verdict + Note finale — alignés à droite */}
+          {/* Verdict + Note finale */}
           <div className="flex items-center justify-end" style={{ gap: '12px', marginBottom: '10px' }}>
             {v && (
               <span className="font-medium rounded-full" style={{
@@ -216,8 +216,8 @@ export default function RecapBlock({ score }: Props) {
             </div>
           </div>
 
-          {/* 4 dimensions — chaque ligne = texte + note alignée à droite */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          {/* 4 mini-cartes dimension */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
             {DIMS.map(({ key, label, color }) => {
               const val = (score?.[key] as number | null) ?? 0;
               const c = getColor(val);
@@ -226,16 +226,33 @@ export default function RecapBlock({ score }: Props) {
               return (
                 <div key={key}
                   onClick={() => setExpanded(isOpen ? null : key)}
-                  style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '8px' }}>
-                  {/* Texte */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center" style={{ gap: '4px', marginBottom: '2px' }}>
-                      <span style={{ fontSize: '11px', fontWeight: 600, color }}>{label}</span>
-                      <ChevronDown style={{
-                        width: '10px', height: '10px', color: '#BBB',
-                        transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                        transition: 'transform 0.15s ease',
-                      }} strokeWidth={1.5} />
+                  style={{
+                    display: 'flex', cursor: 'pointer',
+                    background: 'var(--color-background-secondary, #f5f5f7)',
+                    borderRadius: '6px', overflow: 'hidden',
+                  }}>
+                  {/* Barre colorée gauche */}
+                  <div style={{ width: '3px', background: c, borderRadius: '6px 0 0 6px', flexShrink: 0 }} />
+                  {/* Contenu */}
+                  <div style={{ flex: 1, padding: '8px 10px', minWidth: 0 }}>
+                    <div className="flex items-center justify-between" style={{ marginBottom: '3px' }}>
+                      <div className="flex items-center" style={{ gap: '4px' }}>
+                        <span style={{ fontSize: '11px', fontWeight: 600, color }}>{label}</span>
+                        <ChevronDown style={{
+                          width: '10px', height: '10px', color: '#BBB',
+                          transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                          transition: 'transform 0.15s ease',
+                        }} strokeWidth={1.5} />
+                      </div>
+                      {/* Badge note */}
+                      <span className="font-mono font-bold" style={{
+                        fontSize: '11px', color: c,
+                        background: 'white', borderRadius: '4px',
+                        padding: '1px 6px',
+                        border: `0.5px solid ${c}22`,
+                      }}>
+                        {val.toFixed(1)}
+                      </span>
                     </div>
                     <p style={{
                       fontSize: '11px', color: 'var(--text-secondary)', lineHeight: '1.3', margin: 0,
@@ -247,10 +264,6 @@ export default function RecapBlock({ score }: Props) {
                       {synthesis}
                     </p>
                   </div>
-                  {/* Note — alignée à droite, en face de cette dimension */}
-                  <span className="font-mono font-bold shrink-0 text-right" style={{ fontSize: '14px', color: c, width: '52px' }}>
-                    {val.toFixed(1)}
-                  </span>
                 </div>
               );
             })}
@@ -263,11 +276,11 @@ export default function RecapBlock({ score }: Props) {
               <div
                 onClick={() => setExpanded(isRecoOpen ? null : 'reco')}
                 style={{
-                  background: '#FFF7E6', border: '0.5px solid #F59E0B', borderRadius: '8px',
-                  padding: '10px 12px', marginTop: '10px', cursor: 'pointer',
+                  background: '#FFF7E6', border: '0.5px solid #F59E0B', borderRadius: '6px',
+                  padding: '8px 10px', marginTop: '6px', cursor: 'pointer',
                 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2px' }}>
-                  <p style={{ fontSize: '11px', fontWeight: 500, color: '#B45309', margin: 0 }}>Recommandation</p>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3px' }}>
+                  <p style={{ fontSize: '11px', fontWeight: 600, color: '#B45309', margin: 0 }}>Recommandation</p>
                   <ChevronDown style={{
                     width: '10px', height: '10px', color: '#B45309',
                     transform: isRecoOpen ? 'rotate(180deg)' : 'rotate(0deg)',
