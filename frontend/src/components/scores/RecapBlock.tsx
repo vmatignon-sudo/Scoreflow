@@ -217,7 +217,7 @@ export default function RecapBlock({ score }: Props) {
                   {/* Texte */}
                   <div style={{ flex: 1, padding: '8px 10px', minWidth: 0 }}>
                     <div className="flex items-center" style={{ gap: '4px', marginBottom: '2px' }}>
-                      <span style={{ fontSize: '11px', fontWeight: 600, color }}>{label}</span>
+                      <span style={{ fontSize: '11px', fontWeight: 600, color: c }}>{label}</span>
                       <ChevronDown style={{
                         width: '10px', height: '10px', color: '#BBB',
                         transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
