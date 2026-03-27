@@ -38,7 +38,7 @@ export default function Tooltip({ definition, formula, source, children }: Props
             boxShadow: '0 4px 20px rgba(0,0,0,0.12), 0 1px 3px rgba(0,0,0,0.06)',
           }}>
           {/* Arrow */}
-          <div className={`absolute left-1/2 -translate-x-1/2 w-2.5 h-2.5 rotate-45 ${
+          <div className={`absolute left-4 w-2.5 h-2.5 rotate-45 ${
             position === 'top' ? '-bottom-1' : '-top-1'
           }`} style={{ background: 'white', border: '0.5px solid rgba(0,0,0,0.08)' }} />
 
