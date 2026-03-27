@@ -169,7 +169,7 @@ export default function RecapBlock({ score }: Props) {
               })}
             </svg>
           ) : (
-            <div className="space-y-3" style={{ padding: '16px 0' }}>
+            <div className="space-y-3 flex-1 flex flex-col justify-center" style={{ padding: '16px 0' }}>
               {DIMS.map(({ key, label }) => {
                 const val = (score?.[key] as number | null) ?? 0;
                 const c = getColor(val);
