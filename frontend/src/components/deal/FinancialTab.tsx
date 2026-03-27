@@ -212,7 +212,7 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
       {/* Upload zone + documents list */}
       <div className="tile" style={{ padding: '24px' }}>
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-[12px] font-medium text-[#185FA5]">Documents financiers</h3>
+          <h3 className="text-[12px] font-medium text-[#1e3a5f]">Documents financiers</h3>
           <button
             onClick={handleReanalyze}
             disabled={reanalyzing}
@@ -351,7 +351,7 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
 
           {/* Données brutes */}
           <div className="tile" style={{ padding: '24px' }}>
-            <h3 className="text-[12px] font-medium text-[#185FA5] mb-4">
+            <h3 className="text-[12px] font-medium text-[#1e3a5f] mb-4">
               Données comptables {data.annee ? `(${data.annee})` : ''} <span className="font-normal text-[#a1a1a6] text-xs">en k€</span>
             </h3>
             <div className="grid grid-cols-3 gap-x-8 gap-y-3 text-xs">
@@ -373,7 +373,7 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
             if (!hasAny) return null;
             return (
               <div key={group.title} className="tile" style={{ padding: '24px' }}>
-                <h3 className="text-[12px] font-medium text-[#185FA5] mb-4">{group.title}</h3>
+                <h3 className="text-[12px] font-medium text-[#1e3a5f] mb-4">{group.title}</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 text-sm">
                   {group.keys.map((key) => {
                     const val = ratios[key];
@@ -475,7 +475,7 @@ function PredictiveCard({ dealId, organizationId }: { dealId: string; organizati
     <div className="tile" style={{ padding: '24px' }}>
       <div className="flex items-center gap-2 mb-4">
         <TrendingUp className="w-4 h-4 text-[#1e40af]" strokeWidth={1.8} />
-        <h3 className="text-[12px] font-medium text-[#185FA5]">Probabilité de défaillance</h3>
+        <h3 className="text-[12px] font-medium text-[#1e3a5f]">Probabilité de défaillance</h3>
         <span className="text-[10px] text-[#a1a1a6] bg-[#f5f5f7] px-2 py-0.5 rounded-full">
           Signaux Faibles
         </span>
