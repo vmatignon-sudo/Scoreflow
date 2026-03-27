@@ -63,28 +63,28 @@ function gridPolygon(fraction: number, count: number): string {
   }).join(' ');
 }
 
-// Dimension syntheses
+// Dimension syntheses — textes longs pour remplir 2 lignes
 function getDimSynthesis(key: keyof DealScore, score: DealScore): string {
   const val = (score[key] as number | null) ?? 0;
   if (key === 'score_macro_sectoriel_combine') {
-    if (val >= 14) return 'Contexte macro et sectoriel favorable. Pas de signal de ralentissement identifié.';
-    if (val >= 10) return 'Environnement neutre. Quelques indicateurs sectoriels en zone de vigilance.';
-    return 'Contexte macro ou sectoriel dégradé. Risque exogène identifié.';
+    if (val >= 14) return 'Contexte macro-économique et sectoriel favorable. Les indicateurs de conjoncture ne montrent aucun signal de ralentissement sur ce secteur d\'activité.';
+    if (val >= 10) return 'Environnement macro-économique neutre avec quelques indicateurs sectoriels en zone de vigilance. Le taux de défaillance du secteur reste contenu mais en légère hausse.';
+    return 'Contexte macro-économique ou sectoriel dégradé. Le secteur présente un taux de défaillance élevé et des signaux conjoncturels défavorables au financement.';
   }
   if (key === 'score_financier') {
-    if (val >= 14) return 'Ratios financiers solides. Bonne capacité de remboursement et structure saine.';
-    if (val >= 10) return 'Ratios corrects mais points de vigilance sur la liquidité ou l\'endettement.';
-    return 'Structure financière fragile. Capacité de remboursement insuffisante.';
+    if (val >= 14) return 'Ratios financiers solides sur l\'ensemble des dimensions analysées. Bonne capacité de remboursement, structure bilancielle saine et trésorerie confortable.';
+    if (val >= 10) return 'Ratios financiers corrects dans l\'ensemble mais des points de vigilance identifiés sur la liquidité ou le niveau d\'endettement. Le DSCR reste acceptable.';
+    return 'Structure financière fragile avec une capacité de remboursement insuffisante. Les ratios d\'endettement et de liquidité sont en dessous des seuils sectoriels médians.';
   }
   if (key === 'score_materiel') {
-    if (val >= 14) return 'Bien facilement récupérable avec faible dépréciation. Bonne couverture matérielle.';
-    if (val >= 10) return 'Bien récupérable mais dépréciation modérée. Couverture partielle.';
-    return 'Bien difficilement récupérable ou forte dépréciation. Risque matériel élevé.';
+    if (val >= 14) return 'Bien facilement récupérable avec une faible dépréciation estimée. La couverture matérielle du financement est excellente sur toute la durée du contrat.';
+    if (val >= 10) return 'Bien récupérable mais avec une dépréciation modérée à surveiller. La couverture matérielle est partielle, le point d\'équilibre est atteint en milieu de contrat.';
+    return 'Bien difficilement récupérable ou soumis à une forte dépréciation. Le risque matériel est élevé avec une exposition significative en début de contrat.';
   }
   if (key === 'score_dirigeant') {
-    if (val >= 14) return 'Dirigeant expérimenté, historique clean. Aucune inscription ou procédure.';
-    if (val >= 10) return 'Historique correct mais vigilance sur certains signaux (ancienneté, inscriptions).';
-    return 'Signaux négatifs sur le dirigeant. Inscriptions ou historique problématique.';
+    if (val >= 14) return 'Dirigeant expérimenté avec un historique entrepreneurial solide. Aucune inscription, procédure collective ou signal négatif identifié sur les mandats passés.';
+    if (val >= 10) return 'Historique du dirigeant globalement correct mais certains signaux de vigilance détectés : ancienneté limitée, inscriptions mineures ou changement récent de direction.';
+    return 'Signaux négatifs identifiés sur le dirigeant : inscriptions au Trésor ou URSSAF, procédures collectives passées ou historique entrepreneurial présentant des défaillances.';
   }
   return '';
 }
@@ -252,8 +252,8 @@ export default function RecapBlock({ score }: Props) {
           </div>
         </div>
 
-        {/* Right — Dimension syntheses */}
-        <div className="flex-1 min-w-0 flex flex-col" style={{ minHeight: '240px' }}>
+        {/* Right — Dimension syntheses — centered with rosace */}
+        <div className="flex-1 min-w-0 flex flex-col justify-center" style={{ minHeight: '240px' }}>
           {/* 4 dimension lines */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1px' }}>
             {DIMS.map(({ key, label, color }) => {
