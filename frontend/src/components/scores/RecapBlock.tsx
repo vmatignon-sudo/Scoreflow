@@ -301,9 +301,12 @@ export default function RecapBlock({ score }: Props) {
                   width: '56px',
                   borderLeft: `0.5px solid ${recoBorder}44`,
                 }}>
-                  <span className="font-mono font-bold" style={{ fontSize: '20px', color: scoreColor }}>
-                    {total.toFixed(1)}
-                  </span>
+                  <div className="flex flex-col items-center">
+                    <span className="font-mono font-bold leading-none" style={{ fontSize: '20px', color: scoreColor }}>
+                      {total.toFixed(1)}
+                    </span>
+                    <span className="font-medium" style={{ fontSize: '9px', color: 'var(--text-muted)' }}>/20</span>
+                  </div>
                 </div>
               </div>
             );
