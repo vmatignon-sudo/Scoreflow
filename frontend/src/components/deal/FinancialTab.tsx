@@ -285,7 +285,7 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
       {/* No data message */}
       {!data && (
         <div className="bg-[#FFFBEB] border border-[#F59E0B] rounded-xl p-4 text-sm text-[#B45309]">
-          Aucune donnée financière disponible. Uploadez une liasse fiscale ci-dessus puis cliquez sur &quot;Relancer l&apos;analyse&quot;.
+          Aucune donnée financière disponible. Uploadez une liasse fiscale ci-dessus puis relancez l&apos;analyse depuis le header.
         </div>
       )}
 
