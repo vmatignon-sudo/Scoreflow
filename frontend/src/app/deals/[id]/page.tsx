@@ -240,7 +240,7 @@ export default function DealDetailPage() {
 
             {/* Synthèse block — NEVER scrolls */}
             <div className="shrink-0">
-              <RecapBlock score={score} />
+              <RecapBlock score={deal.status === 'completed' ? score : null} />
             </div>
 
             {/* Tab bar — NEVER scrolls */}
