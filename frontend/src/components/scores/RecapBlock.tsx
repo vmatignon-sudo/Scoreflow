@@ -120,7 +120,7 @@ export default function RecapBlock({ score }: Props) {
         <button onClick={() => setView(view === 'rosace' ? 'barres' : 'rosace')} style={{ fontSize: '9px', background: 'none', border: 'none', cursor: 'pointer' }}>
           <span style={{ color: '#BBB' }}>(</span>
           <span style={{ color: view === 'rosace' ? '#185FA5' : '#BBB' }}>rosace</span>
-          <span style={{ margin: '0 3px', color: '#DDD' }}>·</span>
+          <span style={{ margin: '0 3px', color: '#DDD' }}>|</span>
           <span style={{ color: view === 'barres' ? '#185FA5' : '#BBB' }}>barres</span>
           <span style={{ color: '#BBB' }}>)</span>
         </button>
