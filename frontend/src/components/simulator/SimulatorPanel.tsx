@@ -80,7 +80,7 @@ export default function SimulatorPanel({ deal, asset }: Props) {
   return (
     <div className="space-y-6">
       {/* Controls */}
-      <div className="bg-white rounded-[20px] shadow p-6">
+      <div className="tile" style={{ padding: '24px' }}>
         <h3 className="font-semibold text-[#2d2d2d] mb-4">Simulateur d&apos;incident</h3>
 
         {/* Slider 1: mois de défaut */}
@@ -161,7 +161,7 @@ export default function SimulatorPanel({ deal, asset }: Props) {
       </div>
 
       {/* Results */}
-      <div className="bg-white rounded-[20px] shadow p-6">
+      <div className="tile" style={{ padding: '24px' }}>
         <h3 className="font-semibold text-[#2d2d2d] mb-4">Résultat du scénario</h3>
         <div className="grid grid-cols-3 gap-4 mb-6">
           <ResultCard label="Loyers encaissés" value={simulation.loyersEncaisses} positive />
@@ -185,7 +185,7 @@ export default function SimulatorPanel({ deal, asset }: Props) {
       </div>
 
       {/* Chart */}
-      <div className="bg-white rounded-[20px] shadow p-6">
+      <div className="tile" style={{ padding: '24px' }}>
         <h3 className="font-semibold text-[#2d2d2d] mb-4">Évolution dans le temps</h3>
         <ResponsiveContainer width="100%" height={350}>
           <AreaChart data={chartData}>

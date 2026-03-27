@@ -23,7 +23,7 @@ export default function ScoreExplainer({ score, label, signals }: Props) {
   const m = score !== null ? getMention(score) : null;
 
   return (
-    <div className="bg-white rounded-[20px] shadow p-6">
+    <div className="tile" style={{ padding: '24px' }}>
       {/* Score header */}
       <div className="flex items-center justify-between mb-5">
         <h3 className="text-[15px] font-semibold text-[#2d2d2d]">{label}</h3>

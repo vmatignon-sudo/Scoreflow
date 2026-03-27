@@ -36,7 +36,7 @@ export default function NegotiationSliders({ deal, score }: Props) {
   );
 
   return (
-    <div className="bg-white rounded-[20px] shadow p-6">
+    <div className="tile" style={{ padding: '24px' }}>
       <div className="flex items-center justify-between mb-4">
         <h3 className="font-semibold text-[#2d2d2d]">Curseurs de négociation</h3>
         <div className="flex items-center gap-2">

@@ -70,21 +70,21 @@ export default function RiskCurveChart({ deal, asset }: Props) {
     <div className="space-y-6">
       {/* Key metrics */}
       <div className="grid grid-cols-3 gap-4">
-        <div className="bg-white rounded-[20px] shadow p-5">
+        <div className="tile" style={{ padding: '20px' }}>
           <p className="text-sm text-[#6e6e73] mb-1">Couverture matériel</p>
           <p className="text-2xl font-bold font-mono text-[#1d1d1f]">
             {moisCouvertureMateriel !== null ? `Mois ${moisCouvertureMateriel}` : '—'}
           </p>
           <p className="text-xs text-[#a1a1a6] mt-1">Point A</p>
         </div>
-        <div className="bg-white rounded-[20px] shadow p-5">
+        <div className="tile" style={{ padding: '20px' }}>
           <p className="text-sm text-[#6e6e73] mb-1">Couverture totale</p>
           <p className="text-2xl font-bold font-mono text-[#059669]">
             {moisCouvertureTotale !== null ? `Mois ${moisCouvertureTotale}` : '—'}
           </p>
           <p className="text-xs text-[#a1a1a6] mt-1">Point B — plus de perte possible</p>
         </div>
-        <div className="bg-white rounded-[20px] shadow p-5">
+        <div className="tile" style={{ padding: '20px' }}>
           <p className="text-sm text-[#6e6e73] mb-1">Exposition maximale</p>
           <p className="text-2xl font-bold font-mono text-[#DC2626]">
             {expositionMax.toLocaleString('fr-FR')} EUR
@@ -93,7 +93,7 @@ export default function RiskCurveChart({ deal, asset }: Props) {
       </div>
 
       {/* Main chart */}
-      <div className="bg-white rounded-[20px] shadow p-6">
+      <div className="tile" style={{ padding: '24px' }}>
         <h3 className="font-semibold text-[#2d2d2d] mb-4">Courbe de Risque Résiduel Net (RRN)</h3>
 
         {moisCouvertureTotale !== null && (

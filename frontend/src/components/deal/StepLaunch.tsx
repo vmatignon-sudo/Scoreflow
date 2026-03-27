@@ -167,7 +167,7 @@ export default function StepLaunch({ draft, onBack }: Props) {
   return (
     <div className="space-y-6">
       {/* Summary */}
-      <div className="bg-white rounded-[20px] shadow p-6">
+      <div className="tile" style={{ padding: '24px' }}>
         <h3 className="font-semibold text-[#2d2d2d] mb-4">Récapitulatif</h3>
         <div className="grid grid-cols-2 gap-4 text-sm">
           <div>
@@ -206,7 +206,7 @@ export default function StepLaunch({ draft, onBack }: Props) {
 
       {/* Analysis progress */}
       {analyzing && (
-        <div className="bg-white rounded-[20px] shadow p-6">
+        <div className="tile" style={{ padding: '24px' }}>
           <h3 className="font-semibold text-[#2d2d2d] mb-4">Analyse en cours...</h3>
           <div className="space-y-3">
             {ANALYSIS_STEPS.map((step) => (

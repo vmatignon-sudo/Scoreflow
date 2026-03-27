@@ -92,7 +92,7 @@ export default function DirectorTab({ deal, dealId }: Props) {
 
       {/* Mandats */}
       {data && (
-        <div className="bg-white rounded-[20px] shadow p-6">
+        <div className="tile" style={{ padding: '24px' }}>
           <h3 className="text-[15px] font-semibold text-[#2d2d2d] mb-4">Historique des mandats</h3>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <Metric label="Mandats total" value={data.nb_mandats_total.toString()} />

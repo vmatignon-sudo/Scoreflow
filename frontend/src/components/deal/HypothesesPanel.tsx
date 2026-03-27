@@ -10,7 +10,7 @@ export default function HypothesesPanel({ deal, asset, score }: Props) {
     <div className="space-y-4">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Deal params */}
-        <div className="bg-white rounded-[20px] shadow p-5">
+        <div className="tile" style={{ padding: '20px' }}>
           <h3 className="text-[14px] font-semibold text-[#2d2d2d] mb-4">Conditions du deal</h3>
           <div className="space-y-2.5 text-[13px]">
             <Row label="Montant financé" value={fmtEur(deal.montant_finance)} />
@@ -23,7 +23,7 @@ export default function HypothesesPanel({ deal, asset, score }: Props) {
         </div>
 
         {/* Asset params */}
-        <div className="bg-white rounded-[20px] shadow p-5">
+        <div className="tile" style={{ padding: '20px' }}>
           <h3 className="text-[14px] font-semibold text-[#2d2d2d] mb-4">Bien financé</h3>
           <div className="space-y-2.5 text-[13px]">
             <Row label="Catégorie" value={asset?.asset_class?.replace(/_/g, ' ') || '—'} />
@@ -38,7 +38,7 @@ export default function HypothesesPanel({ deal, asset, score }: Props) {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Refinancement */}
-        <div className="bg-white rounded-[20px] shadow p-5">
+        <div className="tile" style={{ padding: '20px' }}>
           <h3 className="text-[14px] font-semibold text-[#2d2d2d] mb-4">Refinancement</h3>
           <div className="space-y-2.5 text-[13px]">
             <Row label="Taux refinancement" value={deal.taux_refinancement_banque ? `${deal.taux_refinancement_banque}%` : '—'} />
@@ -48,7 +48,7 @@ export default function HypothesesPanel({ deal, asset, score }: Props) {
         </div>
 
         {/* Cotation BDF */}
-        <div className="bg-white rounded-[20px] shadow p-5">
+        <div className="tile" style={{ padding: '20px' }}>
           <h3 className="text-[14px] font-semibold text-[#2d2d2d] mb-4">Cotation BDF & Dirigeant</h3>
           <div className="space-y-2.5 text-[13px]">
             <Row label="Cote activité" value={deal.cotation_bdf_activite || '—'} />

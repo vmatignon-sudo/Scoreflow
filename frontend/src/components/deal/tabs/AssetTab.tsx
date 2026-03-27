@@ -72,7 +72,7 @@ export default function AssetTab({ deal, asset }: Props) {
 
       {/* Asset details */}
       {asset && (
-        <div className="bg-white rounded-[20px] shadow p-6">
+        <div className="tile" style={{ padding: '24px' }}>
           <h3 className="text-[15px] font-semibold text-[#2d2d2d] mb-4">Détails du bien</h3>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             <Metric label="Catégorie" value={RECUP_LABELS[asset.asset_class] || asset.asset_class} />
@@ -89,7 +89,7 @@ export default function AssetTab({ deal, asset }: Props) {
       )}
 
       {/* Risk curve */}
-      <div className="bg-white rounded-[20px] shadow p-6">
+      <div className="tile" style={{ padding: '24px' }}>
         <h3 className="text-[15px] font-semibold text-[#2d2d2d] mb-4">Courbe de Risque Résiduel Net</h3>
         <RiskCurveChart deal={deal} asset={asset} />
       </div>
