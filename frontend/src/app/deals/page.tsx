@@ -131,9 +131,9 @@ export default function DealsPage() {
                       <div className="flex items-center mt-1.5" style={{ gap: '6px' }}>
                         <span className="font-mono font-bold" style={{
                           fontSize: '16px',
-                          color: scores[deal.id].score_deal_total >= 14 ? '#059669' : scores[deal.id].score_deal_total >= 10 ? '#B45309' : '#DC2626',
+                          color: (scores[deal.id]?.score_deal_total ?? 0) >= 14 ? '#059669' : (scores[deal.id]?.score_deal_total ?? 0) >= 10 ? '#B45309' : '#DC2626',
                         }}>
-                          {scores[deal.id].score_deal_total.toFixed(1)}
+                          {(scores[deal.id]?.score_deal_total ?? 0).toFixed(1)}
                         </span>
                         <span style={{ fontSize: '9px', color: '#a1a1a6' }}>/20</span>
                         {scores[deal.id].verdict && (
