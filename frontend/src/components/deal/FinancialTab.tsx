@@ -475,7 +475,7 @@ function PredictiveCard({ dealId, organizationId }: { dealId: string; organizati
     <div className="tile" style={{ padding: '24px' }}>
       <div className="flex items-center gap-2 mb-4">
         <TrendingUp className="w-4 h-4 text-[#1e40af]" strokeWidth={1.8} />
-        <h3 className="text-[15px] font-semibold text-[#2d2d2d]">Probabilité de défaillance</h3>
+        <h3 className="text-[12px] font-medium text-[#185FA5]">Probabilité de défaillance</h3>
         <span className="text-[10px] text-[#a1a1a6] bg-[#f5f5f7] px-2 py-0.5 rounded-full">
           Signaux Faibles
         </span>
