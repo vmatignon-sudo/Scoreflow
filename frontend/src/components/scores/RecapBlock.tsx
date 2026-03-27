@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import type { DealScore } from '@/types/database';
 
-type Props = { score: DealScore | null };
+type Props = { score: DealScore | null; analyzed?: boolean };
 
 function getColor(v: number): string {
   if (v >= 14) return '#059669';
