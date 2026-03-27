@@ -112,12 +112,12 @@ export default function RecapBlock({ score }: Props) {
   return (
     <div style={{
       background: 'white', border: '0.5px solid #E2E8F0', borderRadius: '12px',
-      boxShadow: '0 2px 8px rgba(0,0,0,0.08)', padding: '16px',
+      boxShadow: '0 2px 8px rgba(0,0,0,0.08)', padding: '32px 16px 16px 16px',
       flexShrink: 0,
     }}>
 
       {/* TOP LINE: Synthèse (left) — Verdict + Score (right) */}
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '28px' }}>
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '60px' }}>
         <span style={{ fontSize: '12px', fontWeight: 500, color: '#185FA5', lineHeight: '1', paddingTop: '2px' }}>Synthèse</span>
 
         {/* Verdict + Note + Mention — centered on same axis */}
