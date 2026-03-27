@@ -260,7 +260,7 @@ export default function RecapBlock({ score }: Props) {
               const val = (score?.[key] as number | null) ?? 0;
               const synthesis = getDimSynthesis(key, score);
               return (
-                <div key={key} style={{ display: 'grid', gridTemplateColumns: '110px 1fr', gap: '8px', alignItems: 'start', minHeight: '52px' }}>
+                <div key={key} style={{ display: 'grid', gridTemplateColumns: '110px 1fr', gap: '8px', alignItems: 'start', minHeight: '35px' }}>
                   <div className="flex items-center" style={{ gap: '6px' }}>
                     <span style={{ fontSize: '11px', fontWeight: 600, color }}>{label}</span>
                     <span className="font-mono" style={{ fontSize: '11px', color: '#BBB' }}>{val.toFixed(0)}/20</span>
