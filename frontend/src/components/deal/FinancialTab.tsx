@@ -272,7 +272,7 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
               <div key={doc.id} className="flex items-center justify-between p-3 bg-[#f5f5f7] rounded-lg">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-white rounded border border-black/[0.04] flex items-center justify-center">
-                    <span className="text-[10px] font-mono text-[#6e6e73]">
+                    <span className="text-[10px] text-[#6e6e73]" style={{ fontVariantNumeric: 'tabular-nums' }}>
                       {doc.filename.split('.').pop()?.toUpperCase()}
                     </span>
                   </div>
