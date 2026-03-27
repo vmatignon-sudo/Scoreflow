@@ -11,7 +11,7 @@ import FinancialTab from '@/components/deal/FinancialTab';
 import AssetTab from '@/components/deal/tabs/AssetTab';
 import DirectorTab from '@/components/deal/tabs/DirectorTab';
 import SimulatorPanel from '@/components/simulator/SimulatorPanel';
-import { Globe, BarChart3, Truck, User, Zap, Trash2 } from 'lucide-react';
+import { Globe, BarChart3, Truck, User, Zap, Trash2, FileDown, Lightbulb } from 'lucide-react';
 import type { Deal, DealAsset, DealScore } from '@/types/database';
 
 type TabId = 'macro' | 'financial' | 'asset' | 'director' | 'simulator';
@@ -61,6 +61,8 @@ export default function DealDetailPage() {
       </div>
     );
   }
+
+  const verdict = score?.verdict;
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--page-bg)' }}>
@@ -121,31 +123,59 @@ export default function DealDetailPage() {
 
           {/* LEFT — Hypothèses */}
           <div className="hidden lg:flex flex-col w-[280px] xl:w-[280px] shrink-0 overflow-y-auto pt-4">
-            <p className="text-[18px] font-medium pl-2 mb-3" style={{ color: 'var(--accent)' }}>Hypothèses</p>
+            <p className="text-[12px] font-medium pl-2 mb-3" style={{ color: 'var(--text-primary)' }}>Hypothèses</p>
             <HypothesesColumn deal={deal} asset={asset} dealId={dealId} supabase={supabase} />
           </div>
 
           {/* RIGHT — Résultats */}
           <div className="flex-1 min-w-0 flex flex-col pt-4" style={{ height: 'calc(100vh - 76px)', overflow: 'hidden' }}>
-            <p className="text-[18px] font-medium pl-1 mb-3" style={{ color: 'var(--accent)' }}>Résultats</p>
 
-            {/* Récap block — NEVER scrolls */}
+            {/* Title line: Résultats + buttons */}
+            <div className="flex items-center justify-between" style={{ marginBottom: '12px' }}>
+              <p className="text-[12px] font-medium pl-1" style={{ color: 'var(--text-primary)' }}>Résultats</p>
+              <div className="flex items-center" style={{ gap: '8px' }}>
+                <button className="inline-flex items-center font-medium" style={{
+                  gap: '5px', fontSize: '11px', background: 'white', border: '0.5px solid #E2E8F0',
+                  borderRadius: '6px', padding: '5px 12px', color: 'var(--text-secondary)',
+                }}>
+                  <FileDown className="w-3.5 h-3.5" strokeWidth={1.5} />
+                  Exporter PDF
+                </button>
+                {verdict && (verdict === 'go_conditionnel' || verdict === 'no_go') && (
+                  <button className="inline-flex items-center font-medium" style={{
+                    gap: '5px', fontSize: '11px', background: '#185FA5', border: 'none',
+                    borderRadius: '6px', padding: '5px 12px', color: 'white',
+                  }}>
+                    <Lightbulb className="w-3.5 h-3.5" strokeWidth={1.5} />
+                    Optimiser le deal
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Synthèse block — NEVER scrolls */}
             <div className="shrink-0">
               <RecapBlock score={score} />
             </div>
 
             {/* Tab bar — NEVER scrolls */}
             <div className="shrink-0" style={{ marginTop: '20px' }}>
-              <div className="tile flex gap-0 overflow-x-auto" style={{ padding: '2px', borderRadius: '6px' }}>
+              <div style={{
+                display: 'flex', gap: '0', background: 'white', border: '0.5px solid #E2E8F0',
+                borderRadius: '8px', padding: '3px', overflowX: 'auto',
+              }}>
                 {TABS.map((tab) => {
                   const Icon = tab.icon;
                   const active = activeTab === tab.id;
                   return (
                     <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-                      className="flex items-center justify-center gap-1 flex-1 py-[7px] rounded-[5px] text-[10px] font-medium whitespace-nowrap transition-all"
+                      className="flex items-center justify-center flex-1 whitespace-nowrap"
                       style={{
-                        background: active ? 'var(--accent)' : 'transparent',
-                        color: active ? 'white' : 'var(--text-secondary)',
+                        gap: '5px', padding: '7px 0', borderRadius: '6px',
+                        fontSize: '10px', fontWeight: 500, border: 'none', cursor: 'pointer',
+                        background: active ? '#185FA5' : 'transparent',
+                        color: active ? 'white' : '#4A5568',
+                        transition: 'all 0.15s ease',
                       }}>
                       <Icon className="w-3 h-3" strokeWidth={1.8} />
                       <span className="hidden sm:inline">{tab.label}</span>
@@ -156,7 +186,10 @@ export default function DealDetailPage() {
             </div>
 
             {/* Scrollable zone: tab content ONLY */}
-            <div className="flex-1 min-h-0 overflow-y-auto mt-2 pb-6" style={{ scrollbarWidth: 'thin', scrollbarColor: '#E2E8F0 transparent' }}>
+            <div className="flex-1 min-h-0 overflow-y-auto" style={{
+              marginTop: '8px', paddingBottom: '24px',
+              scrollbarWidth: 'thin', scrollbarColor: '#E2E8F0 transparent',
+            }}>
               <div className="space-y-2">
                 {activeTab === 'macro' && <MacroSectorTab dealId={dealId} score={score} />}
                 {activeTab === 'financial' && <FinancialTab dealId={dealId} organizationId={deal.organization_id} />}
