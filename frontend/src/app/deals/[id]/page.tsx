@@ -95,7 +95,7 @@ export default function DealDetailPage() {
         <div className="m-3 mb-0 tile" style={{ padding: '12px 16px' }}>
           <div className="flex items-start justify-between">
             <div>
-              <h1 className="text-[15px] font-medium" style={{ color: 'var(--text-primary)' }}>{deal.raison_sociale}</h1>
+              <h1 className="text-[18px] font-semibold" style={{ color: 'var(--text-primary)' }}>{deal.raison_sociale}</h1>
               <p className="text-[11px] mt-0.5" style={{ color: 'var(--text-secondary)' }}>
                 <span className="font-mono">{deal.siren}</span>
                 {' · '}{deal.code_naf} {deal.secteur_label}
