@@ -118,13 +118,38 @@ export default function DealsPage() {
                       {assets[deal.id]?.annee_fabrication && <span>{assets[deal.id].marque} {assets[deal.id].modele} {assets[deal.id].annee_fabrication}</span>}
                     </p>
                   </div>
-                  <div className="flex items-center gap-3 shrink-0">
-                    <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${STATUS_LABELS[deal.status]?.style}`}>
-                      {STATUS_LABELS[deal.status]?.label}
-                    </span>
-                    <span className="text-xs text-[#a1a1a6]">
-                      {new Date(deal.created_at).toLocaleDateString('fr-FR')}
-                    </span>
+                  <div className="flex flex-col items-end shrink-0" style={{ width: '140px' }}>
+                    <div className="flex items-center gap-2">
+                      <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${STATUS_LABELS[deal.status]?.style}`}>
+                        {STATUS_LABELS[deal.status]?.label}
+                      </span>
+                      <span className="text-xs text-[#a1a1a6]">
+                        {new Date(deal.created_at).toLocaleDateString('fr-FR')}
+                      </span>
+                    </div>
+                    {deal.status === 'completed' && scores[deal.id] ? (
+                      <div className="flex items-center mt-1.5" style={{ gap: '6px' }}>
+                        <span className="font-mono font-bold" style={{
+                          fontSize: '16px',
+                          color: scores[deal.id].score_deal_total >= 14 ? '#059669' : scores[deal.id].score_deal_total >= 10 ? '#B45309' : '#DC2626',
+                        }}>
+                          {scores[deal.id].score_deal_total.toFixed(1)}
+                        </span>
+                        <span style={{ fontSize: '9px', color: '#a1a1a6' }}>/20</span>
+                        {scores[deal.id].verdict && (
+                          <span className="font-medium" style={{
+                            fontSize: '9px', borderRadius: '6px', padding: '2px 8px', whiteSpace: 'nowrap',
+                            background: scores[deal.id].verdict === 'go' ? '#f0fdf4' : scores[deal.id].verdict === 'go_conditionnel' ? '#FFF7E6' : '#FEF2F2',
+                            color: scores[deal.id].verdict === 'go' ? '#059669' : scores[deal.id].verdict === 'go_conditionnel' ? '#B45309' : '#DC2626',
+                            border: `0.5px solid ${scores[deal.id].verdict === 'go' ? '#059669' : scores[deal.id].verdict === 'go_conditionnel' ? '#F59E0B' : '#DC2626'}`,
+                          }}>
+                            {scores[deal.id].verdict === 'go' ? 'GO' : scores[deal.id].verdict === 'go_conditionnel' ? 'GO COND.' : scores[deal.id].verdict === 'no_go' ? 'NO GO' : 'VETO'}
+                          </span>
+                        )}
+                      </div>
+                    ) : deal.status !== 'completed' ? (
+                      <span className="mt-1.5" style={{ fontSize: '12px', color: '#a1a1a6' }}>—</span>
+                    ) : null}
                   </div>
                 </div>
               </Link>
