@@ -129,7 +129,7 @@ export default function ScorePanel({ score }: Props) {
       </div>
 
       {/* Mobile — bottom sticky bar */}
-      <div className="xl:hidden fixed bottom-0 left-0 right-0 bg-white/95 glass shadow-xl border-t border-black/[0.04] z-20 px-5 py-3 sm:ml-[64px]">
+      <div className="xl:hidden fixed bottom-0 left-0 right-0 bg-white/95 glass shadow-xl border-t border-black/[0.04] z-20 px-5 py-3 sm:ml-[56px]">
         <div className="flex items-center justify-between max-w-[600px] mx-auto">
           {v && (
             <div className="flex items-center gap-3">

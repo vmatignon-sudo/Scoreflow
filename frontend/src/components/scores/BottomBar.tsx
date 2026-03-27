@@ -42,7 +42,7 @@ export default function BottomBar({ score }: Props) {
   const mention = getMention(total);
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-40 bg-white shadow-[0_-2px_16px_rgba(0,0,0,0.06)] sm:ml-[64px]">
+    <div className="fixed bottom-0 left-0 right-0 z-40 bg-white shadow-[0_-2px_16px_rgba(0,0,0,0.06)] sm:ml-[56px]">
       <div className="flex items-center justify-between h-[80px] px-5 sm:px-8 max-w-[1400px] mx-auto">
 
         {/* Verdict */}

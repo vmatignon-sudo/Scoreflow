@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import Sidebar from '@/components/layout/Sidebar';
-import ScoreBlock from '@/components/scores/ScoreBlock';
+import RecapBlock from '@/components/scores/RecapBlock';
 import HypothesesColumn from '@/components/deal/HypothesesColumn';
 import MacroSectorTab from '@/components/deal/tabs/MacroSectorTab';
 import FinancialTab from '@/components/deal/FinancialTab';
@@ -50,12 +50,12 @@ export default function DealDetailPage() {
 
   if (!deal) {
     return (
-      <div className="min-h-screen" style={{ background: 'var(--color-background-tertiary)' }}>
+      <div className="min-h-screen" style={{ background: 'var(--page-bg)' }}>
         <Sidebar />
-        <main className="sm:ml-[64px] p-8">
-          <div className="animate-pulse space-y-4 max-w-2xl">
-            <div className="h-7 rounded-[8px] w-1/3" style={{ background: 'var(--color-background-secondary)' }} />
-            <div className="h-60 rounded-[8px]" style={{ background: 'var(--color-background-secondary)' }} />
+        <main className="sm:ml-[56px] p-4">
+          <div className="animate-pulse space-y-3 max-w-2xl">
+            <div className="h-6 rounded-[8px] w-1/3" style={{ background: '#E2E8F0' }} />
+            <div className="h-48 rounded-[8px]" style={{ background: '#E2E8F0' }} />
           </div>
         </main>
       </div>
@@ -63,25 +63,23 @@ export default function DealDetailPage() {
   }
 
   return (
-    <div className="min-h-screen" style={{ background: 'var(--color-background-tertiary)' }}>
-      {/* Sidebar — full height, independent */}
+    <div className="min-h-screen" style={{ background: 'var(--page-bg)' }}>
       <Sidebar />
 
       {/* Delete modal */}
       {showDelete && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
-          <div className="rounded-[8px] p-6 max-w-sm w-full shadow-xl animate-scale-in" style={{ background: 'var(--color-background-primary)' }}>
-            <h3 className="text-[15px] font-medium" style={{ color: 'var(--color-text-primary)' }}>Supprimer ce dossier ?</h3>
-            <p className="text-[12px] mt-1 mb-5" style={{ color: 'var(--color-text-secondary)' }}><strong>{deal.raison_sociale}</strong> — irréversible.</p>
-            <div className="flex gap-3">
+        <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-4">
+          <div className="tile p-5 max-w-[340px] w-full">
+            <p className="text-[13px] font-medium" style={{ color: 'var(--text-primary)' }}>Supprimer ce dossier ?</p>
+            <p className="text-[11px] mt-1 mb-4" style={{ color: 'var(--text-secondary)' }}><strong>{deal.raison_sociale}</strong> — irréversible.</p>
+            <div className="flex gap-2">
               <button onClick={() => setShowDelete(false)} disabled={deleting}
-                className="flex-1 py-2 rounded-[8px] text-[12px] font-medium transition-all"
-                style={{ background: 'var(--color-background-secondary)', color: 'var(--color-text-secondary)' }}>Annuler</button>
+                className="flex-1 py-[6px] rounded-[4px] text-[10px] font-medium" style={{ background: 'var(--page-bg)', color: 'var(--text-secondary)' }}>Annuler</button>
               <button disabled={deleting} onClick={async () => {
                 setDeleting(true);
                 const { error } = await supabase.from('deals').delete().eq('id', dealId);
                 if (!error) router.push('/deals'); else { setDeleting(false); setShowDelete(false); }
-              }} className="flex-1 py-2 bg-[#c4342d] text-white rounded-[8px] text-[12px] font-medium hover:bg-[#a52a24] transition-all disabled:opacity-50">
+              }} className="flex-1 py-[6px] rounded-[4px] text-[10px] font-medium text-white disabled:opacity-50" style={{ background: '#DC2626' }}>
                 {deleting ? '...' : 'Supprimer'}
               </button>
             </div>
@@ -89,86 +87,79 @@ export default function DealDetailPage() {
         </div>
       )}
 
-      {/* Right of sidebar */}
-      <div className="sm:ml-[64px] min-h-screen flex flex-col">
+      <div className="sm:ml-[56px] min-h-screen flex flex-col">
 
-        {/* HEADER — white, spans hypotheses + results */}
-        <div className="px-5 sm:px-8 pt-5 sm:pt-6 pb-4 flex items-start justify-between"
-          style={{ background: 'var(--color-background-primary)', borderBottom: '0.5px solid var(--color-border-tertiary)' }}>
-          <div>
-            <h1 className="text-[18px] sm:text-[22px] font-semibold tracking-tight" style={{ color: 'var(--color-text-primary)' }}>
-              {deal.raison_sociale}
-            </h1>
-            <div className="flex items-center gap-2 mt-1 text-[11px]" style={{ color: 'var(--color-text-secondary)' }}>
-              <span className="font-mono">{deal.siren}</span>
-              <span style={{ color: 'var(--color-border-primary)' }}>|</span>
-              <span>{deal.code_naf} — {deal.secteur_label}</span>
-              <span className="ml-1 px-2 py-0.5 rounded-full text-[10px] font-medium" style={{
-                background: deal.status === 'completed' ? '#2d9d3f10' : deal.status === 'analyzing' ? '#1e40af10' : 'var(--color-background-secondary)',
-                color: deal.status === 'completed' ? '#2d9d3f' : deal.status === 'analyzing' ? '#1e40af' : 'var(--color-text-secondary)',
+        {/* HEADER — white tile above both columns */}
+        <div className="m-3 mb-0 tile" style={{ padding: '12px 16px' }}>
+          <div className="flex items-start justify-between">
+            <div>
+              <h1 className="text-[15px] font-medium" style={{ color: 'var(--text-primary)' }}>{deal.raison_sociale}</h1>
+              <p className="text-[11px] mt-0.5" style={{ color: 'var(--text-secondary)' }}>
+                <span className="font-mono">{deal.siren}</span>
+                {' · '}{deal.code_naf} {deal.secteur_label}
+                {' · '}{deal.type_financement?.replace('_', ' ')}
+                {deal.montant_finance && <>{' · '}<span className="font-mono">{deal.montant_finance.toLocaleString('fr-FR')} EUR</span></>}
+              </p>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="px-[10px] py-[3px] rounded-full text-[9px] font-medium" style={{
+                background: deal.status === 'completed' ? 'var(--color-success-bg)' : deal.status === 'analyzing' ? '#EBF5FF' : 'var(--page-bg)',
+                color: deal.status === 'completed' ? 'var(--color-success-text)' : deal.status === 'analyzing' ? 'var(--accent)' : 'var(--text-muted)',
+                border: `0.5px solid ${deal.status === 'completed' ? 'var(--color-success-border)' : deal.status === 'analyzing' ? 'var(--accent)' : '#E2E8F0'}`,
               }}>
                 {deal.status === 'completed' ? 'Analysé' : deal.status === 'analyzing' ? 'En cours' : 'Brouillon'}
               </span>
+              <button onClick={() => setShowDelete(true)} className="p-1.5 rounded-[4px]" style={{ color: 'var(--text-muted)' }}>
+                <Trash2 className="w-3.5 h-3.5" strokeWidth={1.5} />
+              </button>
             </div>
           </div>
-          <button onClick={() => setShowDelete(true)}
-            className="p-2 rounded-[6px] transition-all" style={{ color: 'var(--color-text-tertiary)' }}
-            onMouseEnter={(e) => { e.currentTarget.style.color = '#c4342d'; e.currentTarget.style.background = '#c4342d0A'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--color-text-tertiary)'; e.currentTarget.style.background = 'transparent'; }}>
-            <Trash2 className="w-4 h-4" strokeWidth={1.6} />
-          </button>
         </div>
 
         {/* TWO COLUMNS */}
-        <div className="flex flex-1 overflow-hidden">
+        <div className="flex flex-1 overflow-hidden m-3 mt-0 gap-0">
 
-          {/* LEFT — Hypothèses (248px) */}
-          <div className="hidden lg:flex flex-col w-[248px] shrink-0 overflow-y-auto"
-            style={{ background: 'var(--color-background-tertiary)', borderRight: '1px solid var(--color-border-secondary)' }}>
-            <div className="p-4">
-              <p className="text-[12px] font-normal mb-2" style={{ color: 'var(--color-text-secondary)' }}>Hypothèses</p>
-              <HypothesesColumn deal={deal} asset={asset} dealId={dealId} supabase={supabase} />
-            </div>
+          {/* LEFT — Hypothèses */}
+          <div className="hidden lg:flex flex-col w-[280px] xl:w-[280px] shrink-0 overflow-y-auto pt-4 pr-3"
+            style={{ borderRight: '1px solid #E2E8F0' }}>
+            <p className="text-[18px] font-medium pl-2 mb-3" style={{ color: 'var(--accent)' }}>Hypothèses</p>
+            <HypothesesColumn deal={deal} asset={asset} dealId={dealId} supabase={supabase} />
           </div>
 
-          {/* RIGHT — Résultats (flex) */}
-          <div className="flex-1 min-w-0 flex flex-col overflow-hidden"
-            style={{ background: 'var(--color-background-tertiary)' }}>
+          {/* RIGHT — Résultats */}
+          <div className="flex-1 min-w-0 flex flex-col overflow-hidden pl-3 pt-4">
+            <p className="text-[18px] font-medium pl-1 mb-3" style={{ color: 'var(--accent)' }}>Résultats</p>
 
-            {/* Title floating on gray bg */}
-            <div className="px-5 sm:px-6 pt-4 pb-2">
-              <p className="text-[12px] font-normal" style={{ color: 'var(--color-text-secondary)' }}>Résultats</p>
+            {/* Récap block — NEVER scrolls */}
+            <div className="shrink-0 sticky top-2 z-10 mb-2">
+              <RecapBlock score={score} />
             </div>
 
-            {/* Score block — sticky */}
-            <div className="px-5 sm:px-6 pb-3 sticky top-0 z-10" style={{ background: 'var(--color-background-tertiary)' }}>
-              <ScoreBlock score={score} />
-            </div>
-
-            {/* Tab bar — card */}
-            <div className="px-5 sm:px-6 pb-3">
-              <div className="flex gap-0 rounded-[8px] overflow-hidden" style={{ background: 'var(--color-background-primary)', border: '0.5px solid var(--color-border-tertiary)' }}>
-                {TABS.map((tab) => {
-                  const Icon = tab.icon;
-                  const isActive = activeTab === tab.id;
-                  return (
-                    <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-                      className="flex items-center gap-1.5 px-3 sm:px-4 py-2.5 text-[11px] sm:text-[12px] font-medium transition-all whitespace-nowrap flex-1 justify-center"
-                      style={{
-                        color: isActive ? 'var(--color-accent)' : 'var(--color-text-secondary)',
-                        borderBottom: isActive ? '2px solid var(--color-accent)' : '2px solid transparent',
-                      }}>
-                      <Icon className="w-3.5 h-3.5" strokeWidth={1.8} />
-                      <span className="hidden sm:inline">{tab.label}</span>
-                    </button>
-                  );
-                })}
+            {/* Scrollable zone: tabs + content */}
+            <div className="flex-1 min-h-0 overflow-y-auto">
+              {/* Tab bar — sticky in scroll zone */}
+              <div className="sticky top-0 z-[9] pb-2" style={{ background: 'var(--page-bg)' }}>
+                <div className="tile flex gap-0 overflow-x-auto" style={{ padding: '2px', borderRadius: '6px' }}>
+                  {TABS.map((tab) => {
+                    const Icon = tab.icon;
+                    const active = activeTab === tab.id;
+                    return (
+                      <button key={tab.id} onClick={() => setActiveTab(tab.id)}
+                        className="flex items-center justify-center gap-1 flex-1 py-[7px] rounded-[5px] text-[10px] font-medium whitespace-nowrap transition-all"
+                        style={{
+                          background: active ? 'var(--accent)' : 'transparent',
+                          color: active ? 'white' : 'var(--text-secondary)',
+                        }}>
+                        <Icon className="w-3 h-3" strokeWidth={1.8} />
+                        <span className="hidden sm:inline">{tab.label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
 
-            {/* Tab content — card, scrollable */}
-            <div className="px-5 sm:px-6 pb-6 flex-1 overflow-y-auto">
-              <div className="rounded-[8px] p-5 sm:p-6" style={{ background: 'var(--color-background-primary)', border: '0.5px solid var(--color-border-tertiary)' }}>
+              {/* Tab content — sub-tiles floating on gray bg */}
+              <div className="pb-6 space-y-2">
                 {activeTab === 'macro' && <MacroSectorTab dealId={dealId} score={score} />}
                 {activeTab === 'financial' && <FinancialTab dealId={dealId} organizationId={deal.organization_id} />}
                 {activeTab === 'asset' && <AssetTab deal={deal} asset={asset} />}

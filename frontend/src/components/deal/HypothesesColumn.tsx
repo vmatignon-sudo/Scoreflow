@@ -1,109 +1,138 @@
 'use client';
 
 import { useState } from 'react';
-import { Pencil, Check } from 'lucide-react';
 import type { Deal, DealAsset } from '@/types/database';
 import type { SupabaseClient } from '@supabase/supabase-js';
 
 type Props = { deal: Deal; asset: DealAsset | null; dealId: string; supabase: SupabaseClient };
 
-export default function HypothesesColumn({ deal, asset }: Props) {
+export default function HypothesesColumn({ deal, asset, dealId, supabase }: Props) {
   return (
     <div className="space-y-2">
-      {/* Tuile 1 — Entreprise */}
-      <Tile title="Entreprise">
-        <Row label="Raison sociale" value={deal.raison_sociale || '—'} />
-        <Row label="Forme juridique" value={deal.forme_juridique || '—'} />
-        <Row label="SIREN" value={deal.siren || '—'} mono />
-        <Row label="NAF" value={`${deal.code_naf || ''} ${deal.secteur_label || ''}`} />
-        <Row label="Dirigeant" value={`${deal.dirigeant_prenom || ''} ${deal.dirigeant_nom || ''}`.trim() || '—'} />
-        {deal.dirigeant_date_nomination && (
-          <Row label="Nommé depuis" value={deal.jours_depuis_nomination ? `${deal.jours_depuis_nomination}j` : '—'} />
-        )}
-        <div className="mt-1.5 pt-1.5" style={{ borderTop: '0.5px solid var(--color-border-tertiary)' }}>
-          <Row label="Cotation BDF" value={deal.cotation_bdf_credit ? `${deal.cotation_bdf_activite || ''}${deal.cotation_bdf_credit}` : '—'} />
-          <Row label="Source" value={deal.cotation_bdf_source?.replace(/_/g, ' ') || '—'} />
-          <Row label="Indic. dirigeant" value={deal.indicateur_dirigeant_bdf || '—'} />
-        </div>
-      </Tile>
+      <Tile title="Entreprise" dealId={dealId} table="deals" supabase={supabase} fields={[
+        { k: 'raison_sociale', l: 'Raison sociale', v: deal.raison_sociale || '' },
+        { k: 'forme_juridique', l: 'Forme juridique', v: deal.forme_juridique || '' },
+        { k: 'siren', l: 'SIREN', v: deal.siren || '', mono: true },
+        { k: '', l: 'NAF', v: `${deal.code_naf || ''} ${deal.secteur_label || ''}`, ro: true },
+        { k: '', l: 'Dirigeant', v: `${deal.dirigeant_prenom || ''} ${deal.dirigeant_nom || ''}`.trim() || '—', ro: true },
+        { k: '', l: 'Nomination', v: deal.jours_depuis_nomination ? `${deal.jours_depuis_nomination}j` : '—', ro: true },
+        { k: 'cotation_bdf_activite', l: 'BDF activité', v: deal.cotation_bdf_activite || '' },
+        { k: 'cotation_bdf_credit', l: 'BDF crédit', v: deal.cotation_bdf_credit || '' },
+        { k: '', l: 'Source BDF', v: deal.cotation_bdf_source?.replace(/_/g, ' ') || '—', ro: true },
+        { k: 'indicateur_dirigeant_bdf', l: 'Indic. dirigeant', v: deal.indicateur_dirigeant_bdf || '' },
+      ]} />
 
-      {/* Tuile 2 — Bien à financer */}
-      <Tile title="Bien à financer">
-        <Row label="Catégorie" value={asset?.asset_class?.replace(/_/g, ' ') || '—'} />
-        {asset?.asset_subclass && <Row label="Sous-catégorie" value={asset.asset_subclass} />}
-        <Row label="Marque" value={asset?.marque || '—'} />
-        <Row label="Modèle" value={asset?.modele || '—'} />
-        <Row label="Année" value={asset?.annee_fabrication?.toString() || '—'} />
-        <Row label="État" value={asset?.etat?.replace(/_/g, ' ') || '—'} />
-        {(asset?.numero_serie || asset?.vin) && (
-          <Row label="N° série / VIN" value={asset?.vin || asset?.numero_serie || '—'} mono />
-        )}
-        <Row label="Km / Heures" value={
-          asset?.kilometrage ? `${asset.kilometrage.toLocaleString('fr-FR')} km` :
-          asset?.heures_moteur ? `${asset.heures_moteur.toLocaleString('fr-FR')} h` : '—'
-        } />
-        <Row label="Prix HT" value={asset?.prix_achat_ht ? `${asset.prix_achat_ht.toLocaleString('fr-FR')} EUR` : '—'} />
-        <div className="mt-1.5 pt-1.5" style={{ borderTop: '0.5px solid var(--color-border-tertiary)' }}>
-          <Row label="GPS" value={asset?.traceur_gps ? 'Oui' : 'Non'} highlight={asset?.traceur_gps} />
-          <Row label="Récupérateur" value={asset?.contrat_recuperation ? 'Oui' : 'Non'} highlight={asset?.contrat_recuperation} />
-          <Row label="Coeff. récup." value={asset?.coefficient_recuperabilite ? `${(asset.coefficient_recuperabilite * 100).toFixed(0)}%` : '—'} />
-        </div>
-      </Tile>
+      <Tile title="Bien à financer" dealId={dealId} table="deal_assets" supabase={supabase} fields={[
+        { k: '', l: 'Catégorie', v: asset?.asset_class?.replace(/_/g, ' ') || '—', ro: true },
+        { k: 'marque', l: 'Marque', v: asset?.marque || '' },
+        { k: 'modele', l: 'Modèle', v: asset?.modele || '' },
+        { k: 'annee_fabrication', l: 'Année', v: asset?.annee_fabrication?.toString() || '' },
+        { k: '', l: 'État', v: asset?.etat?.replace(/_/g, ' ') || '—', ro: true },
+        { k: '', l: 'N° série / VIN', v: asset?.vin || asset?.numero_serie || '—', ro: true, mono: true },
+        { k: '', l: 'Km / Heures', v: asset?.kilometrage ? `${asset.kilometrage.toLocaleString('fr-FR')} km` : asset?.heures_moteur ? `${asset.heures_moteur.toLocaleString('fr-FR')} h` : '—', ro: true },
+        { k: '', l: 'Prix HT', v: asset?.prix_achat_ht ? `${asset.prix_achat_ht.toLocaleString('fr-FR')} EUR` : '—', ro: true, mono: true },
+        { k: '', l: 'GPS', v: asset?.traceur_gps ? 'Oui' : 'Non', ro: true, accent: asset?.traceur_gps },
+        { k: '', l: 'Récupérateur', v: asset?.contrat_recuperation ? 'Oui' : 'Non', ro: true, accent: asset?.contrat_recuperation },
+        { k: '', l: 'Coeff. récup.', v: asset?.coefficient_recuperabilite ? `${(asset.coefficient_recuperabilite * 100).toFixed(0)}%` : '—', ro: true },
+      ]} />
 
-      {/* Tuile 3 — Financement banque */}
-      <Tile title="Financement banque" empty={!deal.taux_refinancement_banque && !deal.loyer_mensuel_banque}>
-        <Row label="Taux refinancement" value={deal.taux_refinancement_banque ? `${deal.taux_refinancement_banque}%` : '—'} />
-        <Row label="Loyer banque" value={deal.loyer_mensuel_banque ? `${deal.loyer_mensuel_banque.toLocaleString('fr-FR')} EUR/m` : '—'} />
-        <Row label="Frais dossier" value={deal.frais_dossier_banque ? `${deal.frais_dossier_banque.toLocaleString('fr-FR')} EUR` : '—'} />
-        <Row label="Pénalités RA" value={deal.penalites_remboursement_anticipe ? `${deal.penalites_remboursement_anticipe.toLocaleString('fr-FR')} EUR` : '—'} />
-      </Tile>
+      <Tile title="Financement banque" dealId={dealId} table="deals" supabase={supabase}
+        empty={!deal.taux_refinancement_banque && !deal.loyer_mensuel_banque}
+        fields={[
+          { k: 'taux_refinancement_banque', l: 'Taux refinancement', v: deal.taux_refinancement_banque ? `${deal.taux_refinancement_banque}%` : '' },
+          { k: 'loyer_mensuel_banque', l: 'Loyer banque', v: deal.loyer_mensuel_banque ? `${deal.loyer_mensuel_banque.toLocaleString('fr-FR')} EUR/m` : '' },
+          { k: 'frais_dossier_banque', l: 'Frais dossier', v: deal.frais_dossier_banque ? `${deal.frais_dossier_banque.toLocaleString('fr-FR')} EUR` : '' },
+          { k: 'penalites_remboursement_anticipe', l: 'Pénalités RA', v: deal.penalites_remboursement_anticipe ? `${deal.penalites_remboursement_anticipe.toLocaleString('fr-FR')} EUR` : '' },
+        ]} />
 
-      {/* Tuile 4 — Financement client */}
-      <Tile title="Financement client">
-        <Row label="Type" value={deal.type_financement?.replace('_', ' ') || '—'} />
-        <Row label="Montant financé" value={deal.montant_finance ? `${deal.montant_finance.toLocaleString('fr-FR')} EUR` : '—'} />
-        <Row label="Apport initial" value={deal.apport_initial ? `${deal.apport_initial.toLocaleString('fr-FR')} EUR` : '0 EUR'} />
-        {deal.montant_finance && deal.apport_initial ? (
-          <Row label="Apport %" value={`${((deal.apport_initial / deal.montant_finance) * 100).toFixed(0)}%`} />
-        ) : null}
-        <Row label="Dépôt garantie" value={deal.depot_garantie ? `${deal.depot_garantie.toLocaleString('fr-FR')} EUR` : '0 EUR'} />
-        <Row label="Durée" value={deal.duree_mois ? `${deal.duree_mois} mois` : '—'} />
-        <Row label="Loyer client" value={deal.loyer_mensuel_client ? `${deal.loyer_mensuel_client.toLocaleString('fr-FR')} EUR/m` : 'Auto'} />
-      </Tile>
+      <Tile title="Financement client" dealId={dealId} table="deals" supabase={supabase} fields={[
+        { k: '', l: 'Type', v: deal.type_financement?.replace('_', ' ') || '—', ro: true },
+        { k: 'montant_finance', l: 'Montant financé', v: deal.montant_finance ? `${deal.montant_finance.toLocaleString('fr-FR')} EUR` : '' },
+        { k: 'apport_initial', l: 'Apport initial', v: `${(deal.apport_initial || 0).toLocaleString('fr-FR')} EUR` },
+        ...(deal.montant_finance && deal.apport_initial ? [{ k: '', l: 'Apport %', v: `${((deal.apport_initial / deal.montant_finance) * 100).toFixed(0)}%`, ro: true as const }] : []),
+        { k: 'depot_garantie', l: 'Dépôt garantie', v: `${(deal.depot_garantie || 0).toLocaleString('fr-FR')} EUR` },
+        { k: 'duree_mois', l: 'Durée', v: deal.duree_mois ? `${deal.duree_mois} mois` : '' },
+        { k: '', l: 'Loyer client', v: deal.loyer_mensuel_client ? `${deal.loyer_mensuel_client.toLocaleString('fr-FR')} EUR/m` : 'Auto', ro: true },
+      ]} />
     </div>
   );
 }
 
-function Tile({ title, children, empty }: { title: string; children: React.ReactNode; empty?: boolean }) {
+type Field = { k: string; l: string; v: string; ro?: boolean; mono?: boolean; accent?: boolean };
+
+function Tile({ title, fields, empty, dealId, table, supabase }: {
+  title: string; fields: Field[]; empty?: boolean;
+  dealId: string; table: string; supabase: SupabaseClient;
+}) {
   const [editing, setEditing] = useState(false);
+  const [values, setValues] = useState<Record<string, string>>({});
+
+  function startEdit() {
+    const init: Record<string, string> = {};
+    fields.forEach(f => { if (f.k && !f.ro) init[f.k] = f.v; });
+    setValues(init);
+    setEditing(true);
+  }
+
+  async function save() {
+    const updates: Record<string, string | number | null> = {};
+    Object.entries(values).forEach(([k, v]) => {
+      const cleaned = v.replace(/[^\d.,-]/g, '').replace(',', '.');
+      const num = parseFloat(cleaned);
+      updates[k] = cleaned && !isNaN(num) ? num : (v || null);
+    });
+    if (Object.keys(updates).length > 0) {
+      if (table === 'deals') {
+        await supabase.from('deals').update(updates).eq('id', dealId);
+      } else {
+        await supabase.from(table).update(updates).eq('deal_id', dealId);
+      }
+    }
+    setEditing(false);
+  }
 
   return (
-    <div className="rounded-[8px]" style={{ background: 'var(--color-background-primary)', border: '0.5px solid var(--color-border-tertiary)', padding: '12px 14px' }}>
-      <div className="flex items-center justify-between mb-2">
-        <h4 className="text-[12px] font-medium" style={{ color: 'var(--color-text-primary)' }}>{title}</h4>
-        <button onClick={() => setEditing(!editing)}
-          className="p-1 rounded-[4px] transition-all"
-          style={{ color: editing ? 'var(--color-accent)' : 'var(--color-text-tertiary)' }}>
-          {editing ? <Check className="w-3 h-3" strokeWidth={2} /> : <Pencil className="w-3 h-3" strokeWidth={1.8} />}
-        </button>
-      </div>
+    <div className="tile" style={{ padding: '16px' }}>
+      <h4 className="text-[12px] font-medium mb-2" style={{ color: 'var(--text-primary)' }}>{title}</h4>
+
       {empty && !editing ? (
-        <p className="text-[11px] italic" style={{ color: 'var(--color-text-tertiary)' }}>Non renseigné</p>
+        <div className="flex items-center justify-between">
+          <p className="text-[11px] italic" style={{ color: 'var(--text-muted)' }}>Non renseigné</p>
+          <button onClick={startEdit} className="text-[9px] font-medium text-white rounded-[4px]"
+            style={{ background: 'var(--accent)', padding: '3px 10px' }}>Ajouter</button>
+        </div>
       ) : (
-        <div className="space-y-1">{children}</div>
+        <>
+          <div className="space-y-[5px]">
+            {fields.map((f, i) => (
+              <div key={i} className="flex justify-between items-baseline text-[11px]">
+                <span style={{ color: 'var(--text-secondary)' }}>{f.l}</span>
+                {editing && f.k && !f.ro ? (
+                  <input value={values[f.k] ?? f.v}
+                    onChange={(e) => setValues(p => ({ ...p, [f.k]: e.target.value }))}
+                    className="w-[110px] text-right text-[10px] rounded-[4px] px-1.5 py-0.5 outline-none"
+                    style={{ background: 'var(--page-bg)', border: '0.5px solid #E2E8F0', color: 'var(--text-primary)', fontFamily: f.mono ? 'var(--font-geist-mono), monospace' : 'inherit' }}
+                  />
+                ) : (
+                  <span className={f.mono ? 'font-mono' : ''} style={{
+                    fontSize: '10px',
+                    color: f.accent ? '#059669' : (f.v && f.v !== '—' && f.v !== 'Non') ? 'var(--text-primary)' : 'var(--text-muted)',
+                  }}>{f.v || '—'}</span>
+                )}
+              </div>
+            ))}
+          </div>
+          <div className="flex justify-end mt-3">
+            {editing ? (
+              <button onClick={save} className="text-[9px] font-medium text-white rounded-[4px]"
+                style={{ background: '#059669', padding: '3px 10px' }}>Valider</button>
+            ) : (
+              <button onClick={startEdit} className="text-[9px] font-medium text-white rounded-[4px]"
+                style={{ background: 'var(--accent)', padding: '3px 10px' }}>Modifier</button>
+            )}
+          </div>
+        </>
       )}
-    </div>
-  );
-}
-
-function Row({ label, value, mono, highlight }: { label: string; value: string; mono?: boolean; highlight?: boolean }) {
-  return (
-    <div className="flex justify-between items-baseline text-[11px]">
-      <span style={{ color: 'var(--color-text-secondary)' }}>{label}</span>
-      <span className={mono ? 'font-mono' : ''} style={{
-        color: highlight ? 'var(--success)' : (value === '—' || value === 'Non') ? 'var(--color-text-tertiary)' : 'var(--color-text-primary)',
-        fontSize: '10px',
-      }}>{value}</span>
     </div>
   );
 }

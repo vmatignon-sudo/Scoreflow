@@ -98,7 +98,7 @@ export default function PortfolioPage() {
   return (
     <div className="min-h-screen bg-[#f5f5f7]">
       <Sidebar />
-      <main className="ml-[64px] p-8">
+      <main className="ml-[56px] p-8">
         <h1 className="text-2xl font-bold text-[#1d1d1f] mb-8">Portefeuille</h1>
 
         {/* Aggregates */}
