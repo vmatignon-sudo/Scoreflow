@@ -28,7 +28,7 @@ const VERDICTS: Record<string, { label: string; bg: string; border: string; colo
 };
 
 const DIMS: { key: keyof DealScore; label: string; color: string }[] = [
-  { key: 'score_macro_sectoriel_combine', label: 'Macro & Sect.', color: '#185FA5' },
+  { key: 'score_macro_sectoriel_combine', label: 'Mac. / Sec.', color: '#185FA5' },
   { key: 'score_financier', label: 'Financier', color: '#EF6C00' },
   { key: 'score_materiel', label: 'Matériel', color: '#059669' },
   { key: 'score_dirigeant', label: 'Dirigeant', color: '#185FA5' },
@@ -36,7 +36,7 @@ const DIMS: { key: keyof DealScore; label: string; color: string }[] = [
 
 // Diamond SVG rosace — 4 axes, viewBox 360x360 for label space
 const CX = 180, CY = 180, R = 120;
-const AXES = ['Macro & Sect.', 'Financier', 'Matériel', 'Dirigeant'];
+const AXES = ['Mac. / Sec.', 'Financier', 'Matériel', 'Dirigeant'];
 const AXIS_KEYS: (keyof DealScore)[] = [
   'score_macro_sectoriel_combine', 'score_financier', 'score_materiel', 'score_dirigeant',
 ];
@@ -102,7 +102,7 @@ export default function RecapBlock({ score }: Props) {
     return (
       <div style={{
         background: 'white', border: '0.5px solid #E2E8F0', borderRadius: '12px',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.08)', padding: '14px 16px', minHeight: '120px',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.08)', padding: '16px', minHeight: '120px',
       }}>
         <p className="text-[11px]" style={{ color: 'var(--text-muted)' }}>Analyse en attente...</p>
       </div>
@@ -112,12 +112,12 @@ export default function RecapBlock({ score }: Props) {
   return (
     <div style={{
       background: 'white', border: '0.5px solid #E2E8F0', borderRadius: '12px',
-      boxShadow: '0 2px 8px rgba(0,0,0,0.08)', padding: '14px 16px',
+      boxShadow: '0 2px 8px rgba(0,0,0,0.08)', padding: '16px',
       flexShrink: 0,
     }}>
 
       {/* TOP LINE: Synthèse (left) — Verdict + Score (right) */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
         <span style={{ fontSize: '12px', fontWeight: 500, color: '#185FA5' }}>Synthèse</span>
 
         {/* Verdict + Note + Mention — centered on same axis */}
@@ -255,7 +255,7 @@ export default function RecapBlock({ score }: Props) {
         {/* Right — Dimension syntheses */}
         <div className="flex-1 min-w-0 flex flex-col" style={{ minHeight: '240px' }}>
           {/* 4 dimension lines */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
             {DIMS.map(({ key, label, color }) => {
               const val = (score?.[key] as number | null) ?? 0;
               const synthesis = getDimSynthesis(key, score);
@@ -266,7 +266,7 @@ export default function RecapBlock({ score }: Props) {
                     <span className="font-mono" style={{ fontSize: '11px', color: '#BBB' }}>{val.toFixed(0)}/20</span>
                   </div>
                   <p style={{
-                    fontSize: '12px', color: 'var(--text-secondary)', lineHeight: '1.6',
+                    fontSize: '12px', color: 'var(--text-secondary)', lineHeight: '1.3',
                     display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden',
                     margin: 0,
                   }}>
