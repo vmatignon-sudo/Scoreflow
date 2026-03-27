@@ -211,27 +211,8 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
     <div className="space-y-3">
       {/* Upload zone + documents list */}
       <div className="tile" style={{ padding: '24px' }}>
-        <div className="flex items-center justify-between mb-4">
+        <div className="mb-4">
           <h3 className="text-[12px] font-medium text-[#2a5082]">Documents financiers</h3>
-          <button
-            onClick={handleReanalyze}
-            disabled={reanalyzing}
-            className="flex items-center gap-2 px-4 py-2 bg-[#1e40af] text-white rounded-lg text-sm font-medium hover:bg-[#1e3a8a] transition-colors disabled:opacity-50"
-          >
-            {reanalyzing ? (
-              <>
-                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                Analyse en cours...
-              </>
-            ) : (
-              <>
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                </svg>
-                Relancer l&apos;analyse
-              </>
-            )}
-          </button>
         </div>
 
         {/* Drop zone */}
