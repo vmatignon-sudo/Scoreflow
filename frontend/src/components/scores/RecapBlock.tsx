@@ -276,7 +276,7 @@ export default function RecapBlock({ score, analyzed = true }: Props) {
             {DIMS.map(({ key, label }, idx) => {
               const val = show ? ((score?.[key] as number | null) ?? 0) : 0;
               const revealed = revealedDims >= idx;
-              const computing = show && !revealed;
+              const computing = show && !revealed && dimProgress[idx] > 0;
               const c = revealed ? getColor(val) : '#d1d5db';
               const synthesis = revealed ? getDimSynthesis(key, score) : '';
               const isOpen = revealed ? expanded === key : false;
