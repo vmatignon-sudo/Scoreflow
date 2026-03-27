@@ -29,7 +29,7 @@ export default function DealsPage() {
       setDeals(data || []);
 
       if (data && data.length > 0) {
-        const ids = data.map(d => d.id);
+        const ids = data.map((d: { id: string }) => d.id);
         const { data: assetData } = await supabase
           .from('deal_assets')
           .select('*')
