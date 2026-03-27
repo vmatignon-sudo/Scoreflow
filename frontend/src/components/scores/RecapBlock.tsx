@@ -117,7 +117,7 @@ export default function RecapBlock({ score }: Props) {
     }}>
 
       {/* TOP LINE: Synthèse (left) — Verdict + Score (right) */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '28px' }}>
         <span style={{ fontSize: '12px', fontWeight: 500, color: '#185FA5' }}>Synthèse</span>
 
         {/* Verdict + Note + Mention — centered on same axis */}
@@ -255,7 +255,7 @@ export default function RecapBlock({ score }: Props) {
         {/* Right — Dimension syntheses */}
         <div className="flex-1 min-w-0 flex flex-col" style={{ minHeight: '240px' }}>
           {/* 4 dimension lines */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
             {DIMS.map(({ key, label, color }) => {
               const val = (score?.[key] as number | null) ?? 0;
               const synthesis = getDimSynthesis(key, score);
