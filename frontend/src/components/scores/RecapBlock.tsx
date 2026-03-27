@@ -269,34 +269,34 @@ export default function RecapBlock({ score, analyzed = true }: Props) {
 
           {/* Recommandation + Note finale — même structure que les mini-cartes */}
           {(() => {
-            const isRecoOpen = expanded === 'reco';
-            const recoColor = v ? v.color : '#B45309';
-            const recoBg = v ? v.bg : '#FFF7E6';
-            const recoBorder = v ? v.border : '#F59E0B';
+            const isRecoOpen = show ? expanded === 'reco' : false;
+            const recoColor = show ? (v ? v.color : '#B45309') : '#6e6e73';
+            const recoBg = show ? (v ? v.bg : '#FFF7E6') : '#f9f9fb';
+            const recoBorder = show ? (v ? v.border : '#F59E0B') : '#d1d5db';
             return (
               <div
-                onClick={() => setExpanded(isRecoOpen ? null : 'reco')}
+                onClick={() => show && setExpanded(isRecoOpen ? null : 'reco')}
                 style={{
                   display: 'flex', alignItems: 'stretch',
                   width: '90%',
                   background: recoBg,
                   border: `0.5px solid ${recoBorder}`,
                   borderRadius: '6px', overflow: 'hidden',
-                  boxShadow: '0 3px 10px rgba(0,0,0,0.10)',
-                  cursor: 'pointer',
+                  boxShadow: show ? '0 3px 10px rgba(0,0,0,0.10)' : '0 2px 6px rgba(0,0,0,0.08)',
+                  cursor: show ? 'pointer' : 'default',
                 }}>
                 {/* Barre colorée gauche */}
                 <div style={{ width: '3px', background: recoBorder, flexShrink: 0 }} />
                 {/* Contenu */}
                 <div style={{ flex: 1, padding: '10px 12px', minWidth: 0 }}>
-                  <div className="flex items-center" style={{ gap: '6px', marginBottom: '8px' }}>
+                  <div className="flex items-center" style={{ gap: '6px', marginBottom: show ? '8px' : '0' }}>
                     <span style={{ fontSize: '12px', fontWeight: 600, color: recoColor }}>Recommandation</span>
-                    <ChevronDown style={{
+                    {show && <ChevronDown style={{
                       width: '10px', height: '10px', color: recoColor,
                       transform: isRecoOpen ? 'rotate(180deg)' : 'rotate(0deg)',
                       transition: 'transform 0.15s ease',
-                    }} strokeWidth={1.5} />
-                    {v && (
+                    }} strokeWidth={1.5} />}
+                    {show && v && (
                       <span className="font-medium" style={{
                         fontSize: '10px', background: 'white', border: `0.5px solid ${recoBorder}`,
                         color: recoColor, borderRadius: '6px',
@@ -306,7 +306,7 @@ export default function RecapBlock({ score, analyzed = true }: Props) {
                       </span>
                     )}
                   </div>
-                  {score.recommandation && (
+                  {show && score.recommandation && (
                     <p style={{
                       fontSize: '11px', color: recoColor, lineHeight: '1.4', margin: 0,
                       ...(isRecoOpen
@@ -320,8 +320,8 @@ export default function RecapBlock({ score, analyzed = true }: Props) {
                 </div>
                 {/* Note à droite */}
                 <div className="shrink-0 flex items-center justify-center" style={{ width: '56px', marginRight: '4px' }}>
-                  <span className="font-mono font-bold" style={{ fontSize: '20px', color: scoreColor }}>
-                    {total.toFixed(1)}
+                  <span className="font-mono font-bold" style={{ fontSize: '20px', color: show ? scoreColor : '#d1d5db' }}>
+                    {show ? total.toFixed(1) : '—'}
                   </span>
                 </div>
               </div>
