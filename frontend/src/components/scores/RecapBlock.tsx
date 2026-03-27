@@ -293,7 +293,7 @@ export default function RecapBlock({ score }: Props) {
                   )}
                 </div>
                 {/* Note à droite */}
-                <div className="shrink-0 flex items-center justify-center" style={{ width: '56px' }}>
+                <div className="shrink-0 flex items-center justify-center" style={{ width: '56px', marginRight: '4px' }}>
                   <span className="font-mono font-bold" style={{ fontSize: '20px', color: scoreColor }}>
                     {total.toFixed(1)}
                   </span>
