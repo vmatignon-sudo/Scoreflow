@@ -226,7 +226,7 @@ export default function RecapBlock({ score, analyzed = true }: Props) {
                     {labelEl}
                     <circle cx={px} cy={py} r={7} fill="#185FA5" stroke="white" strokeWidth="2" />
                     <text x={px + scoreOffX} y={py + scoreOffY} textAnchor={scoreAnchor} dominantBaseline="central"
-                      style={{ fontSize: '11px', fill: '#6e6e73', fontWeight: 700, fontFamily: 'var(--font-geist-mono), monospace', opacity: progress > 0.1 ? 1 : 0, transition: 'opacity 0.3s ease' }}>
+                      style={{ fontSize: '11px', fill: '#6e6e73', fontWeight: 700, fontFamily: 'var(--font-geist-mono), monospace', opacity: revealedDims >= i ? 1 : 0, transition: 'opacity 0.3s ease' }}>
                       {val.toFixed(0)}
                     </text>
                   </g>
