@@ -59,7 +59,7 @@ export default function RecapBlock({ score }: Props) {
   }
 
   return (
-    <div className="tile" style={{ padding: '16px', minHeight: '320px', boxShadow: 'var(--tile-shadow-lg)' }}>
+    <div className="tile" style={{ padding: '16px', minHeight: '320px' }}>
 
       {/* TOP LINE: Récap badge (left) — Verdict + Score GROS (right) */}
       <div className="flex items-center justify-between mb-3">
