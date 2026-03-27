@@ -23,7 +23,7 @@ export default function HypothesesColumn({ deal, asset, dealId, supabase, onChan
         { k: 'indicateur_dirigeant_bdf', l: 'Indic. dirigeant', v: deal.indicateur_dirigeant_bdf || '' },
       ]} />
 
-      <Tile title="Bien à financer" dealId={dealId} table="deal_assets" supabase={supabase} fields={[
+      <Tile title="Bien à financer" dealId={dealId} table="deal_assets" supabase={supabase} onChanged={onChanged} fields={[
         { k: '', l: 'Catégorie', v: asset?.asset_class?.replace(/_/g, ' ') || '—', ro: true },
         { k: 'marque', l: 'Marque', v: asset?.marque || '' },
         { k: 'modele', l: 'Modèle', v: asset?.modele || '' },
