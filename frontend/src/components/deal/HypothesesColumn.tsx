@@ -84,9 +84,10 @@ function Tile({ title, fields, empty, editable = true, dealId, table, supabase }
     });
     if (Object.keys(updates).length > 0) {
       if (table === 'deals') {
-        await supabase.from('deals').update(updates).eq('id', dealId);
+        await supabase.from('deals').update({ ...updates, status: 'draft' }).eq('id', dealId);
       } else {
         await supabase.from(table).update(updates).eq('deal_id', dealId);
+        await supabase.from('deals').update({ status: 'draft' }).eq('id', dealId);
       }
     }
     setEditing(false);
