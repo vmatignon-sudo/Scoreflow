@@ -128,7 +128,7 @@ export default function RecapBlock({ score }: Props) {
       </div>
 
       {/* 2 COLUMNS: Rosace | Contenu droit (verdict + dimensions) */}
-      <div className="flex" style={{ gap: '28px' }}>
+      <div className="flex" style={{ gap: '16px' }}>
 
         {/* LEFT — Rosace SVG (280px) */}
         <div className="shrink-0 flex flex-col items-center justify-center" style={{ width: '320px', minHeight: '340px' }}>
