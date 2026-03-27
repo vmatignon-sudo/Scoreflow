@@ -114,14 +114,21 @@ export default function DealDetailPage() {
                 {deal.apport_initial ? <span>Apport {(deal.apport_initial / 1000).toLocaleString('fr-FR', { maximumFractionDigits: 0 })} k€</span> : null}
               </p>
             </div>
-            <div className="flex items-center gap-2">
-              <span className="px-[10px] py-[3px] rounded-full text-[9px] font-medium" style={{
-                background: deal.status === 'completed' ? 'var(--color-success-bg)' : deal.status === 'analyzing' ? '#EBF5FF' : 'var(--page-bg)',
-                color: deal.status === 'completed' ? 'var(--color-success-text)' : deal.status === 'analyzing' ? 'var(--accent)' : 'var(--text-muted)',
-                border: `0.5px solid ${deal.status === 'completed' ? 'var(--color-success-border)' : deal.status === 'analyzing' ? 'var(--accent)' : '#E2E8F0'}`,
-              }}>
-                {deal.status === 'completed' ? 'Analysé' : deal.status === 'analyzing' ? 'En cours' : 'Brouillon'}
-              </span>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={async () => {
+                  await supabase.from('deals').update({ status: 'analyzing' }).eq('id', dealId);
+                  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/deals/${dealId}/analyze`, { method: 'POST' });
+                  if (res.ok) window.location.reload();
+                }}
+                className="inline-flex items-center font-medium"
+                style={{
+                  gap: '6px', fontSize: '12px', background: '#2a5082', border: 'none',
+                  borderRadius: '8px', padding: '8px 16px', color: 'white', cursor: 'pointer',
+                }}>
+                <RefreshCw className="w-3.5 h-3.5" strokeWidth={2} />
+                Relancer l'analyse
+              </button>
               <button onClick={() => setShowDelete(true)} className="p-1.5 rounded-[4px]" style={{ color: 'var(--text-muted)' }}>
                 <Trash2 className="w-3.5 h-3.5" strokeWidth={1.5} />
               </button>
