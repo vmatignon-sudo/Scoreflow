@@ -72,6 +72,6 @@ a, button { transition: all 0.15s ease; }
     background: var(--tile-bg);
     border: var(--tile-border);
     border-radius: var(--tile-radius);
-    box-shadow: var(--tile-shadow);
+    box-shadow: var(--tile-shadow-lg);
   }
 }
