@@ -158,7 +158,7 @@ export default function RecapBlock({ score }: Props) {
                 } else if (i === 1) {
                   labelEl = (<text x={CX + R + 16} y={CY} textAnchor="middle" dominantBaseline="central" transform={`rotate(90, ${CX + R + 16}, ${CY})`} style={{ fontSize: '11px', fill: '#6e6e73', fontWeight: 500 }}>{label}</text>);
                 } else {
-                  labelEl = (<text x={CX - R - 28} y={CY} textAnchor="middle" dominantBaseline="central" transform={`rotate(-90, ${CX - R - 28}, ${CY})`} style={{ fontSize: '11px', fill: '#6e6e73', fontWeight: 500 }}>{label}</text>);
+                  labelEl = (<text x={CX - R - 16} y={CY} textAnchor="middle" dominantBaseline="central" transform={`rotate(-90, ${CX - R - 16}, ${CY})`} style={{ fontSize: '11px', fill: '#6e6e73', fontWeight: 500 }}>{label}</text>);
                 }
                 return (
                   <g key={i}>
