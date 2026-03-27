@@ -91,6 +91,7 @@ function Tile({ title, fields, empty, editable = true, dealId, table, supabase, 
       }
     }
     setEditing(false);
+    onChanged?.();
   }
 
   return (
