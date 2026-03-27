@@ -198,8 +198,17 @@ export default function RecapBlock({ score }: Props) {
           )}
         </div>
 
-        {/* RIGHT — Verdict + mini-cartes par dimension */}
+        {/* RIGHT — Toggle + mini-cartes par dimension */}
         <div className="flex-1 min-w-0 flex flex-col">
+
+          {/* Toggle rosace/barres */}
+          <div style={{ marginBottom: '6px' }}>
+            <button onClick={() => setView(view === 'rosace' ? 'barres' : 'rosace')} style={{ fontSize: '10px', background: 'none', border: 'none', cursor: 'pointer' }}>
+              <span style={{ color: view === 'rosace' ? '#185FA5' : '#BBB' }}>rosace</span>
+              <span style={{ margin: '0 4px', color: '#DDD' }}>·</span>
+              <span style={{ color: view === 'barres' ? '#185FA5' : '#BBB' }}>barres</span>
+            </button>
+          </div>
 
           {/* 4 mini-cartes dimension — note centrée verticalement */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
