@@ -210,7 +210,7 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
   return (
     <div className="space-y-6">
       {/* Upload zone + documents list */}
-      <div className="bg-white rounded-[20px] shadow p-6">
+      <div className="tile" style={{ padding: '24px' }}>
         <div className="flex items-center justify-between mb-4">
           <h3 className="font-semibold text-[#2d2d2d]">Documents financiers</h3>
           <button
@@ -350,7 +350,7 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
           <PredictiveCard dealId={dealId} organizationId={organizationId} />
 
           {/* Données brutes */}
-          <div className="bg-white rounded-[20px] shadow p-6">
+          <div className="tile" style={{ padding: '24px' }}>
             <h3 className="font-semibold text-[#2d2d2d] mb-4">
               Données comptables {data.annee ? `(${data.annee})` : ''}
             </h3>
@@ -372,7 +372,7 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
             const hasAny = group.keys.some((k) => ratios[k] !== null && ratios[k] !== undefined);
             if (!hasAny) return null;
             return (
-              <div key={group.title} className="bg-white rounded-[20px] shadow p-6">
+              <div key={group.title} className="tile" style={{ padding: '24px' }}>
                 <h3 className="font-semibold text-[#2d2d2d] mb-4">{group.title}</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 text-sm">
                   {group.keys.map((key) => {
@@ -472,7 +472,7 @@ function PredictiveCard({ dealId, organizationId }: { dealId: string; organizati
   const pct18 = (pred.probability_18m * 100).toFixed(1);
 
   return (
-    <div className="bg-white rounded-[20px] shadow p-6">
+    <div className="tile" style={{ padding: '24px' }}>
       <div className="flex items-center gap-2 mb-4">
         <TrendingUp className="w-4 h-4 text-[#1e40af]" strokeWidth={1.8} />
         <h3 className="text-[15px] font-semibold text-[#2d2d2d]">Probabilité de défaillance</h3>
