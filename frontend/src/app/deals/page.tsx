@@ -85,16 +85,30 @@ export default function DealsPage() {
               <Link
                 key={deal.id}
                 href={`/deals/${deal.id}`}
-                className="block bg-white rounded-[20px] shadow p-5 hover:bg-[#ededf0] transition-colors"
+                className="block tile hover:bg-[#fafafa] transition-colors"
+                style={{ padding: '16px 20px' }}
               >
-                <div className="flex items-center justify-between">
+                <div className="flex items-start justify-between">
                   <div>
-                    <h3 className="font-semibold text-[#2d2d2d]">{deal.raison_sociale || 'Sans nom'}</h3>
-                    <p className="text-sm text-[#6e6e73] mt-1">
-                      {deal.siren} - {deal.secteur_label} - {deal.montant_finance?.toLocaleString('fr-FR')} EUR
+                    <h3 className="text-[18px] font-semibold" style={{ color: 'var(--text-primary, #1d1d1f)' }}>
+                      {deal.raison_sociale || 'Sans nom'}
+                      {assets[deal.id]?.marque && (
+                        <span className="font-normal text-[#6e6e73]">{' — '}{[assets[deal.id].marque, assets[deal.id].modele].filter(Boolean).join(' ')}</span>
+                      )}
+                    </h3>
+                    <p className="text-[13px] mt-1" style={{ color: 'var(--text-secondary, #6e6e73)' }}>
+                      {deal.code_naf} {deal.secteur_label}
+                      {' · '}{deal.type_financement?.replace('_', ' ')}
+                      {deal.montant_finance && <>{' · '}{(deal.montant_finance / 1000).toLocaleString('fr-FR', { maximumFractionDigits: 0 })} k€</>}
+                      {deal.duree_mois && <>{' · '}{deal.duree_mois} mois</>}
+                    </p>
+                    <p className="text-[11px] mt-1 flex flex-wrap gap-x-3 gap-y-0.5" style={{ color: '#a1a1a6' }}>
+                      <span>SIREN <span style={{ fontVariantNumeric: 'tabular-nums' }}>{deal.siren}</span></span>
+                      {deal.dirigeant_nom && <span>Dirigeant {deal.dirigeant_prenom} {deal.dirigeant_nom}</span>}
+                      {assets[deal.id]?.annee_fabrication && <span>{assets[deal.id].marque} {assets[deal.id].modele} {assets[deal.id].annee_fabrication}</span>}
                     </p>
                   </div>
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 shrink-0">
                     <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${STATUS_LABELS[deal.status]?.style}`}>
                       {STATUS_LABELS[deal.status]?.label}
                     </span>
