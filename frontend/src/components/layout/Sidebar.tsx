@@ -16,7 +16,7 @@ export default function Sidebar() {
 
   return (
     <aside className="hidden sm:flex fixed left-0 top-0 h-screen w-[56px] flex-col items-center z-40 py-3"
-      style={{ background: '#F0F1F3' }}>
+      style={{ background: 'var(--tile-bg)', borderRight: '0.5px solid #E2E8F0', boxShadow: 'var(--tile-shadow)' }}>
 
       {/* Logo */}
       <Link href="/dashboard" className="w-8 h-8 rounded-[8px] flex items-center justify-center mb-4" style={{ background: 'var(--accent)' }}>

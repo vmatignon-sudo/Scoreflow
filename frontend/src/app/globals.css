@@ -8,8 +8,8 @@
   --tile-bg: #FFFFFF;
   --tile-border: 0.5px solid #E2E8F0;
   --tile-radius: 8px;
-  --tile-shadow: 0 2px 4px rgba(0,0,0,0.06);
-  --tile-shadow-lg: 0 2px 8px rgba(0,0,0,0.08);
+  --tile-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+  --tile-shadow-lg: 0 2px 6px rgba(0,0,0,0.08), 0 8px 20px rgba(0,0,0,0.06);
 
   /* Text */
   --text-primary: #0F1923;
