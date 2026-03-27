@@ -28,11 +28,11 @@ const VERDICTS: Record<string, { label: string; bg: string; border: string; colo
   veto: { label: 'VETO', bg: '#FEF2F2', border: '#DC2626', color: '#991B1B' },
 };
 
-const DIMS: { key: keyof DealScore; label: string; color: string }[] = [
-  { key: 'score_macro_sectoriel_combine', label: 'Mac. / Sec.', color: '#185FA5' },
-  { key: 'score_financier', label: 'Financier', color: '#EF6C00' },
-  { key: 'score_materiel', label: 'Matériel', color: '#059669' },
-  { key: 'score_dirigeant', label: 'Dirigeant', color: '#185FA5' },
+const DIMS: { key: keyof DealScore; label: string }[] = [
+  { key: 'score_macro_sectoriel_combine', label: 'Mac. / Sec.' },
+  { key: 'score_financier', label: 'Financier' },
+  { key: 'score_materiel', label: 'Matériel' },
+  { key: 'score_dirigeant', label: 'Dirigeant' },
 ];
 
 // Diamond SVG rosace — 4 axes, viewBox 360x360 for label space
