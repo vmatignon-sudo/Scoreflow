@@ -10,7 +10,7 @@ type Props = { deal: Deal; asset: DealAsset | null; dealId: string; supabase: Su
 export default function HypothesesColumn({ deal, asset, dealId, supabase, onChanged }: Props) {
   return (
     <div className="space-y-2">
-      <Tile title="Entreprise" editable={false} dealId={dealId} table="deals" supabase={supabase} fields={[
+      <Tile title="Entreprise" editable={false} dealId={dealId} table="deals" supabase={supabase} onChanged={onChanged} fields={[
         { k: 'raison_sociale', l: 'Raison sociale', v: deal.raison_sociale || '' },
         { k: 'forme_juridique', l: 'Forme juridique', v: deal.forme_juridique || '' },
         { k: 'siren', l: 'SIREN', v: deal.siren || '', mono: true },
