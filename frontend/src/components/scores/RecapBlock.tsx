@@ -234,7 +234,7 @@ export default function RecapBlock({ score, analyzed = true }: Props) {
               })}
             </svg>
           ) : (
-            <div className="flex-1 flex flex-col justify-center" style={{ padding: '16px 0', gap: '20px' }}>
+            <div className="space-y-3 flex-1 flex flex-col justify-center" style={{ padding: '16px 0' }}>
               {DIMS.map(({ key, label }, idx) => {
                 const target = show ? ((score?.[key] as number | null) ?? 0) : 0;
                 const val = target * dimProgress[idx];
@@ -242,18 +242,28 @@ export default function RecapBlock({ score, analyzed = true }: Props) {
                 const c = revealed ? getColor(target) : (dimProgress[idx] > 0 ? '#a1a1a6' : '#d1d5db');
                 return (
                   <div key={key}>
-                    <div className="flex justify-between" style={{ fontSize: '11px', marginBottom: '6px' }}>
-                      <span style={{ color: revealed ? c : 'var(--text-secondary)', fontWeight: 500 }}>{label}</span>
+                    <div className="flex justify-between" style={{ fontSize: '10px', marginBottom: '4px' }}>
+                      <span style={{ color: 'var(--text-secondary)' }}>{label}</span>
                       <span className="font-mono font-bold" style={{ color: c }}>
-                        {revealed ? target.toFixed(1) : dimProgress[idx] > 0 ? val.toFixed(1) : '—'}
+                        {revealed ? `${target.toFixed(0)}/20` : dimProgress[idx] > 0 ? `${val.toFixed(0)}/20` : '—'}
                       </span>
                     </div>
-                    <div className="rounded-full overflow-hidden" style={{ height: '10px', background: '#E2E8F0' }}>
+                    <div className="rounded-full overflow-hidden" style={{ height: '6px', background: '#E2E8F0' }}>
                       <div className="h-full rounded-full" style={{ width: `${(val / 20) * 100}%`, backgroundColor: c }} />
                     </div>
                   </div>
                 );
               })}
+              {/* Barre score total */}
+              <div style={{ marginTop: '12px', paddingTop: '10px', borderTop: '0.5px solid rgba(0,0,0,0.06)' }}>
+                <div className="flex justify-between" style={{ fontSize: '10px', marginBottom: '4px' }}>
+                  <span style={{ color: revealedDims >= 4 ? scoreColor : '#d1d5db', fontWeight: 600 }}>Score Deal</span>
+                  <span className="font-mono font-bold" style={{ color: revealedDims >= 4 ? scoreColor : '#d1d5db' }}>{revealedDims >= 4 ? `${total.toFixed(1)}/20` : '—'}</span>
+                </div>
+                <div className="rounded-full overflow-hidden" style={{ height: '8px', background: '#E2E8F0' }}>
+                  <div className="h-full rounded-full" style={{ width: revealedDims >= 4 ? `${(total / 20) * 100}%` : '0%', backgroundColor: scoreColor, transition: 'width 0.8s ease-out' }} />
+                </div>
+              </div>
             </div>
           )}
         </div>
