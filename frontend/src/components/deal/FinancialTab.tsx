@@ -516,7 +516,7 @@ function PredictiveCard({ dealId, organizationId }: { dealId: string; organizati
           return (
             <div key={h.label} className="bg-[#f5f5f7] rounded-[12px] p-3 text-center">
               <p className="text-[10px] text-[#86868b] mb-1">{h.label}</p>
-              <p className="text-[17px] font-semibold font-mono tracking-tight" style={{ color: col }}>
+              <p className="text-[17px] font-semibold tracking-tight" style={{ color: col }}>
                 {pct.toFixed(1)}%
               </p>
             </div>
