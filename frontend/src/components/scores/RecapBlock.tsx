@@ -198,8 +198,8 @@ export default function RecapBlock({ score, analyzed = true }: Props) {
               {/* Barre score total */}
               <div style={{ marginTop: '12px', paddingTop: '10px', borderTop: '0.5px solid rgba(0,0,0,0.06)' }}>
                 <div className="flex justify-between" style={{ fontSize: '10px', marginBottom: '4px' }}>
-                  <span style={{ color: scoreColor, fontWeight: 600 }}>Score Deal</span>
-                  <span className="font-mono font-bold" style={{ color: scoreColor }}>{total.toFixed(1)}/20</span>
+                  <span style={{ color: show ? scoreColor : '#d1d5db', fontWeight: 600 }}>Score Deal</span>
+                  <span className="font-mono font-bold" style={{ color: show ? scoreColor : '#d1d5db' }}>{show ? `${total.toFixed(1)}/20` : '—'}</span>
                 </div>
                 <div className="rounded-full overflow-hidden" style={{ height: '8px', background: '#E2E8F0' }}>
                   <div className="h-full rounded-full" style={{ width: `${(total / 20) * 100}%`, backgroundColor: scoreColor, transition: 'width 0.5s ease' }} />
