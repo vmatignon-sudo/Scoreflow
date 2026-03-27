@@ -237,7 +237,6 @@ export default function RecapBlock({ score }: Props) {
                   {/* Note centrée à droite — même largeur que la note finale */}
                   <div className="shrink-0 flex items-center justify-center" style={{
                     width: '56px',
-                    borderLeft: '0.5px solid rgba(0,0,0,0.06)',
                   }}>
                     <span className="font-mono font-bold" style={{ fontSize: '13px', color: c }}>
                       {val.toFixed(1)}
