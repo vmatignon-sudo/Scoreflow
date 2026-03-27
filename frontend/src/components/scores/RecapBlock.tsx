@@ -195,7 +195,7 @@ export default function RecapBlock({ score }: Props) {
         </div>
 
         {/* RIGHT — Verdict + dimensions (texte + note sur chaque ligne) */}
-        <div className="flex-1 min-w-0 flex flex-col" style={{ maxWidth: '320px' }}>
+        <div className="flex-1 min-w-0 flex flex-col">
 
           {/* Verdict + Note finale — alignés à droite */}
           <div className="flex items-center justify-end" style={{ gap: '12px', marginBottom: '10px' }}>
