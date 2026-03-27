@@ -121,7 +121,7 @@ export default function DealDetailPage() {
         {/* SHARED TITLE ROW */}
         <div className="hidden lg:flex m-3 mt-0 mb-0 pt-4 pb-3" style={{ gap: '24px' }}>
           <div className="w-[280px] xl:w-[280px] shrink-0">
-            <p className="font-medium pl-2" style={{ fontSize: '20px', color: '#6e6e73' }}>Hypothèses</p>
+            <p className="font-medium pl-2" style={{ fontSize: '20px', color: '#64748b' }}>Hypothèses</p>
           </div>
           <div className="flex-1 min-w-0 flex items-center justify-between">
             <p className="font-medium pl-1" style={{ fontSize: '20px', color: '#185FA5' }}>Résultats</p>
