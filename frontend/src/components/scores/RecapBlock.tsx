@@ -93,13 +93,53 @@ function getDimSynthesis(key: keyof DealScore, score: DealScore): string {
 export default function RecapBlock({ score, analyzed = true }: Props) {
   const [view, setView] = useState<'rosace' | 'barres'>('rosace');
   const [expanded, setExpanded] = useState<string | null>(null);
+  const [progress, setProgress] = useState(0); // 0→1 pour la rosace
+  const [revealedDims, setRevealedDims] = useState(-1); // -1 = aucune, 0-3 = dim révélée, 4 = note finale
+  const prevShow = useRef(false);
+
   const show = analyzed && !!score;
+
+  // Animation quand show passe à true
+  useEffect(() => {
+    if (show && !prevShow.current) {
+      // Reset
+      setProgress(0);
+      setRevealedDims(-1);
+
+      // Animer la rosace de 0 à 1 sur 1.2s
+      const start = performance.now();
+      const duration = 1200;
+      function tick(now: number) {
+        const t = Math.min((now - start) / duration, 1);
+        // ease-out cubic
+        const eased = 1 - Math.pow(1 - t, 3);
+        setProgress(eased);
+        if (t < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+
+      // Révéler les dims une par une avec spinner
+      DIMS.forEach((_, i) => {
+        setTimeout(() => setRevealedDims(i), 800 + i * 400);
+      });
+      // Note finale
+      setTimeout(() => setRevealedDims(4), 800 + DIMS.length * 400);
+    }
+    if (!show) {
+      setProgress(0);
+      setRevealedDims(-1);
+    }
+    prevShow.current = show;
+  }, [show]);
+
   const total = show ? (score?.score_deal_total || 0) : 0;
   const verdict = show ? score?.verdict : undefined;
   const v = verdict ? VERDICTS[verdict] : null;
   const scoreColor = show ? getColor(total) : '#a1a1a6';
 
-  const axisValues = AXIS_KEYS.map(k => show ? ((score?.[k] as number | null) ?? 0) : 0);
+  // Rosace animée par progress
+  const targetValues = AXIS_KEYS.map(k => show ? ((score?.[k] as number | null) ?? 0) : 0);
+  const axisValues = targetValues.map(v => v * progress);
 
   if (!score) {
     return (
