@@ -253,8 +253,8 @@ export default function RecapBlock({ score }: Props) {
             })}
           </div>
 
-          {/* Trait d'addition */}
-          <div style={{ height: '1px', background: '#1d1d1f', opacity: 0.15, marginTop: '16px' }} />
+          {/* Trait d'addition + espace */}
+          <div style={{ height: '1px', background: '#1d1d1f', opacity: 0.15, marginTop: '16px', marginBottom: '10px' }} />
 
           {/* Recommandation + Note finale — même structure que les mini-cartes */}
           {(() => {
