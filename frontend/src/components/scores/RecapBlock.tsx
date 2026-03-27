@@ -248,7 +248,7 @@ export default function RecapBlock({ score, analyzed = true }: Props) {
                         {revealed ? `${target.toFixed(0)}/20` : dimProgress[idx] > 0 ? `${val.toFixed(0)}/20` : '—'}
                       </span>
                     </div>
-                    <div className="rounded-full overflow-hidden" style={{ height: '6px', background: '#E2E8F0' }}>
+                    <div className="rounded-full overflow-hidden" style={{ height: '5px', background: '#E2E8F0' }}>
                       <div className="h-full rounded-full" style={{ width: `${(val / 20) * 100}%`, backgroundColor: c }} />
                     </div>
                   </div>
