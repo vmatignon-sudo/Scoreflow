@@ -95,7 +95,7 @@ function Tile({ title, fields, empty, editable = true, dealId, table, supabase }
   return (
     <div className="tile" style={{ padding: '16px', position: 'relative' }}>
       <div className="flex items-center justify-between mb-2">
-        <h4 className="text-[12px] font-medium" style={{ color: '#6e6e73' }}>{title}</h4>
+        <h4 className="text-[12px] font-medium" style={{ color: '#64748b' }}>{title}</h4>
         {editable && !empty && (
           editing ? (
             <button onClick={save} aria-label="Valider" className="p-0.5 rounded-[4px] transition-colors hover:bg-green-50">
