@@ -214,15 +214,6 @@ export default function RecapBlock({ score }: Props) {
                   }}>
                   {/* Barre colorée gauche */}
                   <div style={{ width: '3px', background: c, flexShrink: 0 }} />
-                  {/* Note centrée au milieu de la carte */}
-                  <div className="shrink-0 flex items-center justify-center" style={{
-                    width: '44px',
-                    borderRight: '0.5px solid rgba(0,0,0,0.06)',
-                  }}>
-                    <span className="font-mono font-bold" style={{ fontSize: '13px', color: c }}>
-                      {val.toFixed(1)}
-                    </span>
-                  </div>
                   {/* Texte */}
                   <div style={{ flex: 1, padding: '8px 10px', minWidth: 0 }}>
                     <div className="flex items-center" style={{ gap: '4px', marginBottom: '2px' }}>
