@@ -133,7 +133,7 @@ export default function DealDetailPage() {
           <div className="flex-1 min-w-0 flex flex-col pt-4" style={{ height: 'calc(100vh - 76px)', overflow: 'hidden' }}>
 
             {/* Title line: Résultats + buttons */}
-            <div className="flex items-center justify-between" style={{ marginBottom: '12px' }}>
+            <div className="flex items-center justify-between mb-3" style={{ height: '34px' }}>
               <p className="font-medium pl-1" style={{ fontSize: '20px', color: '#185FA5' }}>Résultats</p>
               <div className="flex items-center" style={{ gap: '8px' }}>
                 <button className="inline-flex items-center font-medium" style={{
