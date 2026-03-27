@@ -378,10 +378,16 @@ export default function RecapBlock({ score, analyzed = true }: Props) {
                   )}
                 </div>
                 {/* Note à droite */}
-                <div className="shrink-0 flex items-center justify-center" style={{ width: '56px', marginRight: '4px', transition: 'all 0.5s ease', transitionDelay: show ? '0.4s' : '0s' }}>
-                  <span className="font-mono font-bold" style={{ fontSize: '20px', color: show ? scoreColor : '#d1d5db', transition: 'color 0.5s ease' }}>
-                    {show ? total.toFixed(1) : '—'}
-                  </span>
+                <div className="shrink-0 flex items-center justify-center" style={{ width: '56px', marginRight: '4px' }}>
+                  {recoRevealed ? (
+                    <span className="font-mono font-bold" style={{ fontSize: '20px', color: scoreColor, animation: 'fadeIn 0.4s ease-out' }}>
+                      {total.toFixed(1)}
+                    </span>
+                  ) : recoComputing ? (
+                    <Loader2 className="w-4 h-4 animate-spin" style={{ color: '#a1a1a6' }} strokeWidth={2} />
+                  ) : (
+                    <span className="font-mono font-bold" style={{ fontSize: '20px', color: '#d1d5db' }}>—</span>
+                  )}
                 </div>
               </div>
             );
