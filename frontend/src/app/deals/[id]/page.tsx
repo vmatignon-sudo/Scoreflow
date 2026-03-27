@@ -155,7 +155,6 @@ export default function DealDetailPage() {
 
             {/* Synthèse block — NEVER scrolls */}
             <div className="shrink-0">
-              <h4 className="text-[12px] font-medium mb-1.5" style={{ color: '#185FA5' }}>Synthèse</h4>
               <RecapBlock score={score} />
             </div>
 
