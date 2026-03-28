@@ -19,18 +19,28 @@ async function seed() {
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   const supabase = createClient(supabaseUrl, serviceKey || supabaseAnonKey);
 
-  // Find the Terrassement deal
-  const { data: deals } = await supabase
+  // Find all deals — try Terrassement first, fallback to any deal
+  const { data: allDeals, error: dealErr } = await supabase
     .from('deals')
     .select('id, siren, raison_sociale')
-    .or('siren.eq.123456789,raison_sociale.ilike.%terrassement%')
-    .limit(1);
+    .order('created_at', { ascending: false })
+    .limit(10);
 
-  if (!deals || deals.length === 0) {
-    return NextResponse.json({ error: 'Deal Terrassement not found' }, { status: 404 });
+  if (dealErr) {
+    return NextResponse.json({ error: 'DB error', details: dealErr.message }, { status: 500 });
   }
 
-  const dealId = deals[0].id;
+  if (!allDeals || allDeals.length === 0) {
+    return NextResponse.json({ error: 'No deals found in database', hint: 'Service role key may be missing' }, { status: 404 });
+  }
+
+  // Prefer Terrassement, fallback to first deal
+  const target = allDeals.find(d =>
+    d.raison_sociale?.toLowerCase().includes('terrassement') ||
+    d.siren === '123456789'
+  ) || allDeals[0];
+
+  const dealId = target.id;
 
   // Check existing years
   const { data: existing } = await supabase
@@ -91,8 +101,10 @@ async function seed() {
   }
 
   return NextResponse.json({
-    deal: deals[0].raison_sociale,
+    deal: target.raison_sociale,
     deal_id: dealId,
+    siren: target.siren,
+    all_deals: allDeals.map(d => ({ id: d.id, name: d.raison_sociale, siren: d.siren })),
     existing_years: existingYears,
     inserted_years: inserted,
   });
