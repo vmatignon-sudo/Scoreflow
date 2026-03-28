@@ -81,6 +81,48 @@ const LOWER_IS_BETTER = new Set([
   'dso', 'dpo', 'ccc', 'bfr',
 ]);
 
+// Seuils normatifs conventionnels (fondamentaux finance d'entreprise)
+// { min, max, label } — si lowerIsBetter, la logique s'inverse
+const NORMS: Record<string, { danger: number; warning: number; good: number; label: string }> = {
+  liquidite_generale:    { danger: 0.8,  warning: 1.0,  good: 1.5,  label: 'Norme > 1' },
+  liquidite_reduite:     { danger: 0.5,  warning: 0.8,  good: 1.2,  label: 'Norme > 0,8' },
+  liquidite_immediate:   { danger: 0.1,  warning: 0.2,  good: 0.5,  label: 'Norme > 0,2' },
+  dscr:                  { danger: 0.8,  warning: 1.0,  good: 1.5,  label: 'Norme > 1,2' },
+  couverture_ff:         { danger: 1.5,  warning: 3.0,  good: 5.0,  label: 'Norme > 3' },
+  autonomie_financiere:  { danger: 0.15, warning: 0.25, good: 0.40, label: 'Norme > 0,3' },
+  dette_sur_caf:         { danger: 5.0,  warning: 3.5,  good: 2.0,  label: 'Norme < 3,5' },  // lower is better
+  endettement:           { danger: 2.0,  warning: 1.0,  good: 0.5,  label: 'Norme < 1' },    // lower is better
+  gearing:               { danger: 2.5,  warning: 1.5,  good: 0.8,  label: 'Norme < 1,5' },  // lower is better
+  levier:                { danger: 4.0,  warning: 2.5,  good: 1.5,  label: 'Norme < 2,5' },  // lower is better
+  marge_ebitda:          { danger: 0.03, warning: 0.08, good: 0.15, label: 'Norme > 8%' },
+  marge_ebit:            { danger: 0.02, warning: 0.05, good: 0.10, label: 'Norme > 5%' },
+  marge_nette:           { danger: 0.01, warning: 0.03, good: 0.08, label: 'Norme > 3%' },
+  roe:                   { danger: 0.02, warning: 0.08, good: 0.15, label: 'Norme > 8%' },
+  roa:                   { danger: 0.01, warning: 0.03, good: 0.08, label: 'Norme > 3%' },
+  roce:                  { danger: 0.03, warning: 0.08, good: 0.15, label: 'Norme > 8%' },
+  rotation_actif:        { danger: 0.3,  warning: 0.6,  good: 1.0,  label: 'Norme > 0,6' },
+  dso:                   { danger: 90,   warning: 60,   good: 30,   label: 'Norme < 60j' },   // lower is better
+  dpo:                   { danger: 90,   warning: 60,   good: 30,   label: 'Norme < 60j' },   // lower is better
+  ccc:                   { danger: 120,  warning: 60,   good: 20,   label: 'Norme < 60j' },   // lower is better
+};
+
+/** Get norm color for a ratio value. */
+function getNormColor(val: number, key: string): string | undefined {
+  const norm = NORMS[key];
+  if (!norm) return undefined;
+  const lowerBetter = LOWER_IS_BETTER.has(key);
+  if (lowerBetter) {
+    if (val <= norm.good) return '#059669';
+    if (val <= norm.warning) return '#2d9d3f';
+    if (val <= norm.danger) return '#bf5a00';
+    return '#c4342d';
+  }
+  if (val >= norm.good) return '#059669';
+  if (val >= norm.warning) return '#2d9d3f';
+  if (val >= norm.danger) return '#bf5a00';
+  return '#c4342d';
+}
+
 const RATIO_GROUPS: { title: string; keys: string[] }[] = [
   { title: 'Liquidité', keys: ['liquidite_generale', 'liquidite_reduite', 'liquidite_immediate', 'bfr', 'frng', 'tresorerie_nette', 'jours_tresorerie'] },
   { title: 'Capacité de remboursement', keys: ['caf', 'dette_sur_caf', 'dscr', 'couverture_ff'] },
@@ -382,8 +424,11 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
                     const yearValues = years.map(y => y.ratios?.[key] ?? null);
                     const trend = getTrend(yearValues);
 
-                    // Sector comparison color
+                    // Colors
                     const sectorColor = sector ? getSectorColor(val, key, sector) : undefined;
+                    const normColor = getNormColor(val, key);
+                    // Use norm color on the value itself, sector color on the badge
+                    const valueColor = normColor || '#1d1d1f';
 
                     return (
                       <div key={key}>
@@ -399,6 +444,10 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
                             ) : (
                               <span className="text-[13px] text-[#6e6e73]">{RATIO_LABELS[key] || key}</span>
                             )}
+                            {/* Norm label inline */}
+                            {NORMS[key] && (
+                              <span className="text-[9px] text-[#a1a1a6] hidden sm:inline">{NORMS[key].label}</span>
+                            )}
                           </div>
 
                           <div className="flex items-center gap-2 shrink-0">
@@ -407,8 +456,8 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
                               <TrendBadge direction={trend.direction} pctChange={trend.pctChange} isLowerBetter={LOWER_IS_BETTER.has(key)} />
                             )}
 
-                            {/* Value */}
-                            <span className="font-medium text-[14px] text-[#1d1d1f]" style={{ fontVariantNumeric: 'tabular-nums' }}>
+                            {/* Value — colored by norm */}
+                            <span className="font-medium text-[14px]" style={{ color: valueColor, fontVariantNumeric: 'tabular-nums' }}>
                               {fmt(val)}
                             </span>
 
@@ -424,7 +473,7 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
                             )}
 
                             {/* Expand indicator */}
-                            {years.length > 1 && (
+                            {(years.length > 1 || sector || NORMS[key]) && (
                               isExpanded
                                 ? <ChevronUp className="w-3 h-3 text-[#a1a1a6]" />
                                 : <ChevronDown className="w-3 h-3 text-[#a1a1a6]" />
@@ -432,8 +481,8 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
                           </div>
                         </div>
 
-                        {/* Expanded: year-by-year detail */}
-                        {isExpanded && years.length > 1 && (
+                        {/* Expanded: year-by-year detail + norms + sector */}
+                        {isExpanded && (
                           <div className="ml-2 mr-1 mb-2 p-3 bg-[#f5f5f7] rounded-lg">
                             <div className="space-y-1.5">
                               {years.map((y, i) => {
@@ -466,13 +515,25 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
                             {sector && (
                               <div className="mt-2 pt-2 border-t border-black/[0.06]">
                                 <p className="text-[10px] text-[#a1a1a6] mb-1">Benchmark sectoriel</p>
-                                <div className="flex gap-3 text-[10px]" style={{ fontVariantNumeric: 'tabular-nums' }}>
+                                <div className="flex flex-wrap gap-3 text-[10px]" style={{ fontVariantNumeric: 'tabular-nums' }}>
                                   {sector.q10 !== undefined && <span className="text-[#c4342d]">Q10 {fmt(sector.q10)}</span>}
                                   {sector.q25 !== undefined && <span className="text-[#bf5a00]">Q25 {fmt(sector.q25)}</span>}
                                   {sector.q50 !== undefined && <span className="text-[#1d1d1f] font-medium">Q50 {fmt(sector.q50)}</span>}
                                   {sector.q75 !== undefined && <span className="text-[#2d9d3f]">Q75 {fmt(sector.q75)}</span>}
                                   {sector.q90 !== undefined && <span className="text-[#059669]">Q90 {fmt(sector.q90)}</span>}
                                 </div>
+                              </div>
+                            )}
+                            {/* Norm thresholds */}
+                            {NORMS[key] && (
+                              <div className={`mt-2 pt-2 border-t border-black/[0.06] ${!sector ? 'mt-2' : ''}`}>
+                                <p className="text-[10px] text-[#a1a1a6] mb-1">Seuil normatif conventionnel</p>
+                                <div className="flex flex-wrap gap-3 text-[10px]" style={{ fontVariantNumeric: 'tabular-nums' }}>
+                                  <span style={{ color: '#c4342d' }}>Danger {LOWER_IS_BETTER.has(key) ? '>' : '<'} {fmt(NORMS[key].danger)}</span>
+                                  <span style={{ color: '#bf5a00' }}>Vigilance {LOWER_IS_BETTER.has(key) ? '>' : '<'} {fmt(NORMS[key].warning)}</span>
+                                  <span style={{ color: '#059669' }}>Bon {LOWER_IS_BETTER.has(key) ? '<' : '>'} {fmt(NORMS[key].good)}</span>
+                                </div>
+                                <p className="text-[9px] text-[#a1a1a6] mt-1">Votre valeur : <span style={{ color: normColor, fontWeight: 600 }}>{fmt(val)}</span></p>
                               </div>
                             )}
                           </div>
