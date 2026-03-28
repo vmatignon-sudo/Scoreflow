@@ -116,7 +116,76 @@ export default function DealDetailPage() {
             <ArrowLeft className="w-4 h-4" />
             Retour aux dossiers
           </Link>
-          <div className="flex items-center justify-between">
+          {/* MOBILE header — compact empilé */}
+          <div className="sm:hidden">
+            <h1 className="text-[17px] font-semibold leading-tight" style={{ color: 'var(--text-primary)' }}>
+              {deal.raison_sociale}
+            </h1>
+            {asset?.marque && (
+              <p className="text-[14px] text-[#6e6e73] mt-0.5">{[asset.marque, asset.modele].filter(Boolean).join(' ')}</p>
+            )}
+            <p className="text-[12px] mt-1" style={{ color: 'var(--text-secondary)' }}>
+              {deal.type_financement?.replace('_', ' ')}
+              {deal.montant_finance && <>{' · '}{(deal.montant_finance / 1000).toLocaleString('fr-FR', { maximumFractionDigits: 0 })} k€</>}
+              {deal.duree_mois && <>{' · '}{deal.duree_mois} mois</>}
+            </p>
+            <div className="flex items-center gap-2 mt-2">
+              <div className="flex-1">
+                {deal.status === 'completed' ? (
+                  <div className="flex items-center gap-2">
+                    <span className="inline-flex items-center font-medium"
+                      style={{ fontSize: '11px', background: '#f0fdf4', border: '1px solid #059669', borderRadius: '6px', padding: '4px 10px', color: '#059669' }}>
+                      Analysé
+                    </span>
+                    {score && (
+                      <>
+                        <span className="font-mono font-bold" style={{ fontSize: '16px', color: (score.score_deal_total ?? 0) >= 14 ? '#059669' : (score.score_deal_total ?? 0) >= 10 ? '#B45309' : '#DC2626' }}>
+                          {(score.score_deal_total ?? 0).toFixed(1)}
+                        </span>
+                        <span style={{ fontSize: '9px', color: 'var(--text-muted)' }}>/20</span>
+                        {score.verdict && (
+                          <span className="font-medium" style={{
+                            fontSize: '9px', borderRadius: '6px', padding: '2px 8px', whiteSpace: 'nowrap',
+                            background: score.verdict === 'go' ? '#f0fdf4' : score.verdict === 'go_conditionnel' ? '#FFF7E6' : '#FEF2F2',
+                            color: score.verdict === 'go' ? '#059669' : score.verdict === 'go_conditionnel' ? '#B45309' : '#DC2626',
+                            border: `0.5px solid ${score.verdict === 'go' ? '#059669' : score.verdict === 'go_conditionnel' ? '#F59E0B' : '#DC2626'}`,
+                          }}>
+                            {score.verdict === 'go' ? 'GO' : score.verdict === 'go_conditionnel' ? 'GO COND.' : score.verdict === 'no_go' ? 'NO GO' : 'VETO'}
+                          </span>
+                        )}
+                      </>
+                    )}
+                  </div>
+                ) : (
+                  <button
+                    onClick={async () => {
+                      setDeal({ ...deal, status: 'analyzing' });
+                      try {
+                        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/deals/${dealId}/analyze`, { method: 'POST' });
+                        if (!res.ok) throw new Error('backend unavailable');
+                      } catch {
+                        await supabase.from('deals').update({ status: 'completed' }).eq('id', dealId);
+                      }
+                      const { data: d } = await supabase.from('deals').select('*').eq('id', dealId).maybeSingle();
+                      if (d) setDeal(d);
+                      const { data: s } = await supabase.from('deal_scores').select('*').eq('deal_id', dealId).order('computed_at', { ascending: false }).limit(1).maybeSingle();
+                      if (s) setScore(s);
+                    }}
+                    className="inline-flex items-center font-medium"
+                    style={{ gap: '5px', fontSize: '11px', background: '#2a5082', border: 'none', borderRadius: '6px', padding: '6px 12px', color: 'white', cursor: 'pointer' }}>
+                    <RefreshCw className="w-3.5 h-3.5" strokeWidth={2} />
+                    Relancer
+                  </button>
+                )}
+              </div>
+              <button onClick={() => setShowDelete(true)} className="p-1.5 rounded-[4px]" style={{ color: 'var(--text-muted)' }}>
+                <Trash2 className="w-3.5 h-3.5" strokeWidth={1.5} />
+              </button>
+            </div>
+          </div>
+
+          {/* DESKTOP header — layout original inchangé */}
+          <div className="hidden sm:flex items-center justify-between">
             <div>
               <h1 className="text-[22px] font-semibold" style={{ color: 'var(--text-primary)' }}>
                 {deal.raison_sociale}

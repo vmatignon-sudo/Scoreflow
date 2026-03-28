@@ -100,7 +100,39 @@ export default function DealsPage() {
                 className="block tile hover:bg-[#fafafa] transition-colors"
                 style={{ padding: '16px 20px' }}
               >
-                <div className="flex items-start justify-between">
+                {/* Mobile: statut + score en haut, puis titre en dessous */}
+                <div className="flex items-center gap-2 sm:hidden mb-2">
+                  <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${STATUS_LABELS[deal.status]?.style}`}>
+                    {STATUS_LABELS[deal.status]?.label}
+                  </span>
+                  <span className="text-xs text-[#a1a1a6]">
+                    {new Date(deal.created_at).toLocaleDateString('fr-FR')}
+                  </span>
+                  {deal.status === 'completed' && scores[deal.id] && (
+                    <>
+                      <span className="font-mono font-bold ml-auto" style={{
+                        fontSize: '16px',
+                        color: (scores[deal.id]?.score_deal_total ?? 0) >= 14 ? '#059669' : (scores[deal.id]?.score_deal_total ?? 0) >= 10 ? '#B45309' : '#DC2626',
+                      }}>
+                        {(scores[deal.id]?.score_deal_total ?? 0).toFixed(1)}
+                      </span>
+                      <span style={{ fontSize: '9px', color: '#a1a1a6' }}>/20</span>
+                      {scores[deal.id].verdict && (
+                        <span className="font-medium" style={{
+                          fontSize: '9px', borderRadius: '6px', padding: '2px 8px', whiteSpace: 'nowrap',
+                          background: scores[deal.id].verdict === 'go' ? '#f0fdf4' : scores[deal.id].verdict === 'go_conditionnel' ? '#FFF7E6' : '#FEF2F2',
+                          color: scores[deal.id].verdict === 'go' ? '#059669' : scores[deal.id].verdict === 'go_conditionnel' ? '#B45309' : '#DC2626',
+                          border: `0.5px solid ${scores[deal.id].verdict === 'go' ? '#059669' : scores[deal.id].verdict === 'go_conditionnel' ? '#F59E0B' : '#DC2626'}`,
+                        }}>
+                          {scores[deal.id].verdict === 'go' ? 'GO' : scores[deal.id].verdict === 'go_conditionnel' ? 'GO COND.' : scores[deal.id].verdict === 'no_go' ? 'NO GO' : 'VETO'}
+                        </span>
+                      )}
+                    </>
+                  )}
+                </div>
+
+                {/* Desktop: layout original côte à côte */}
+                <div className="hidden sm:flex items-start justify-between">
                   <div>
                     <h3 className="text-[18px] font-semibold" style={{ color: 'var(--text-primary, #1d1d1f)' }}>
                       {deal.raison_sociale || 'Sans nom'}
@@ -153,6 +185,21 @@ export default function DealsPage() {
                       <span className="mt-1.5" style={{ fontSize: '12px', color: '#a1a1a6' }}>—</span>
                     ) : null}
                   </div>
+                </div>
+
+                {/* Mobile: titre + infos compactes */}
+                <div className="sm:hidden">
+                  <h3 className="text-[16px] font-semibold leading-tight" style={{ color: 'var(--text-primary, #1d1d1f)' }}>
+                    {deal.raison_sociale || 'Sans nom'}
+                  </h3>
+                  {assets[deal.id]?.marque && (
+                    <p className="text-[14px] text-[#6e6e73] mt-0.5">{[assets[deal.id].marque, assets[deal.id].modele].filter(Boolean).join(' ')}</p>
+                  )}
+                  <p className="text-[12px] mt-1" style={{ color: 'var(--text-secondary, #6e6e73)' }}>
+                    {deal.type_financement?.replace('_', ' ')}
+                    {deal.montant_finance && <>{' · '}{(deal.montant_finance / 1000).toLocaleString('fr-FR', { maximumFractionDigits: 0 })} k€</>}
+                    {deal.duree_mois && <>{' · '}{deal.duree_mois} mois</>}
+                  </p>
                 </div>
               </Link>
             ))}
