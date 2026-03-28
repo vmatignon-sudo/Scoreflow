@@ -108,7 +108,7 @@ export default function StepProspect({ draft, updateDraft, onNext }: Props) {
               >
                 <div className="flex justify-between items-start">
                   <div>
-                    <p className="font-medium text-[#424245]">{r.raison_sociale}</p>
+                    <p className="font-medium text-[#424245] uppercase">{r.raison_sociale}</p>
                     <p className="text-sm text-[#6e6e73]">
                       {r.siren} - {r.secteur_label}
                     </p>
@@ -150,7 +150,7 @@ export default function StepProspect({ draft, updateDraft, onNext }: Props) {
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div>
               <span className="text-[#a1a1a6]">Raison sociale</span>
-              <p className="font-medium text-[#424245]">{selected.raison_sociale}</p>
+              <p className="font-medium text-[#424245] uppercase">{selected.raison_sociale}</p>
             </div>
             <div>
               <span className="text-[#a1a1a6]">SIREN</span>

@@ -172,7 +172,7 @@ export default function StepLaunch({ draft, onBack }: Props) {
         <div className="grid grid-cols-2 gap-4 text-sm">
           <div>
             <span className="text-[#a1a1a6]">Entreprise</span>
-            <p className="font-medium text-[#424245]">{draft.raison_sociale}</p>
+            <p className="font-medium text-[#424245] uppercase">{draft.raison_sociale}</p>
             <p className="text-[#6e6e73]">{draft.siren}</p>
           </div>
           <div>

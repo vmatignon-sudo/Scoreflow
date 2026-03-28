@@ -118,7 +118,7 @@ export default function DealDetailPage() {
           </Link>
           {/* MOBILE header — compact empilé */}
           <div className="sm:hidden">
-            <h1 className="text-[17px] font-semibold leading-tight" style={{ color: 'var(--text-primary)' }}>
+            <h1 className="text-[17px] font-semibold leading-tight uppercase" style={{ color: 'var(--text-primary)' }}>
               {deal.raison_sociale}
             </h1>
             {asset?.marque && (
@@ -187,9 +187,9 @@ export default function DealDetailPage() {
           {/* DESKTOP header — layout original inchangé */}
           <div className="hidden sm:flex items-center justify-between">
             <div>
-              <h1 className="text-[22px] font-semibold" style={{ color: 'var(--text-primary)' }}>
+              <h1 className="text-[22px] font-semibold uppercase" style={{ color: 'var(--text-primary)' }}>
                 {deal.raison_sociale}
-                {asset?.marque && <span className="font-normal text-[#6e6e73]">{' — '}{[asset.marque, asset.modele].filter(Boolean).join(' ')}</span>}
+                {asset?.marque && <span className="font-normal normal-case text-[#6e6e73]">{' — '}{[asset.marque, asset.modele].filter(Boolean).join(' ')}</span>}
               </h1>
               <p className="text-[13px] mt-1" style={{ color: 'var(--text-secondary)' }}>
                 {deal.code_naf} {deal.secteur_label}

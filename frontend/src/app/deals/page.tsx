@@ -134,10 +134,10 @@ export default function DealsPage() {
                 {/* Desktop: layout original côte à côte */}
                 <div className="hidden sm:flex items-start justify-between">
                   <div>
-                    <h3 className="text-[18px] font-semibold" style={{ color: 'var(--text-primary, #1d1d1f)' }}>
+                    <h3 className="text-[18px] font-semibold uppercase" style={{ color: 'var(--text-primary, #1d1d1f)' }}>
                       {deal.raison_sociale || 'Sans nom'}
                       {assets[deal.id]?.marque && (
-                        <span className="font-normal text-[#6e6e73]">{' — '}{[assets[deal.id].marque, assets[deal.id].modele].filter(Boolean).join(' ')}</span>
+                        <span className="font-normal normal-case text-[#6e6e73]">{' — '}{[assets[deal.id].marque, assets[deal.id].modele].filter(Boolean).join(' ')}</span>
                       )}
                     </h3>
                     <p className="text-[13px] mt-1" style={{ color: 'var(--text-secondary, #6e6e73)' }}>
@@ -189,7 +189,7 @@ export default function DealsPage() {
 
                 {/* Mobile: titre + infos compactes */}
                 <div className="sm:hidden">
-                  <h3 className="text-[16px] font-semibold leading-tight" style={{ color: 'var(--text-primary, #1d1d1f)' }}>
+                  <h3 className="text-[16px] font-semibold leading-tight uppercase" style={{ color: 'var(--text-primary, #1d1d1f)' }}>
                     {deal.raison_sociale || 'Sans nom'}
                   </h3>
                   {assets[deal.id]?.marque && (
