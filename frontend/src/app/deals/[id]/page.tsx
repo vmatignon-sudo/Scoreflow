@@ -270,7 +270,7 @@ export default function DealDetailPage() {
         </div>
 
         {/* TWO COLUMNS */}
-        <div className="flex flex-1 overflow-hidden m-3 mt-0" style={{ gap: '24px' }}>
+        <div className="flex flex-col lg:flex-row flex-1 lg:overflow-hidden m-3 mt-0" style={{ gap: '24px' }}>
 
           {/* LEFT — Hypothèses */}
           <div className="hidden lg:flex flex-col w-[280px] xl:w-[280px] shrink-0 overflow-y-auto">
@@ -282,8 +282,8 @@ export default function DealDetailPage() {
             }} />
           </div>
 
-          {/* RIGHT — Résultats */}
-          <div className="flex-1 min-w-0 flex flex-col" style={{ height: 'calc(100vh - 76px - 52px)', overflow: 'hidden' }}>
+          {/* RIGHT — Résultats : scroll libre sur mobile, hauteur fixée sur desktop */}
+          <div className="flex-1 min-w-0 flex flex-col lg:h-[calc(100vh-76px-52px)] lg:overflow-hidden">
 
             {/* Synthèse block — NEVER scrolls */}
             <div className="shrink-0">
