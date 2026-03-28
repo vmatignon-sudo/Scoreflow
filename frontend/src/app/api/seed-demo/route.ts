@@ -4,8 +4,17 @@ import { NextResponse } from 'next/server';
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
+// Support both GET (for browser) and POST
+export async function GET() {
+  return seed();
+}
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function POST(_req: Request) {
+  return seed();
+}
+
+async function seed() {
   // Use service role if available, otherwise anon
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   const supabase = createClient(supabaseUrl, serviceKey || supabaseAnonKey);
