@@ -393,7 +393,7 @@ export default function DealDetailPage() {
             }}>
               <div className="space-y-2">
                 {activeTab === 'macro' && <MacroSectorTab dealId={dealId} score={score} />}
-                {activeTab === 'financial' && <FinancialTab dealId={dealId} organizationId={deal.organization_id} />}
+                {activeTab === 'financial' && <FinancialTab dealId={dealId} organizationId={deal.organization_id} codeNaf={deal.code_naf || undefined} />}
                 {activeTab === 'asset' && <AssetTab deal={deal} asset={asset} />}
                 {activeTab === 'director' && <DirectorTab deal={deal} dealId={dealId} />}
                 {activeTab === 'simulator' && <SimulatorPanel deal={deal} asset={asset} />}

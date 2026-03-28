@@ -10,6 +10,7 @@ import { RATIO_DEFINITIONS } from '@/lib/utils/ratioDefinitions';
 type Props = {
   dealId: string;
   organizationId: string;
+  codeNaf?: string;
 };
 
 type FinancialData = {
@@ -174,12 +175,36 @@ function getSectorColor(val: number, key: string, sector: { q25?: number; q50?: 
   return '#c4342d';
 }
 
-export default function FinancialTab({ dealId, organizationId }: Props) {
+type SectorBenchmarks = Record<string, { q10?: number; q25?: number; q50?: number; q75?: number; q90?: number }>;
+
+/** Fetch sector benchmarks from open data API (public, no key needed). */
+async function fetchSectorBenchmarks(codeNaf: string): Promise<SectorBenchmarks> {
+  try {
+    const url = `https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/ratios_inpi_bce_sectors/records?where=naf%3D%22${encodeURIComponent(codeNaf)}%22&limit=20`;
+    const resp = await fetch(url);
+    if (!resp.ok) return {};
+    const data = await resp.json();
+    const records = data.results || [];
+    const benchmarks: SectorBenchmarks = {};
+    for (const r of records) {
+      const name = r.ratio_name;
+      if (name) {
+        benchmarks[name] = { q10: r.q10, q25: r.q25, q50: r.q50, q75: r.q75, q90: r.q90 };
+      }
+    }
+    return benchmarks;
+  } catch {
+    return {};
+  }
+}
+
+export default function FinancialTab({ dealId, organizationId, codeNaf }: Props) {
   const [allYears, setAllYears] = useState<FinancialData[]>([]);
   const [docs, setDocs] = useState<DocRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [expandedRatio, setExpandedRatio] = useState<string | null>(null);
+  const [liveSectorRef, setLiveSectorRef] = useState<SectorBenchmarks>({});
 
   const supabase = createClient();
 
@@ -201,6 +226,17 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
 
     setLoading(false);
   }, [dealId, supabase]);
+
+  // Fallback: fetch sector benchmarks from open data API if not in DB
+  useEffect(() => {
+    if (!codeNaf) return;
+    // Check if latest year already has sector ref
+    const latest = allYears.length > 0 ? allYears[allYears.length - 1] : null;
+    const hasRef = latest?.ratios_sectoriels_ref && Object.keys(latest.ratios_sectoriels_ref).length > 0;
+    if (hasRef) return;
+
+    fetchSectorBenchmarks(codeNaf).then(setLiveSectorRef);
+  }, [codeNaf, allYears]);
 
   useEffect(() => {
     fetchData();
@@ -256,7 +292,8 @@ export default function FinancialTab({ dealId, organizationId }: Props) {
   // Latest year data
   const data = allYears.length > 0 ? allYears[allYears.length - 1] : null;
   const ratios = data?.ratios || {};
-  const sectorRef = data?.ratios_sectoriels_ref || {};
+  const dbSectorRef = data?.ratios_sectoriels_ref || {};
+  const sectorRef = Object.keys(dbSectorRef).length > 0 ? dbSectorRef : liveSectorRef;
   const years = allYears.filter(y => y.annee !== null).sort((a, b) => (a.annee || 0) - (b.annee || 0));
 
   return (
