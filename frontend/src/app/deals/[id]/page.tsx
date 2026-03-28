@@ -13,7 +13,7 @@ import FinancialTab from '@/components/deal/FinancialTab';
 import AssetTab from '@/components/deal/tabs/AssetTab';
 import DirectorTab from '@/components/deal/tabs/DirectorTab';
 import SimulatorPanel from '@/components/simulator/SimulatorPanel';
-import { Globe, BarChart3, Truck, User, Zap, Trash2, FileDown, Lightbulb, RefreshCw, ArrowLeft } from 'lucide-react';
+import { Globe, BarChart3, Truck, User, Zap, Trash2, FileDown, Lightbulb, RefreshCw, ArrowLeft, SlidersHorizontal, X } from 'lucide-react';
 import type { Deal, DealAsset, DealScore } from '@/types/database';
 
 type TabId = 'macro' | 'financial' | 'asset' | 'director' | 'simulator';
@@ -35,6 +35,7 @@ export default function DealDetailPage() {
   const [activeTab, setActiveTab] = useState<TabId>('financial');
   const [showDelete, setShowDelete] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [showHypotheses, setShowHypotheses] = useState(false);
   const supabase = createClient();
   const router = useRouter();
 
@@ -204,6 +205,40 @@ export default function DealDetailPage() {
               </button>
             </div>
           </div>
+        </div>
+
+        {/* MOBILE: Hypothèses drawer */}
+        {showHypotheses && (
+          <div className="lg:hidden fixed inset-0 z-50">
+            <div className="absolute inset-0 bg-black/30" onClick={() => setShowHypotheses(false)} />
+            <div className="absolute bottom-0 left-0 right-0 bg-[#f5f5f7] rounded-t-[16px] max-h-[80vh] overflow-y-auto"
+              style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
+              <div className="sticky top-0 bg-[#f5f5f7] z-10 flex items-center justify-between px-4 py-3 border-b border-[rgba(0,0,0,0.08)]">
+                <p className="font-medium text-[16px]" style={{ color: '#2d6a4f' }}>Hypothèses</p>
+                <button onClick={() => setShowHypotheses(false)} className="p-1.5 rounded-full bg-white/80">
+                  <X className="w-4 h-4 text-[#6e6e73]" />
+                </button>
+              </div>
+              <div className="p-4">
+                <HypothesesColumn deal={deal} asset={asset} dealId={dealId} supabase={supabase} onChanged={async () => {
+                  const { data: d } = await supabase.from('deals').select('*').eq('id', dealId).maybeSingle();
+                  if (d) setDeal(d);
+                  const { data: a } = await supabase.from('deal_assets').select('*').eq('deal_id', dealId).maybeSingle();
+                  if (a) setAsset(a);
+                }} />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* MOBILE: bouton Hypothèses flottant */}
+        <div className="lg:hidden flex justify-end px-3 pt-3">
+          <button onClick={() => setShowHypotheses(true)}
+            className="inline-flex items-center gap-1.5 text-[12px] font-medium px-3 py-2 rounded-[8px] bg-white border border-[rgba(0,0,0,0.08)] active:scale-[0.98] transition-all"
+            style={{ color: '#2d6a4f' }}>
+            <SlidersHorizontal className="w-3.5 h-3.5" />
+            Hypothèses
+          </button>
         </div>
 
         {/* SHARED TITLE ROW */}
