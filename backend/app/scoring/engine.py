@@ -12,6 +12,7 @@ from app.scoring.director import DirectorScorer
 from app.scoring.macro_sector import MacroSectorScorer
 from app.scoring.verdicts import VerdictEngine
 from app.scoring.predictive import PredictiveScorer
+from app.services.sector_service import SectorService
 
 logger = logging.getLogger(__name__)
 
@@ -43,6 +44,7 @@ class ScoringEngine:
         self.macro_sector = MacroSectorScorer()
         self.verdict_engine = VerdictEngine()
         self.predictive = PredictiveScorer()
+        self.sector_service = SectorService()
 
     async def compute_full_score(
         self, deal_id: str, organization_id: str, force: bool = False
@@ -78,9 +80,18 @@ class ScoringEngine:
             org_settings=org_settings,
         )
 
-        # Persist financial ratios to Supabase
+        # Fetch sector benchmarks (percentiles Q10-Q90) and persist financial ratios
+        sector_benchmarks = {}
+        code_naf = deal_data.get("code_naf", "")
+        if code_naf:
+            try:
+                sector_result = await self.sector_service.get_sector_data(code_naf)
+                sector_benchmarks = sector_result.get("ratios_sectoriels", {})
+            except Exception:
+                logger.warning("Failed to fetch sector benchmarks for NAF %s", code_naf)
+
         if score_financier.get("ratios"):
-            await self._save_financial_ratios(deal_id, deal_data, score_financier)
+            await self._save_financial_ratios(deal_id, deal_data, score_financier, sector_benchmarks)
 
         # Predictive model (Signaux Faibles inspired)
         predictive = await self.predictive.compute(deal_data)
@@ -232,7 +243,7 @@ class ScoringEngine:
         }
 
     async def _save_financial_ratios(
-        self, deal_id: str, deal_data: dict, score_financier: dict
+        self, deal_id: str, deal_data: dict, score_financier: dict, sector_benchmarks: dict | None = None
     ) -> None:
         """Persist computed ratios to deal_financial_ratios table."""
         base = settings.supabase_url
@@ -265,6 +276,7 @@ class ScoringEngine:
             "valeur_ajoutee": fin.get("valeur_ajoutee"),
             "frais_financiers": fin.get("frais_financiers"),
             "ratios": ratios,
+            "ratios_sectoriels_ref": sector_benchmarks if sector_benchmarks else None,
             "score_altman_z": score_financier.get("altman", {}).get("z"),
             "altman_zone": score_financier.get("altman", {}).get("zone"),
             "score_conan_holder": score_financier.get("conan_holder", {}).get("z"),
