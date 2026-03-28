@@ -177,13 +177,13 @@ export default function RecapBlock({ score, analyzed = true }: Props) {
         <span className="font-medium" style={{ fontSize: '10px', color: 'var(--text-muted)', width: '56px', textAlign: 'center', marginRight: '13px' }}>/20</span>
       </div>
 
-      {/* 2 COLUMNS: Rosace | Contenu droit (verdict + dimensions) */}
-      <div className="flex" style={{ gap: '16px' }}>
+      {/* 2 COLUMNS on desktop, stacked on mobile */}
+      <div className="flex flex-col lg:flex-row" style={{ gap: '16px' }}>
 
-        {/* LEFT — Rosace SVG (280px) */}
-        <div className="shrink-0 flex flex-col items-center justify-center" style={{ width: '320px', minHeight: '340px', paddingLeft: view === 'rosace' ? '28px' : '40px', paddingRight: view === 'rosace' ? '0' : '0' }}>
+        {/* LEFT — Rosace SVG */}
+        <div className="shrink-0 flex flex-col items-center justify-center lg:w-[320px] lg:min-h-[340px]" style={{ paddingLeft: view === 'rosace' ? '28px' : '40px' }}>
           {view === 'rosace' ? (
-            <svg viewBox="0 0 360 360" width="320" height="320" style={{ display: 'block' }}>
+            <svg viewBox="0 0 360 360" className="w-[240px] h-[240px] lg:w-[320px] lg:h-[320px]" style={{ display: 'block' }}>
               {[0.2, 0.4, 0.6, 0.8, 1].map((f) => (
                 <polygon key={f} points={gridPolygon(f, 4)} fill="none" stroke="#E2E8F0" strokeWidth="1" />
               ))}
@@ -261,10 +261,10 @@ export default function RecapBlock({ score, analyzed = true }: Props) {
         </div>
 
         {/* RIGHT — mini-cartes par dimension */}
-        <div className="flex-1 min-w-0 flex flex-col items-end" style={{ paddingRight: '13px' }}>
+        <div className="flex-1 min-w-0 flex flex-col lg:items-end" style={{ paddingRight: '13px' }}>
 
           {/* 4 mini-cartes dimension — note centrée verticalement */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '90%' }}>
+          <div className="w-full lg:w-[90%]" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             {DIMS.map(({ key, label }, idx) => {
               const val = show ? ((score?.[key] as number | null) ?? 0) : 0;
               const revealed = revealedDims >= idx;
@@ -341,9 +341,9 @@ export default function RecapBlock({ score, analyzed = true }: Props) {
             return (
               <div
                 onClick={() => show && setExpanded(isRecoOpen ? null : 'reco')}
+                className="w-full lg:w-[90%]"
                 style={{
                   display: 'flex', alignItems: 'stretch',
-                  width: '90%',
                   background: recoBg,
                   border: `0.5px solid ${recoBorder}`,
                   borderRadius: '6px', overflow: 'hidden',
