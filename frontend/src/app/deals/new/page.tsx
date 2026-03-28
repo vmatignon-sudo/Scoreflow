@@ -129,8 +129,8 @@ export default function NewDealPage() {
           <h1 className="text-2xl font-bold text-[#1d1d1f] mb-2">Nouveau dossier</h1>
           <p className="text-[#6e6e73] mb-6">5 minutes pour analyser un deal complet</p>
 
-          {/* Step indicator */}
-          <div className="flex items-center gap-1 mb-8">
+          {/* Step indicator — DESKTOP (inchangé) */}
+          <div className="hidden sm:flex items-center gap-1 mb-8">
             {STEPS.map((s) => (
               <div key={s.num} className="flex items-center flex-1">
                 <div
@@ -155,6 +155,29 @@ export default function NewDealPage() {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Step indicator — MOBILE : compact avec retour étape */}
+          <div className="sm:hidden mb-6">
+            <div className="flex items-center gap-3 mb-3">
+              {step > 1 && (
+                <button onClick={() => setStep(step - 1)} className="flex items-center gap-1 text-[13px] text-[#6e6e73] active:scale-[0.97]">
+                  <ArrowLeft className="w-4 h-4" />
+                  Étape {step - 1}
+                </button>
+              )}
+              <span className="ml-auto text-[13px] font-medium" style={{ color: 'var(--accent, #1e40af)' }}>
+                {step}/4 — {STEPS[step - 1].label}
+              </span>
+            </div>
+            <div className="flex gap-1.5">
+              {STEPS.map((s) => (
+                <div key={s.num} className="flex-1 h-[3px] rounded-full" style={{
+                  background: s.num <= step ? 'var(--accent, #1e40af)' : '#E2E8F0',
+                  opacity: s.num === step ? 1 : s.num < step ? 0.5 : 0.3,
+                }} />
+              ))}
+            </div>
           </div>
 
           {/* Step content */}
