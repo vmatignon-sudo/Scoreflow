@@ -3,7 +3,9 @@
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
+import Link from 'next/link';
 import Sidebar from '@/components/layout/Sidebar';
+import MobileNav from '@/components/layout/MobileNav';
 import RecapBlock from '@/components/scores/RecapBlock';
 import HypothesesColumn from '@/components/deal/HypothesesColumn';
 import MacroSectorTab from '@/components/deal/tabs/MacroSectorTab';
@@ -11,7 +13,7 @@ import FinancialTab from '@/components/deal/FinancialTab';
 import AssetTab from '@/components/deal/tabs/AssetTab';
 import DirectorTab from '@/components/deal/tabs/DirectorTab';
 import SimulatorPanel from '@/components/simulator/SimulatorPanel';
-import { Globe, BarChart3, Truck, User, Zap, Trash2, FileDown, Lightbulb, RefreshCw } from 'lucide-react';
+import { Globe, BarChart3, Truck, User, Zap, Trash2, FileDown, Lightbulb, RefreshCw, ArrowLeft } from 'lucide-react';
 import type { Deal, DealAsset, DealScore } from '@/types/database';
 
 type TabId = 'macro' | 'financial' | 'asset' | 'director' | 'simulator';
@@ -62,7 +64,12 @@ export default function DealDetailPage() {
     return (
       <div className="min-h-screen" style={{ background: 'var(--page-bg)' }}>
         <Sidebar />
-        <main className="sm:ml-[56px] p-4">
+        <MobileNav />
+        <main className="sm:ml-[56px] p-4 pb-[80px] sm:pb-4">
+          <Link href="/deals" className="inline-flex items-center gap-1.5 text-[13px] text-[#6e6e73] hover:text-[#1d1d1f] transition-colors mb-4">
+            <ArrowLeft className="w-4 h-4" />
+            Retour aux dossiers
+          </Link>
           <div className="animate-pulse space-y-3 max-w-2xl">
             <div className="h-6 rounded-[8px] w-1/3" style={{ background: '#E2E8F0' }} />
             <div className="h-48 rounded-[8px]" style={{ background: '#E2E8F0' }} />
@@ -77,6 +84,7 @@ export default function DealDetailPage() {
   return (
     <div className="min-h-screen" style={{ background: 'var(--page-bg)' }}>
       <Sidebar />
+      <MobileNav />
 
       {/* Delete modal */}
       {showDelete && (
@@ -99,10 +107,14 @@ export default function DealDetailPage() {
         </div>
       )}
 
-      <div className="sm:ml-[56px] min-h-screen flex flex-col">
+      <div className="sm:ml-[56px] min-h-screen flex flex-col pb-[72px] sm:pb-0">
 
         {/* HEADER — white tile above both columns */}
         <div className="m-3 mb-0 tile" style={{ padding: '16px 20px' }}>
+          <Link href="/deals" className="inline-flex items-center gap-1.5 text-[13px] text-[#6e6e73] hover:text-[#1d1d1f] transition-colors mb-2">
+            <ArrowLeft className="w-4 h-4" />
+            Retour aux dossiers
+          </Link>
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-[22px] font-semibold" style={{ color: 'var(--text-primary)' }}>

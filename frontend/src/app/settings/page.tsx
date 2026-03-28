@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Sidebar from '@/components/layout/Sidebar';
+import MobileNav from '@/components/layout/MobileNav';
 
 export default function SettingsPage() {
   const [weights, setWeights] = useState({
@@ -20,10 +21,11 @@ export default function SettingsPage() {
   return (
     <div className="min-h-screen bg-[#f5f5f7]">
       <Sidebar />
-      <main className="ml-[56px] p-8">
+      <MobileNav />
+      <main className="sm:ml-[56px] p-5 sm:p-8 pb-[80px] sm:pb-8">
         <h1 className="text-2xl font-bold text-[#1d1d1f] mb-8">Paramètres</h1>
 
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {/* Pondération */}
           <div className="bg-white rounded-[20px] shadow p-6">
             <h2 className="text-lg font-semibold text-[#2d2d2d] mb-4">

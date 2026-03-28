@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/client';
 import Sidebar from '@/components/layout/Sidebar';
+import MobileNav from '@/components/layout/MobileNav';
 import type { Deal, DealAsset, DealScore } from '@/types/database';
 
 const STATUS_LABELS: Record<string, { label: string; style: string }> = {
@@ -56,7 +57,8 @@ export default function DealsPage() {
   return (
     <div className="min-h-screen bg-[#f5f5f7]">
       <Sidebar />
-      <main className="ml-[56px] p-8">
+      <MobileNav />
+      <main className="sm:ml-[56px] p-5 sm:p-8 pb-[80px] sm:pb-8">
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-2xl font-bold text-[#1d1d1f]">Dossiers</h1>

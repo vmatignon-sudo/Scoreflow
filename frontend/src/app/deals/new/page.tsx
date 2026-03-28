@@ -1,7 +1,10 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
 import Sidebar from '@/components/layout/Sidebar';
+import MobileNav from '@/components/layout/MobileNav';
 import StepProspect from '@/components/deal/StepProspect';
 import StepDeal from '@/components/deal/StepDeal';
 import StepDocuments from '@/components/deal/StepDocuments';
@@ -115,9 +118,14 @@ export default function NewDealPage() {
   return (
     <div className="min-h-screen bg-[#f5f5f7]">
       <Sidebar />
-      <main className="ml-[56px] p-8">
+      <MobileNav />
+      <main className="sm:ml-[56px] p-5 sm:p-8 pb-[80px] sm:pb-8">
         <div className="max-w-3xl mx-auto">
-          {/* Header */}
+          {/* Back + Header */}
+          <Link href="/deals" className="inline-flex items-center gap-1.5 text-[13px] text-[#6e6e73] hover:text-[#1d1d1f] transition-colors mb-4">
+            <ArrowLeft className="w-4 h-4" />
+            Retour aux dossiers
+          </Link>
           <h1 className="text-2xl font-bold text-[#1d1d1f] mb-2">Nouveau dossier</h1>
           <p className="text-[#6e6e73] mb-6">5 minutes pour analyser un deal complet</p>
 
