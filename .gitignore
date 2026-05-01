@@ -37,3 +37,10 @@ coverage/
 # Misc
 *.pem
 .vercel
+
+test-results/
+playwright-report/
+tests/screenshots/
+tests/audit/
+tests/behaviors/
+docs/
